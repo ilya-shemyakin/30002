@@ -17,7 +17,7 @@ struct DataStruct
 };
 
 bool operator==(const DataStruct& s1, const DataStruct& s2)
- {
+{
     return s1.key1 == s2.key1 && s1.key2 == s2.key2 && s1.key3 == s2.key3;
 }
 

@@ -153,7 +153,7 @@ std::istream& operator>>(std::istream& in, RatLspIO& data)
 
     long long tempNum = 0;
     in >> tempNum;
-    if (!in) 
+    if (!in)
     {
         return in;
     }
@@ -214,7 +214,7 @@ std::istream& readData(std::istream& in, DataStruct& rec)
             in >> rat;
         }
         else if (keyNumber == '3')
-        { 
+        {
             in >> StrIO{ str };
         }
         else

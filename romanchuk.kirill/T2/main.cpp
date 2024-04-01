@@ -4,7 +4,7 @@
 #include <algorithm>
 
 #include "DataStruct.h"
-#include "inputFormatters.h"
+#include "InputFormatters.h"
 
 
 int main()

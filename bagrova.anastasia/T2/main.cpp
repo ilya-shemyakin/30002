@@ -62,19 +62,26 @@ public:
     StreamGuard(std::istream& in):
         stream(in),
         flags(in.flags())
-    { stream >> std::noskipws; }
-    ~StreamGuard() { stream.flags(flags); }
+    {
+        stream >> std::noskipws;
+    }
+    ~StreamGuard()
+    {
+        stream.flags(flags);
+    }
 
 private:
     std::istream& stream;
     std::basic_ios< char >::fmtflags flags;
 };
 
-
 std::istream& operator>>(std::istream& in, DelimiterIO&& dest)
 {
     std::istream::sentry sentry(in);
-    if (!sentry) { return in; }
+    if (!sentry)
+    {
+        return in;
+    }
     char c = '0';
     c = in.get();
     if (in && (c != dest.exp))
@@ -88,7 +95,10 @@ std::istream& operator>>(std::istream& in, DelimiterIO&& dest)
 std::istream& operator>>(std::istream& in, StrIO&& dest)
 {
     std::istream::sentry sentry(in);
-    if (!sentry) { return in; }
+    if (!sentry)
+    {
+        return in;
+    }
     return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
 }
 
@@ -96,10 +106,13 @@ std::istream& operator>>(std::istream& in, StrIO&& dest)
 std::istream& operator>>(std::istream& in, LabelIO&& dest)
 {
     std::istream::sentry sentry(in);
-    if (!sentry) { return in; }
+    if (!sentry)
+    {
+        return in; 
+    }
 
     char c = '0';
-    for (int i = 0; i < dest.str.size(); i++)
+    for (size_t i = 0; i < dest.str.size(); i++)
     {
         c = in.get();
         if (in && (c != dest.str[i]))
@@ -115,7 +128,10 @@ std::istream& operator>>(std::istream& in, LabelIO&& dest)
 std::istream& operator>>(std::istream& in, ChrLitIO& data)
 {
     std::istream::sentry sentry(in);
-    if (!sentry) { return in; }
+    if (!sentry)
+    {
+        return in;
+    }
     return in >> DelimiterIO{ '\'' } >> data.c >> DelimiterIO{ '\'' };
 }
 
@@ -123,15 +139,24 @@ std::istream& operator>>(std::istream& in, ChrLitIO& data)
 std::istream& operator>>(std::istream& in, RatLspIO& data)
 {
     std::istream::sentry sentry(in);
-    if (!sentry) { return in; }
+    if (!sentry)
+    {
+        return in;
+    }
 
     in >> DelimiterIO{ '(' } >> DelimiterIO{ ':' } >>
         DelimiterIO{ 'N' } >> DelimiterIO{ ' ' };
-    if (!in) { return in; }
+    if (!in)
+    {
+        return in;
+    }
 
     long long tempNum = 0;
     in >> tempNum;
-    if (!in) { return in; }
+    if (!in) 
+    {
+        return in;
+    }
     in >> DelimiterIO{ ':' } >> DelimiterIO{ 'D' } >> DelimiterIO{ ' ' };
 
     std::string temp;
@@ -164,8 +189,7 @@ std::istream& operator>>(std::istream& in, RatLspIO& data)
     return in;
 }
 
-std::istream& readData(std::istream& in, DataStruct& rec)
-{
+std::istream& readData(std::istream& in, DataStruct& rec) {
     StreamGuard guard(in);
     ChrLitIO symbol;
     RatLspIO rat;
@@ -180,9 +204,18 @@ std::istream& readData(std::istream& in, DataStruct& rec)
         char keyNumber = in.get();
         in >> DelimiterIO{ ' ' };
 
-        if (keyNumber == '1') { in >> symbol; }
-        else if (keyNumber == '2') { in >> rat; }
-        else if (keyNumber == '3') { in >> StrIO{ str }; }
+        if (keyNumber == '1')
+        {
+            in >> symbol;
+        }
+        else if (keyNumber == '2')
+        {
+            in >> rat;
+        }
+        else if (keyNumber == '3') 
+        { 
+            in >> StrIO{ str };
+        }
         else
         {
             in.setstate(std::ios::failbit);
@@ -203,7 +236,10 @@ std::istream& readData(std::istream& in, DataStruct& rec)
 std::istream& operator>>(std::istream& stream, DataStruct& rec)
 {
     std::istream::sentry sentry(stream);
-    if (!sentry) { return stream; }
+    if (!sentry)
+    {
+        return stream;
+    }
 
     std::string line;
     while (getline(stream, line, '\n'))
@@ -247,8 +283,7 @@ int main()
         back_inserter(data)
     );
 
-    auto Comparator = [](const DataStruct& s1, const DataStruct& s2)
-	{
+    auto Comparator = [](const DataStruct& s1, const DataStruct& s2) {
         double rat1 = static_cast<double>(s1.key2.first) / s1.key2.second;
         double rat2 = static_cast<double>(s2.key2.first) / s2.key2.second;
         auto left = std::make_tuple(s1.key1, rat1, s1.key3.size());
@@ -266,4 +301,3 @@ int main()
 
     return 0;
 }
-

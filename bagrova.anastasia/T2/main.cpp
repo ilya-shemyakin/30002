@@ -189,7 +189,8 @@ std::istream& operator>>(std::istream& in, RatLspIO& data)
     return in;
 }
 
-std::istream& readData(std::istream& in, DataStruct& rec) {
+std::istream& readData(std::istream& in, DataStruct& rec)
+{
     StreamGuard guard(in);
     ChrLitIO symbol;
     RatLspIO rat;
@@ -212,7 +213,7 @@ std::istream& readData(std::istream& in, DataStruct& rec) {
         {
             in >> rat;
         }
-        else if (keyNumber == '3') 
+        else if (keyNumber == '3')
         { 
             in >> StrIO{ str };
         }
@@ -283,7 +284,8 @@ int main()
         back_inserter(data)
     );
 
-    auto Comparator = [](const DataStruct& s1, const DataStruct& s2) {
+    auto Comparator = [](const DataStruct& s1, const DataStruct& s2)
+    {
         double rat1 = static_cast<double>(s1.key2.first) / s1.key2.second;
         double rat2 = static_cast<double>(s2.key2.first) / s2.key2.second;
         auto left = std::make_tuple(s1.key1, rat1, s1.key3.size());

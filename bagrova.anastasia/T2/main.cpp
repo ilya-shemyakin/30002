@@ -108,7 +108,7 @@ std::istream& operator>>(std::istream& in, LabelIO&& dest)
     std::istream::sentry sentry(in);
     if (!sentry)
     {
-        return in; 
+        return in;
     }
 
     char c = '0';

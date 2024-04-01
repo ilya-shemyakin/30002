@@ -2,7 +2,7 @@
 #include <istream>
 #include <string>
 
-namespace maltsev 
+namespace maltsev
 {
   struct UnsignedLongLongIO
   {

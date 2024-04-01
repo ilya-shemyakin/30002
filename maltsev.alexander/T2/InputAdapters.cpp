@@ -13,7 +13,7 @@ namespace maltsev
       return in;
     }
     iofmtguard fmtguard(in);
-    return in >> dest.ref >> LabelIO{ "ull", true};
+    return in >> dest.ref >> LabelIO{ "ull", true };
   }
 
   std::istream& operator>>(std::istream& in, UnsignedLongLongHexIO&& dest)
@@ -24,7 +24,7 @@ namespace maltsev
       return in;
     }
     iofmtguard fmtguard(in);
-    return in >> std::hex >> dest.ref;
+    return in >> LabelIO{ "0x", true } >> std::hex >> dest.ref;
   }
 
   std::istream& operator>>(std::istream& in, StringIO&& dest)

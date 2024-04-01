@@ -79,7 +79,7 @@ namespace maltsev
     iofmtguard fmtguard(out);
     out << "(:";
     out << "key1 " << src.key1 << "ull" << ":";
-    out << "key2 " << std::hex << std::showbase << src.key2 << ":";
+    out << "key2 " << "0x" << std::uppercase << std::hex << src.key2 << ":";
     out << "key3 " << std::quoted(src.key3) << ":";
     out << ")";
     return out;

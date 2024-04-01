@@ -1,7 +1,6 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
-#include <sstream>
 #include <vector>
 
 #include "DataStruct.h"
@@ -10,9 +9,6 @@ int main()
 {
   using maltsev::DataStruct;
   std::vector< DataStruct > data;
-  std::istringstream iss(
-    "(:key1 8ull:key2 0xF1:key3 \"Let madness release you\":)\n"
-  );
 
   while (!std::cin.eof())
   {

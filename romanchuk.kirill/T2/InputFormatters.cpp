@@ -50,7 +50,7 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
     in.setstate(std::ios::failbit);
   }
   dest = input;
-  return in;   
+  return in;
 }
 
 std::istream& operator>>(std::istream& in, DelimiterI&& dest)

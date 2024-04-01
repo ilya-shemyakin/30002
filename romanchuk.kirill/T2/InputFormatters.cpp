@@ -106,6 +106,7 @@ std::istream& operator>>(std::istream& in, LongLongI&& dest)
   {
     return in;
   }
+  in >> DelimiterI{ '0' } >> DelimiterI{ 'x' };
   std::string data = "";
   std::getline(in, data, ':');
   in.putback(':');

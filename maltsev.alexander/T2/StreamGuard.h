@@ -1,4 +1,6 @@
-#pragma once
+#ifndef STREAM_GUARD_H
+#define STREAM_GUARD_H
+
 #include <iostream>
 
 namespace maltsev
@@ -15,3 +17,5 @@ namespace maltsev
     std::basic_ios< char >::fmtflags fmt_;
   };
 }
+
+#endif

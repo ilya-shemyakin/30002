@@ -1,4 +1,6 @@
-#pragma once
+#ifndef DATA_STRUCT_H
+#define DATA_STRUCT_H
+
 #include <string>
 
 namespace maltsev
@@ -14,3 +16,5 @@ namespace maltsev
   std::istream& operator>>(std::istream& in, DataStruct& dest);
   std::ostream& operator<<(std::ostream& out, const DataStruct& dest);
 }
+
+#endif

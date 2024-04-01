@@ -1,4 +1,6 @@
-#pragma once
+#ifndef INPUT_ADAPTERS_H
+#define INPUT_ADAPTERS_H
+
 #include <istream>
 #include <string>
 
@@ -37,3 +39,5 @@ namespace maltsev
   std::istream& operator>>(std::istream& in, ExpectedCharIO&& exp);
   std::istream& operator>>(std::istream& in, LabelIO&& exp);
 }
+
+#endif

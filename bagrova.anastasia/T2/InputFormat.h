@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef INPUT_FORMAT_H
 #define INPUT_FORMAT_H
 

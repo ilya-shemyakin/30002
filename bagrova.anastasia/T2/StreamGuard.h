@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef STREAM_GUARD_H
 #define STREAM_GUARD_H
 

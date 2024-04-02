@@ -3,6 +3,9 @@
 #ifndef DATA_STRUCT_H
 #define DATA_STRUCT_H
 
+#include <utility>
+#include <string>
+
 namespace IO
 {
     struct DataStruct

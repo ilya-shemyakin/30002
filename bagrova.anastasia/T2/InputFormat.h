@@ -3,6 +3,9 @@
 #ifndef INPUT_FORMAT_H
 #define INPUT_FORMAT_H
 
+#include <string>
+#include <istream>
+
 namespace IO
 {
     struct DelimiterIO

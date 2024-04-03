@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 
-#include "DataStruct.h" 
+#include "DataStruct.h"
 #include "InputFormatters.h"
 
 

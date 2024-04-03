@@ -3,13 +3,14 @@
 #include <vector>
 #include <algorithm>
 
-#include "DataStruct.h"
+#include "DataStruct.h" 
 #include "InputFormatters.h"
 
 
 int main()
 {
   std::vector< DataStruct > dataStructVector;
+  DataStruct ds;
   while (!std::cin.eof())
   {
     std::copy(std::istream_iterator< DataStruct >(std::cin),
@@ -28,6 +29,5 @@ int main()
   std::copy(dataStructVector.begin(),
     dataStructVector.end(),
     std::ostream_iterator< DataStruct >(std::cout, "\n"));
-
   return 0;
 }

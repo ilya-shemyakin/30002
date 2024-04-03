@@ -1,8 +1,7 @@
 #ifndef READER_H
 #define READER_H
 
-#include "DataStruct.h"
-
+#include <iostream>
 
 struct DelimiterI
 {
@@ -29,12 +28,10 @@ struct LongLongI
   unsigned long long& num;
 };
 
-std::istream& operator>>(std::istream& in, DataStruct& dest);
 std::istream& operator>>(std::istream& in, DelimiterI&& dest);
 std::istream& operator>>(std::istream& in, DoubleI&& dest);
 std::istream& operator>>(std::istream& in, StringI&& dest);
 std::istream& operator>>(std::istream& in, LabelI&& dest);
 std::istream& operator>>(std::istream& in, LongLongI&& dest);
-std::ostream& operator<<(std::ostream& out, const DataStruct& dest);
 
 #endif

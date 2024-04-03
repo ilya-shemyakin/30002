@@ -16,7 +16,7 @@ int main()
       std::istream_iterator< DataStruct >(),
       std::back_inserter(dataStructVector));
 
-    if (!std::cin)
+    if (std::cin.fail() && !std::cin.eof())
     {
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');

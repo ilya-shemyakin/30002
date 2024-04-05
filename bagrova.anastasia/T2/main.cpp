@@ -9,15 +9,28 @@
 int main()
 {
     using IO::DataStruct;
+    using IO::DataStruct;
 
     std::vector<DataStruct> data;
-    std::istream_iterator<DataStruct> begCin(std::cin);
 
-    std::copy(
-        std::istream_iterator< DataStruct >(begCin),
-        std::istream_iterator< DataStruct >(),
-        back_inserter(data)
-    );
+    while (!std::cin.eof())
+    {
+        std::copy(
+            std::istream_iterator< DataStruct >(std::cin),
+            std::istream_iterator< DataStruct >(),
+            back_inserter(data)
+        );
+        if (std::cin.fail())
+        {
+            bool eofCin = std::cin.eof();
+            std::cin.clear();
+            if (eofCin)
+            {
+                std::cin.setstate(std::ios::eofbit);
+            }
+            std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+        }
+    }
 
     auto Comparator = [](const DataStruct& s1, const DataStruct& s2)
     {
@@ -27,7 +40,6 @@ int main()
         auto right = std::make_tuple(s2.key1, rat2, s2.key3.size());
         return left < right;
     };
-
     std::sort(data.begin(), data.end(), Comparator);
 
     std::copy(

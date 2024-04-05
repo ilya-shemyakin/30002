@@ -9,7 +9,6 @@
 int main()
 {
     using IO::DataStruct;
-    using IO::DataStruct;
 
     std::vector<DataStruct> data;
 

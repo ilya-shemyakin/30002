@@ -32,7 +32,7 @@ namespace IO
 
         stream >> std::noskipws;
         stream >> DelimiterIO{ '(' };
-        
+
         for (int i = 0; i < COUNT_KEY; i++)
         {
             stream >> DelimiterIO{ ':' } >> LabelIO{ "key" };

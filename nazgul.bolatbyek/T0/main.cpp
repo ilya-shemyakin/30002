@@ -2,6 +2,6 @@
 
 int main()
 {
-  std::cout << "bolatbyek.nazgul\n";
+  std::cout << "bolatbek.nazgul\n";
   return 0;
 }

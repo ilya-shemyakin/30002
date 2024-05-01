@@ -29,16 +29,16 @@ namespace ivatshenko
             return in;
         }
         std::string str;
-        std::getline(in, str, ':'); 
+        std::getline(in, str, ':');
         in.putback(':');
         if (isDoubleSCI(str))
         {
             std::stringstream ss(str);
-            ss >> dest.value; 
+            ss >> dest.value;
         }
         else
         {
-            in.setstate(std::ios::failbit); 
+            in.setstate(std::ios::failbit);
         }
         return in;
     }

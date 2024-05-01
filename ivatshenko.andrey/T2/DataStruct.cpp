@@ -93,7 +93,7 @@ namespace ivatshenko
         StreamGuard guard(out);
         out << "(";
         out << ":key1 " << myScientific(ds.key1);
-        out << ":key2 " << ds.key2 << "LL";
+        out << ":key2 " << ds.key2 << "ll";
         out << ":key3 " << std::quoted(ds.key3) << ":";
         out << ")";
         return out;

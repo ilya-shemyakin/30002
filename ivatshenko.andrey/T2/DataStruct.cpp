@@ -27,7 +27,6 @@ namespace ivatshenko
             StreamGuard guard(in);
             const std::size_t COUNT_OF_FIELDS = 3;
             char keyId = '0';
-            bool key1 = false;
             in >> std::noskipws;
             in >> DelimiterIO{ '(' };
             for (std::size_t i = 0; i < COUNT_OF_FIELDS; i++)

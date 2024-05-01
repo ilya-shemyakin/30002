@@ -29,13 +29,3 @@ int main()
     );
     return 0;
 }
-
-/*
-(:key1 5.22E-2:key2 3123124412LL:key3 brakovanniyNO:)
-(:key1 3.22E-2:key3 "idi nahuyOK":key2 3124412LL:)
-(:key1 0.22E-2:key2 3123124412LL:key3 "idi nahuyOK":)
-(:key1 5.22E-2:key2 31231442L:key3 "idi nahuyNO":)
-(:key1 5.22E-2:key2 3123124412LL:key3 "idi huyOK":)
-(:key2 3123124412LL:key1 5.22E-2:key3 "idi nahuyOK":)
-(:key1 1.22E-2:key2 31124412LL:key3 "idi nhuyOK":)
-*/

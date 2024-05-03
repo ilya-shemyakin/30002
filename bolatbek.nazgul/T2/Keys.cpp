@@ -1,6 +1,6 @@
-#include "Keys.hpp"
-#include "Delimeter.hpp"
-#include "ScopeGuard.hpp"
+#include "Keys.h"
+#include "Delimeter.h"
+#include "ScopeGuard.h"
 
 std::istream & bolatbek::operator>>(std::istream & is, bolatbek::ULLOCT && value)
 {

@@ -1,4 +1,4 @@
-#include "Delimeter.hpp"
+#include "Delimeter.h"
 
 std::istream & bolatbek::operator>>(std::istream & is, bolatbek::Delimiter && exp)
 {

@@ -3,8 +3,8 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
-#include "Delimeter.hpp"
-#include "DataStruct.hpp"
+#include "Delimeter.h"
+#include "DataStruct.h"
 
 int main()
 {

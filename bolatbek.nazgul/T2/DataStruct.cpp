@@ -1,8 +1,8 @@
-#include "DataStruct.hpp"
+#include "DataStruct.h"
 #include <iostream>
-#include "Delimeter.hpp"
-#include "Keys.hpp"
-#include "ScopeGuard.hpp"
+#include "Delimeter.h"
+#include "Keys.h"
+#include "ScopeGuard.h"
 
 bool bolatbek::operator<(const bolatbek::DataStruct & first, const bolatbek::DataStruct & second)
 {

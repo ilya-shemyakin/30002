@@ -9,7 +9,7 @@ std::istream& operator>>(std::istream& in, Point& point)
   {
     return in;
   }
-  Point tmp = {};
+  Point tmp;
   in >> DelimiterI{ '(' } >> tmp.x >> DelimiterI{ ';' } >> tmp.y >> DelimiterI{ ')' };
   if (!in.fail())
   {

@@ -28,6 +28,7 @@ std::vector< Polygon > readPolygonsFromFile(std::string pathToFile)
     }
   }
   file.close();
+  polygons.shrink_to_fit();
   return polygons;
 }
 

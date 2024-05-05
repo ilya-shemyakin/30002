@@ -15,19 +15,28 @@ void cmd::area(const std::vector< Polygon >& polygons, std::istream& in, std::os
   std::function< double(const Polygon&) > resultFuncForArea;
   if (option == "EVEN")
   {
-    std::cout << "OUTPUT: AREA EVEN\n";
     resultFuncForArea = [](const Polygon& polygon) -> double
-      { return polygon.points.size() % 2 != 0 ? cmd::subcmd::getPolygonArea(polygon) : 0.0; };
+      {
+        return polygon.points.size() % 2 != 0 ? cmd::subcmd::getPolygonArea(polygon) : 0.0;
+      };
   }
   else if (option == "ODD")
   {
-    std::cout << "OUTPUT: AREA ODD\n";
     resultFuncForArea = [](const Polygon& polygon) -> double
-      { return polygon.points.size() % 2 == 0 ? cmd::subcmd::getPolygonArea(polygon) : 0.0; };
+      {
+        return polygon.points.size() % 2 == 0 ? cmd::subcmd::getPolygonArea(polygon) : 0.0;
+      };
   }
   else if (option == "MEAN")
   {
-    std::cout << "OUTPUT: AREA MEAN";
+    if (polygons.size() == 0)
+    {
+      throw std::invalid_argument("<INVALID COMMAND>");
+    }
+    resultFuncForArea = [&polygons](const Polygon& polygon) -> double
+      {
+        return cmd::subcmd::getPolygonArea(polygon) / polygons.size();
+      };
   }
   else
   {
@@ -35,23 +44,28 @@ void cmd::area(const std::vector< Polygon >& polygons, std::istream& in, std::os
     try
     {
       numVertexes = std::stoull(option);
-
       if (numVertexes < 3)
       {
         throw std::invalid_argument("");
       }
-
-      std::cout << "OUTPUT: AREA <num-of-vertexes>";
+      resultFuncForArea = [&numVertexes](const Polygon& polygon) -> double
+        {
+          return polygon.points.size() == numVertexes ? cmd::subcmd::getPolygonArea(polygon) : 0.0;
+        };
     }
     catch (const std::invalid_argument&)
     {
       std::cout << "<INVALID COMMAND>";
     }
   }
-  out << std::accumulate(polygons.begin(), polygons.end(), 0.0,
-    [&resultFuncForArea](double sum, const Polygon& polygon) {
+  out << std::accumulate
+  (
+    polygons.begin(), polygons.end(), 0.0,
+    [&resultFuncForArea](double sum, const Polygon& polygon) -> double
+    {
       return sum + resultFuncForArea(polygon);
-    });
+    }
+  );
 }
 
 void cmd::min(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out)

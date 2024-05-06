@@ -4,7 +4,7 @@
 #include "Keys.h"
 #include "ScopeGuard.h"
 
-bool bolatbek::operator<(const bolatbek::DataStruct & first, const bolatbek::DataStruct & second)
+bool IO::operator<(const IO::DataStruct & first, const IO::DataStruct & second)
 {
   if (first.key1 != second.key1)
   {
@@ -20,7 +20,7 @@ bool bolatbek::operator<(const bolatbek::DataStruct & first, const bolatbek::Dat
   }
 }
 
-std::istream & bolatbek::operator>>(std::istream & is, bolatbek::DataStruct & value)
+std::istream & IO::operator>>(std::istream & is, IO::DataStruct & value)
 {
   std::istream::sentry sentry(is);
   if (!sentry)
@@ -55,7 +55,7 @@ std::istream & bolatbek::operator>>(std::istream & is, bolatbek::DataStruct & va
   return is;
 }
 
-std::ostream & bolatbek::operator<<(std::ostream & out, const bolatbek::DataStruct & value)
+std::ostream & IO::operator<<(std::ostream & out, const IO::DataStruct & value)
 {
   std::ostream::sentry sentry(out);
   iofmtguard guard(out);

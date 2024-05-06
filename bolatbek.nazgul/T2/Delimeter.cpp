@@ -1,6 +1,6 @@
 #include "Delimeter.h"
 
-std::istream & bolatbek::operator>>(std::istream & is, bolatbek::Delimiter && exp)
+std::istream & IO::operator>>(std::istream & is, IO::Delimiter && exp)
 {
   std::istream::sentry guard(is);
   if (!guard)

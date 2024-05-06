@@ -2,7 +2,7 @@
 #include "Delimeter.h"
 #include "ScopeGuard.h"
 
-std::istream & bolatbek::operator>>(std::istream & is, bolatbek::ULLOCT && value)
+std::istream & IO::operator>>(std::istream & is, IO::ULLOCT && value)
 {
   std::istream::sentry sentry(is);
   if (!sentry)
@@ -14,7 +14,7 @@ std::istream & bolatbek::operator>>(std::istream & is, bolatbek::ULLOCT && value
   return is >> std::oct >> value.num;
 }
 
-std::istream & bolatbek::operator>>(std::istream & is, bolatbek::CMPLSP && value)
+std::istream & operator>>(std::istream & is, IO::CMPLSP && value)
 {
   std::istream::sentry sentry(is);
   if (!sentry)
@@ -30,7 +30,7 @@ std::istream & bolatbek::operator>>(std::istream & is, bolatbek::CMPLSP && value
   return is;
 }
 
-std::istream & bolatbek::operator>>(std::istream & is, bolatbek::STR && value)
+std::istream & operator>>(std::istream & is, IO::STR && value)
 {
   std::istream::sentry sentry(is);
   if (!sentry)

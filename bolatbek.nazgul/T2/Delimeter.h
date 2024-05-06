@@ -2,13 +2,13 @@
 #define Delimeter_h
 #include <iostream>
 
-namespace bolatbek
+namespace IO
 {
   struct Delimiter
   {
     char expected;
   };
-  std::istream & operator>>(std::istream & is, bolatbek::Delimiter && exp);
+  std::istream & operator>>(std::istream & is, IO::Delimiter && exp);
 }
 
 #endif

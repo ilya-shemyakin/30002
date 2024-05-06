@@ -1,6 +1,6 @@
 #include "ScopeGuard.h"
 
-namespace bolatbek
+namespace IO
 {
   iofmtguard::iofmtguard(std::basic_ios< char > &s) noexcept:
     s_(s),

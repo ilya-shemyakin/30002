@@ -3,7 +3,7 @@
 #include <string>
 #include "Keys.h"
 
-namespace bolatbek
+namespace IO
 {
   struct DataStruct
   {

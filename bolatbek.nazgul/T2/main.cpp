@@ -8,9 +8,9 @@
 
 int main()
 {
-  using input_it_t = std::istream_iterator< bolatbek::DataStruct >;
-  using output_it_t = std::ostream_iterator< bolatbek::DataStruct >;
-  std::vector< bolatbek::DataStruct > data;
+  using input_it_t = std::istream_iterator< IO::DataStruct >;
+  using output_it_t = std::ostream_iterator< IO::DataStruct >;
+  std::vector< IO::DataStruct > data;
   while (!std::cin.eof())
   {
     if (std::cin.fail())

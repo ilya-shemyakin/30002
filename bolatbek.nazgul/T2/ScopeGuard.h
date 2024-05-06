@@ -3,7 +3,7 @@
 
 #include <iomanip>
 
-namespace bolatbek
+namespace IO
 {
   class iofmtguard
   {

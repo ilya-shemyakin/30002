@@ -55,7 +55,7 @@ void cmd::area(const std::vector< Polygon >& polygons, std::istream& in, std::os
     }
     catch (const std::invalid_argument&)
     {
-      std::cout << "<INVALID COMMAND>";
+      std::cerr << "<INVALID COMMAND>";
     }
   }
   out << std::accumulate
@@ -74,17 +74,15 @@ void cmd::min(const std::vector<Polygon>& polygons, std::istream& in, std::ostre
   in >> option;
   if (option == "AREA")
   {
-    std::cout << "OUTPUT: MIN AREA\n";
     out << cmd::subcmd::getMinPolygonArea(polygons);
   }
   else if (option == "VERTEXES")
   {
-    std::cout << "OUTPUT: MIN VERTEXES\n";
     out << cmd::subcmd::getMinPolygonVertexes(polygons);
   }
   else
   {
-    std::cout << "<INVALID COMMAND>";
+    std::cerr << "<INVALID COMMAND>";
   }
 }
 
@@ -95,17 +93,15 @@ void cmd::max(const std::vector<Polygon>& polygons, std::istream& in, std::ostre
   std::function< double(const Polygon&) > resultFuncForMax;
   if (option == "AREA")
   {
-    std::cout << "OUTPUT: MAX AREA\n";
     out << cmd::subcmd::getMaxPolygonArea(polygons);
   }
   else if (option == "VERTEXES")
   {
-    std::cout << "OUTPUT: MAX VERTEXES\n";
     out << cmd::subcmd::getMaxPolygonVertexes(polygons);
   }
   else
   {
-    std::cout << "<INVALID COMMAND>";
+    std::cerr << "<INVALID COMMAND>";
   }
 }
 
@@ -113,17 +109,30 @@ void cmd::count(const std::vector<Polygon>& polygons, std::istream& in, std::ost
 {
   std::string option;
   in >> option;
+  std::function< size_t(const Polygon&) > resultFuncForCount;
   if (option == "EVEN")
   {
-    std::cout << "OUTPUT: COUNT EVEN";
+    resultFuncForCount = [](const Polygon& polygon) -> size_t
+      {
+        size_t result = 0;
+        if (polygon.points.size() % 2 != 0)
+        {
+          result = 1;
+        }
+        return result;
+      };
   }
   else if (option == "ODD")
   {
-    std::cout << "OUTPUT: COUNT ODD";
-  }
-  else if (option == "MEAN")
-  {
-    std::cout << "OUTPUT: COUNT MEAN";
+    resultFuncForCount = [](const Polygon& polygon) -> size_t
+      {
+        size_t result = 0;
+        if (polygon.points.size() % 2 == 0)
+        {
+          result = 1;
+        }
+        return result;
+      };
   }
   else
   {
@@ -131,19 +140,33 @@ void cmd::count(const std::vector<Polygon>& polygons, std::istream& in, std::ost
     try
     {
       numVertexes = std::stoull(option);
-
       if (numVertexes < 3)
       {
         throw std::invalid_argument("");
       }
-
-      std::cout << "OUTPUT: COUNT <num-of-vertexes>";
+      resultFuncForCount = [&numVertexes](const Polygon& polygon) -> size_t
+        {
+          size_t result = 0;
+          if (polygon.points.size() == numVertexes)
+          {
+            result = 1;
+          }
+          return result;
+        };
     }
     catch (const std::invalid_argument&)
     {
-      std::cout << "<INVALID COMMAND>";
+      std::cerr << "<INVALID COMMAND>";
     }
   }
+  out << std::accumulate
+  (
+    polygons.begin(), polygons.end(), 0,
+    [&resultFuncForCount](double sum, const Polygon& polygon) -> double
+    {
+      return sum + resultFuncForCount(polygon);
+    }
+  );
 }
 
 double cmd::subcmd::getTriangleArea(const Point& p1, const Point& p2, const Point& p3)

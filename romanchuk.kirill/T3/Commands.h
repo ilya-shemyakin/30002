@@ -18,6 +18,7 @@ namespace cmd //command
     double getMinPolygonArea(const std::vector< Polygon >& polygons);
     size_t getMaxPolygonVertexes(const std::vector< Polygon >& polygons);
     size_t getMinPolygonVertexes(const std::vector< Polygon >& polygons);
+    size_t getCountVertexes(const std::vector< Polygon >& polygons);
   }
 }
 

@@ -28,3 +28,8 @@ std::ostream& operator<<(std::ostream& out, const Point& point)
   out << '(' << point.x << ';' << point.y << ')';
   return out;
 }
+
+bool Point::operator==(const Point& other) const
+{
+  return (x == other.x) && (y == other.y);
+}

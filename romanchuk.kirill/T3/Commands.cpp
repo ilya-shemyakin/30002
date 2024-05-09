@@ -169,6 +169,18 @@ void cmd::count(const std::vector<Polygon>& polygons, std::istream& in, std::ost
   );
 }
 
+void cmd::perms(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out)
+{
+  Polygon polygon;
+  in >> polygon;
+  if (in.fail() || in.peek() != '\n')
+  {
+    throw std::invalid_argument("");
+  }
+  std::function< bool(const Polygon&) > pred = std::bind(subcmd::isPerms , std::placeholders::_1, polygon);
+  out << count_if(polygons.cbegin(), polygons.cend(), pred);
+}
+
 double cmd::subcmd::getTriangleArea(const Point& p1, const Point& p2, const Point& p3)
 {
   return 0.5 * std::abs((p1.x - p3.x) * (p2.y - p1.y) - (p1.x - p2.x) * (p3.y - p1.y));
@@ -249,4 +261,23 @@ size_t cmd::subcmd::getMinPolygonVertexes(const std::vector< Polygon >& polygons
       return a.points.size() < b.points.size();
     });
   return minIt->points.size();
+}
+
+bool cmd::subcmd::isPointInPolygon(const Polygon& polygon, const Point& point)
+{
+  Point rotatePoint({ point.y, point.x });
+  return std::find(polygon.points.begin(), polygon.points.end(), point) != polygon.points.cend() ||
+    std::find(polygon.points.begin(), polygon.points.end(), rotatePoint) != polygon.points.cend();
+}
+
+bool cmd::subcmd::isPerms(const Polygon& pl1, const Polygon& pl2)
+{
+  if (pl1.points.size() != pl2.points.size())
+  {
+    return false;
+  }
+
+  using namespace std::placeholders;
+  return std::distance(pl2.points.cbegin(), pl2.points.cend()) == 
+    std::count_if(pl1.points.cbegin(), pl1.points.cend(), std::bind(isPointInPolygon, pl2, _1));
 }

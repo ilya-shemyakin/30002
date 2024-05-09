@@ -10,6 +10,7 @@ namespace cmd //command
   void max(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out);
   void count(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out);
   void perms(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out);
+  void rightShapes(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out);
 
   namespace subcmd
   {
@@ -22,6 +23,14 @@ namespace cmd //command
 
     bool isPointInPolygon(const Polygon& polygon, const Point& point);
     bool isPerms(const Polygon& pl1, const Polygon& pl2);
+
+    struct RightAnglePred
+    {
+      Point point1;
+      Point apex;
+      bool operator()(const Point& point1);
+    };
+    bool isHasRightAngle(const Polygon& polygon);
   }
 }
 

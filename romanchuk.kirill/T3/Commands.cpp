@@ -181,6 +181,12 @@ void cmd::perms(const std::vector<Polygon>& polygons, std::istream& in, std::ost
   out << count_if(polygons.cbegin(), polygons.cend(), pred);
 }
 
+void cmd::rightShapes(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out)
+{
+  using namespace std::placeholders;
+  out << std::count_if(polygons.cbegin(), polygons.cend(), std::bind(subcmd::isHasRightAngle, _1));
+}
+
 double cmd::subcmd::getTriangleArea(const Point& p1, const Point& p2, const Point& p3)
 {
   return 0.5 * std::abs((p1.x - p3.x) * (p2.y - p1.y) - (p1.x - p2.x) * (p3.y - p1.y));
@@ -245,7 +251,6 @@ size_t cmd::subcmd::getMaxPolygonVertexes(const std::vector< Polygon >& polygons
     {
       return a.points.size() < b.points.size();
     });
-
   return maxIt->points.size();
 }
 
@@ -276,8 +281,26 @@ bool cmd::subcmd::isPerms(const Polygon& pl1, const Polygon& pl2)
   {
     return false;
   }
-
   using namespace std::placeholders;
   return std::distance(pl2.points.cbegin(), pl2.points.cend()) == 
     std::count_if(pl1.points.cbegin(), pl1.points.cend(), std::bind(isPointInPolygon, pl2, _1));
+}
+
+bool cmd::subcmd::isHasRightAngle(const Polygon& polygon)
+{
+  if (polygon.points.size() < 3)
+  {
+    throw std::invalid_argument("");
+  }
+  auto findRightAngle = RightAnglePred{ polygon.points[polygon.points.size() - 2], polygon.points[polygon.points.size() - 1] };
+  return (std::find_if(polygon.points.cbegin(), polygon.points.cend(), findRightAngle) != polygon.points.cend());
+}
+
+bool cmd::subcmd::RightAnglePred::operator()(const Point& side2)
+{
+  Point vec1{ apex.x - point1.x, apex.y - point1.y };
+  Point vec2{ apex.x - side2.x, apex.y - side2.y };
+  point1 = apex;
+  apex = side2;
+  return ((vec1.x * vec2.x + vec1.y * vec2.y) == 0);
 }

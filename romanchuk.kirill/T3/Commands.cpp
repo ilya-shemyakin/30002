@@ -117,10 +117,10 @@ void cmd::count(const std::vector<Polygon>& polygons, std::istream& in, std::ost
     try {
       numVertexes = std::stoull(option);
     }
-    catch (std::out_of_range& ex) {
+    catch (const std::out_of_range&) {
       throw std::invalid_argument("There are too many vertices");
     }
-    catch (std::exception& ex) {
+    catch (const std::exception&) {
       throw std::invalid_argument("Command is not found");
     }
     if (numVertexes < 3) {

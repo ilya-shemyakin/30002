@@ -41,6 +41,10 @@ int main(int argc, char** argv) {
       commands.at(argument)(std::cin, std::cout);
       std::cout << '\n';
     }
+    catch (const std::out_of_range&) {
+      std::cout << "<INVALID COMMAND>\n";
+      cleanIStream(std::cin);
+    }
     catch (const std::invalid_argument&) {
       std::cout << "<INVALID COMMAND>\n";
       cleanIStream(std::cin);

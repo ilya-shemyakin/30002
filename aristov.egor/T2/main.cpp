@@ -2,6 +2,8 @@
 #include"InputFormat.h"
 #include<vector>
 #include<algorithm>
+#include<iterator>
+
 int main() {
   std::vector<DataStruct>dataStructV;
   while (!std::cin.eof()) {

@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cmath>
 #include <functional>
+#include <iostream>
 #include <iterator>
 #include <numeric>
 #include <string>
@@ -34,10 +35,10 @@ void cmd::area(const std::vector<Polygon>& polygons, std::istream& in, std::ostr
     try {
       numVertexes = std::stoull(option);
     }
-    catch (std::out_of_range) {
+    catch (std::out_of_range& ex) {
       throw std::invalid_argument("There are too many vertices");
     }
-    catch (std::exception) {
+    catch (std::exception& ex) {
       throw std::invalid_argument("Command is not found");
     }
     if (numVertexes < 3) {
@@ -109,10 +110,10 @@ void cmd::count(const std::vector<Polygon>& polygons, std::istream& in, std::ost
     try {
       numVertexes = std::stoull(option);
     }
-    catch (std::out_of_range) {
+    catch (std::out_of_range& ex) {
       throw std::invalid_argument("There are too many vertices");
     }
-    catch (std::exception) {
+    catch (std::exception& ex) {
       throw std::invalid_argument("Command is not found");
     }
     if (numVertexes < 3) {

@@ -13,7 +13,6 @@ int main() {
 
     if (std::cin.fail() && !std::cin.eof()) {
       std::cin.clear();
-      std::cout << "\n[main cin.fail()]";
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
   }

@@ -3,8 +3,7 @@
 
 #include <iostream>
 
-class StreamGuard
-{
+class StreamGuard {
 public:
   StreamGuard(std::ios& stream);
   ~StreamGuard();

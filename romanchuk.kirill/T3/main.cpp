@@ -31,8 +31,6 @@ int main(int argc, char** argv)
   }
   std::vector< Polygon > polygons = readPolygonsFromFile(argv[1]);
 
-  std::copy(polygons.begin(), polygons.end(), std::ostream_iterator<Polygon>(std::cout, "\n"));
-
   std::string argument;
 
   std::map< std::string, std::function< void(std::istream&, std::ostream&) > > commands;

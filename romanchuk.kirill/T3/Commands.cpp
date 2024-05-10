@@ -31,7 +31,7 @@ void cmd::area(const std::vector< Polygon >& polygons, std::istream& in, std::os
   {
     if (polygons.size() == 0)
     {
-      throw std::invalid_argument("<INVALID COMMAND>");
+      throw std::runtime_error("for working AREA MEAN need more one figure");
     }
     resultFuncForArea = [&polygons](const Polygon& polygon) -> double
       {
@@ -44,19 +44,23 @@ void cmd::area(const std::vector< Polygon >& polygons, std::istream& in, std::os
     try
     {
       numVertexes = std::stoull(option);
-      if (numVertexes < 3)
-      {
-        throw std::invalid_argument("");
-      }
-      resultFuncForArea = [&numVertexes](const Polygon& polygon) -> double
-        {
-          return polygon.points.size() == numVertexes ? cmd::subcmd::getPolygonArea(polygon) : 0.0;
-        };
     }
-    catch (const std::invalid_argument&)
+    catch (std::out_of_range)
     {
-      std::cerr << "<INVALID COMMAND>";
+      throw std::invalid_argument("There are too many vertices");
     }
+    catch (std::exception)
+    {
+      throw std::invalid_argument("Command is not found");
+    }
+    if (numVertexes < 3)
+    {
+      throw std::invalid_argument("AREA <num-of-vertexes> need more three vertexes");
+    }
+    resultFuncForArea = [&numVertexes](const Polygon& polygon) -> double
+      {
+        return polygon.points.size() == numVertexes ? cmd::subcmd::getPolygonArea(polygon) : 0.0;
+      };
   }
   out << std::accumulate
   (
@@ -68,7 +72,7 @@ void cmd::area(const std::vector< Polygon >& polygons, std::istream& in, std::os
   );
 }
 
-void cmd::min(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out)
+void cmd::min(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out)
 {
   std::string option;
   in >> option;
@@ -82,11 +86,11 @@ void cmd::min(const std::vector<Polygon>& polygons, std::istream& in, std::ostre
   }
   else
   {
-    std::cerr << "<INVALID COMMAND>";
+    throw std::invalid_argument("Command is not found");
   }
 }
 
-void cmd::max(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out)
+void cmd::max(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out)
 {
   std::string option;
   in >> option;
@@ -101,11 +105,11 @@ void cmd::max(const std::vector<Polygon>& polygons, std::istream& in, std::ostre
   }
   else
   {
-    std::cerr << "<INVALID COMMAND>";
+    throw std::invalid_argument("Command is not found");
   }
 }
 
-void cmd::count(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out)
+void cmd::count(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out)
 {
   std::string option;
   in >> option;
@@ -140,24 +144,28 @@ void cmd::count(const std::vector<Polygon>& polygons, std::istream& in, std::ost
     try
     {
       numVertexes = std::stoull(option);
-      if (numVertexes < 3)
-      {
-        throw std::invalid_argument("");
-      }
-      resultFuncForCount = [&numVertexes](const Polygon& polygon) -> size_t
-        {
-          size_t result = 0;
-          if (polygon.points.size() == numVertexes)
-          {
-            result = 1;
-          }
-          return result;
-        };
     }
-    catch (const std::invalid_argument&)
+    catch (std::out_of_range)
     {
-      std::cerr << "<INVALID COMMAND>";
+      throw std::invalid_argument("There are too many vertices");
     }
+    catch (std::exception)
+    {
+      throw std::invalid_argument("Command is not found");
+    }
+    if (numVertexes < 3)
+    {
+      throw std::invalid_argument("COUNT <num-of-vertexes> need more three vertexes");
+    }
+    resultFuncForCount = [&numVertexes](const Polygon& polygon) -> size_t
+      {
+        size_t result = 0;
+        if (polygon.points.size() == numVertexes)
+        {
+          result = 1;
+        }
+        return result;
+      };
   }
   out << std::accumulate
   (
@@ -169,19 +177,19 @@ void cmd::count(const std::vector<Polygon>& polygons, std::istream& in, std::ost
   );
 }
 
-void cmd::perms(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out)
+void cmd::perms(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out)
 {
   Polygon polygon;
   in >> polygon;
   if (in.fail() || in.peek() != '\n')
   {
-    throw std::invalid_argument("");
+    throw std::invalid_argument("Ñould not read the figure");
   }
   std::function< bool(const Polygon&) > pred = std::bind(subcmd::isPerms , std::placeholders::_1, polygon);
   out << count_if(polygons.cbegin(), polygons.cend(), pred);
 }
 
-void cmd::rightShapes(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out)
+void cmd::rightShapes(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out)
 {
   using namespace std::placeholders;
   out << std::count_if(polygons.cbegin(), polygons.cend(), std::bind(subcmd::isHasRightAngle, _1));
@@ -290,7 +298,7 @@ bool cmd::subcmd::isHasRightAngle(const Polygon& polygon)
 {
   if (polygon.points.size() < 3)
   {
-    throw std::invalid_argument("");
+    throw std::invalid_argument("There are too few vertices in the figure");
   }
   auto findRightAngle = RightAnglePred{ polygon.points[polygon.points.size() - 2], polygon.points[polygon.points.size() - 1] };
   return (std::find_if(polygon.points.cbegin(), polygon.points.cend(), findRightAngle) != polygon.points.cend());

@@ -174,7 +174,7 @@ double cmd::subcmd::getPolygonArea(const Polygon& polygon) {
 
 double cmd::subcmd::getMaxPolygonArea(const std::vector<Polygon>& polygons) {
   if (polygons.empty()) {
-    return 0.0;
+    throw std::invalid_argument("for working AREA MEAN need more one figure");
   }
   auto maxIt = std::max_element(
     polygons.begin(), polygons.end(), [](const Polygon& a, const Polygon& b) -> bool {
@@ -198,7 +198,6 @@ size_t cmd::subcmd::getMaxPolygonVertexes(const std::vector<Polygon>& polygons) 
   if (polygons.empty()) {
     throw std::invalid_argument("for working AREA MEAN need more one figure");
   }
-
   auto maxIt = std::max_element(
     polygons.begin(), polygons.end(),
     [](const Polygon& a, const Polygon& b) -> bool { return a.points.size() < b.points.size(); });
@@ -207,7 +206,7 @@ size_t cmd::subcmd::getMaxPolygonVertexes(const std::vector<Polygon>& polygons) 
 
 size_t cmd::subcmd::getMinPolygonVertexes(const std::vector<Polygon>& polygons) {
   if (polygons.empty()) {
-    return 0;
+    throw std::invalid_argument("for working AREA MEAN need more one figure");
   }
   auto minIt = std::min_element(
     polygons.begin(), polygons.end(),

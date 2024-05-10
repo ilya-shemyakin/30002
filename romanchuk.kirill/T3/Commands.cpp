@@ -7,8 +7,11 @@
 #include <string>
 
 #include "Commands.h"
+#include "StreamGuard.h"
 
 void cmd::area(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out) {
+  StreamGuard streamGuard(out);
+  out << std::setprecision(1) << std::fixed;
   std::string option;
   in >> option;
   std::function<double(const Polygon&)> resultFuncForArea;
@@ -58,6 +61,8 @@ void cmd::min(const std::vector<Polygon>& polygons, std::istream& in, std::ostre
   std::string option;
   in >> option;
   if (option == "AREA") {
+    StreamGuard streamGuard(out);
+    out << std::setprecision(1) << std::fixed;
     out << cmd::subcmd::getMinPolygonArea(polygons);
   }
   else if (option == "VERTEXES") {
@@ -73,6 +78,8 @@ void cmd::max(const std::vector<Polygon>& polygons, std::istream& in, std::ostre
   in >> option;
   std::function<double(const Polygon&)> resultFuncForMax;
   if (option == "AREA") {
+    StreamGuard streamGuard(out);
+    out << std::setprecision(1) << std::fixed;
     out << cmd::subcmd::getMaxPolygonArea(polygons);
   }
   else if (option == "VERTEXES") {

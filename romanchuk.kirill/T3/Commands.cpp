@@ -144,7 +144,7 @@ void cmd::perms(const std::vector<Polygon>& polygons, std::istream& in, std::ost
   out << count_if(polygons.cbegin(), polygons.cend(), pred);
 }
 
-void cmd::rightShapes(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out) {
+void cmd::rightShapes(const std::vector<Polygon>& polygons, std::ostream& out) {
   using namespace std::placeholders;
   out << std::count_if(polygons.cbegin(), polygons.cend(), std::bind(subcmd::isHasRightAngle, _1));
 }

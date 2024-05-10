@@ -3,6 +3,8 @@
 
 #include <fstream>
 #include <iterator>
+#include <limits>
+
 
 #include "Polygon.h"
 

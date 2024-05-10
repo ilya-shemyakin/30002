@@ -26,8 +26,8 @@ void cmd::area(const std::vector<Polygon>& polygons, std::istream& in, std::ostr
       };
   }
   else if (option == "MEAN") {
-    if (polygons.size() == 0) {
-      throw std::runtime_error("for working AREA MEAN need more one figure");
+    if (polygons.empty()) {
+      throw std::invalid_argument("for working AREA MEAN need more one figure");
     }
     resultFuncForArea = [&polygons](const Polygon& polygon) -> double {
       return cmd::subcmd::getPolygonArea(polygon) / polygons.size();
@@ -185,7 +185,7 @@ double cmd::subcmd::getMaxPolygonArea(const std::vector<Polygon>& polygons) {
 
 double cmd::subcmd::getMinPolygonArea(const std::vector<Polygon>& polygons) {
   if (polygons.empty()) {
-    return 0.0;
+    throw std::invalid_argument("for working AREA MEAN need more one figure");
   }
   auto minIt = std::min_element(
     polygons.begin(), polygons.end(), [](const Polygon& a, const Polygon& b) -> bool {
@@ -196,7 +196,7 @@ double cmd::subcmd::getMinPolygonArea(const std::vector<Polygon>& polygons) {
 
 size_t cmd::subcmd::getMaxPolygonVertexes(const std::vector<Polygon>& polygons) {
   if (polygons.empty()) {
-    return 0;
+    throw std::invalid_argument("for working AREA MEAN need more one figure");
   }
 
   auto maxIt = std::max_element(

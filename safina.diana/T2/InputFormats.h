@@ -4,7 +4,7 @@
 #include <string>
 #include <complex>
 
-namespace nspaceg
+namespace nspace
 {
     // {char}
     struct DelimiterIO

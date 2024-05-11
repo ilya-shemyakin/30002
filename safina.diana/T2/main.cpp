@@ -34,7 +34,7 @@ int main()
 
     auto comparator = [](const DataStruct& a, const DataStruct& b)
     {
-        return std::make_tuple(a.key1, abs(a.key2), a.key3.size()) < 
+        return std::make_tuple(a.key1, abs(a.key2), a.key3.size()) <
             std::make_tuple(b.key1, abs(b.key2), b.key3.size());
     };
 

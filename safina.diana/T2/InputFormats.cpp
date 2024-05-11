@@ -63,14 +63,14 @@ namespace nspace
         int imagFractional = 0;
 
         in >> DelimiterIO{ '#' } >> DelimiterIO{ 'c' } >> DelimiterIO{ '(' } >>
-                realIntegral >> DelimiterIO{ '.' } >> realFractional >> DelimiterIO{ ' ' } >> 
+                realIntegral >> DelimiterIO{ '.' } >> realFractional >> DelimiterIO{ ' ' } >>
                 imagIntegral >> DelimiterIO{ '.' } >> imagFractional >> DelimiterIO{ ')' };
 
         dest.ref.real(static_cast< double >(realIntegral) + static_cast< double >(realFractional) / 10.0);
         dest.ref.imag(static_cast< double >(imagIntegral) + static_cast< double >(imagFractional) / 10.0);
         return in;
     }
-        
+
     std::istream& operator>>(std::istream& in, StringIO&& dest)
     {
         std::istream::sentry sentry(in);

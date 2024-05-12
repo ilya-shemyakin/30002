@@ -57,17 +57,14 @@ namespace nspace
         {
             return in;
         }
-        int realIntegral = 0;
-        int realFractional = 0;
-        int imagIntegral = 0;
-        int imagFractional = 0;
+        double real = 0.0;
+        double imag = 0.0;
 
         in >> DelimiterIO{ '#' } >> DelimiterIO{ 'c' } >> DelimiterIO{ '(' } >>
-                realIntegral >> DelimiterIO{ '.' } >> realFractional >> DelimiterIO{ ' ' } >>
-                imagIntegral >> DelimiterIO{ '.' } >> imagFractional >> DelimiterIO{ ')' };
+            real >> DelimiterIO{ ' ' } >> imag >> DelimiterIO{ ')' };
 
-        dest.ref.real(static_cast< double >(realIntegral) + static_cast< double >(realFractional) / 10.0);
-        dest.ref.imag(static_cast< double >(imagIntegral) + static_cast< double >(imagFractional) / 10.0);
+        dest.ref.real(real);
+        dest.ref.imag(imag);
         return in;
     }
 

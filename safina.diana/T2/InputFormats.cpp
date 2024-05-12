@@ -47,15 +47,7 @@ namespace nspace
         {
             return in;
         }
-        in >> dest.ref;
-        if (dest.ref >= 0)
-        {
-            return in >> DelimiterIO{ 'l' } >> DelimiterIO{ 'l' };
-        }
-        else
-        {
-            return in >> DelimiterIO{ 'L' } >> DelimiterIO{ 'L' };
-        }
+       return in >> dest.ref >> DelimiterIO{ 'l' } >> DelimiterIO{ 'l' };
     }
 
     std::istream& operator>>(std::istream& in, CmpLspIO&& dest)

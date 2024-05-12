@@ -18,7 +18,7 @@ namespace nspace
         std::string exp;
     };
 
-    // {long long}ll || {long long}LL
+    // {long long}ll || {long long}LL positive or negative
     struct SllLitIO
     {
         long long& ref;

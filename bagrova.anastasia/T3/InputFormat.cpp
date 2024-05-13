@@ -60,7 +60,6 @@ std::istream& operator>>(std::istream& in, Polygon& poly) {
     const int MIN_COUNT_SIDE = 3;
     int n;
     in >> n;
-
     if (n < MIN_COUNT_SIDE) {
         in.setstate(std::ios::failbit);
         return in;

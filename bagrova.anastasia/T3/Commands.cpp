@@ -28,6 +28,7 @@ bool convertToSize(const std::string& str, size_t& value) {
 
 bool processArea(const std::string& arg, std::vector<Polygon>& data) {
     // EVEN|ODD|MEAN|<num-of-vertexes:size_t>
+
     size_t num = 0;
 
     if (arg == "EVEN") {
@@ -62,6 +63,7 @@ bool processArea(const std::string& arg, std::vector<Polygon>& data) {
 
 bool processMax(const std::string& arg, std::vector<Polygon>& data) {
     // AREA|VERTEXES
+
     if (arg == "AREA") {
         auto it = max_element(data.cbegin(), data.cend(), [](const Polygon& p1, const Polygon& p2) {
             return p1.area() < p2.area();
@@ -82,6 +84,7 @@ bool processMax(const std::string& arg, std::vector<Polygon>& data) {
 
 bool processMin(const std::string& arg, std::vector<Polygon>& data) {
     // AREA|VERTEXES
+
     if (arg == "AREA") {
         auto it = min_element(data.cbegin(), data.cend(), [](const Polygon& p1, const Polygon& p2) {
             return p1.area() < p2.area();
@@ -102,6 +105,7 @@ bool processMin(const std::string& arg, std::vector<Polygon>& data) {
 
 bool processCount(const std::string& arg, std::vector<Polygon>& data) {
     // EVEN|ODD|<num-of-vertexes:size_t>
+
     size_t num = 0;
 
     auto checkParity = [](int number, int parity) {
@@ -136,6 +140,7 @@ bool processCount(const std::string& arg, std::vector<Polygon>& data) {
 
 bool processLessArea(const std::string& arg, std::vector<Polygon>& data) {
     // <Polygon>
+
     std::istringstream iss(arg);
     Polygon poly;
     iss >> poly;
@@ -154,6 +159,7 @@ bool processLessArea(const std::string& arg, std::vector<Polygon>& data) {
 
 bool processIntersection(const std::string& arg, std::vector<Polygon>& data) {
     // <Polygon>
+
     std::istringstream iss(arg);
     Polygon poly;
     iss >> poly;

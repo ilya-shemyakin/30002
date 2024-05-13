@@ -22,4 +22,5 @@ private:
     std::streamsize precision;
     std::basic_ios<char>::fmtflags flags;
 };
+
 #endif

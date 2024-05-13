@@ -1,7 +1,8 @@
 #include <iostream>
+#include <string>
+
 #include <iterator>
 #include <vector>
-#include <string>
 #include <algorithm>
 #include <numeric>
 #include <set>

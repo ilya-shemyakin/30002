@@ -11,4 +11,5 @@ public:
     Vec(const Point& a, const Point& b);
     double operator/(const Vec& other);
 };
+
 #endif

@@ -30,7 +30,6 @@ int main(int argc, char** argv) {
 
         StreamGuard guard(std::cout);
         std::cout << std::fixed << std::setprecision(1);
-
         std::string cmd;
         while (std::getline(std::cin, cmd)) {
             process(cmd, data);

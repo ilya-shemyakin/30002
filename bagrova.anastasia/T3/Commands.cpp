@@ -1,9 +1,10 @@
 #include "Commands.h"
 
 #include <sstream>
+#include <string>
+
 #include <iterator>
 #include <vector>
-#include <string>
 #include <stdlib.h>
 #include <algorithm>
 #include <numeric>

@@ -6,7 +6,7 @@
 class StreamGuard
 {
 public:
-    StreamGuard(std::basic_ios<char>& stream) :
+    StreamGuard(std::basic_ios<char>& stream):
         stream(stream),
         precision(stream.precision()),
         flags(stream.flags())

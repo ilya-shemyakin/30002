@@ -1,11 +1,12 @@
 #include <iostream>
 #include <string>
 
-#include <iterator>
 #include <vector>
-#include <algorithm>
-#include <numeric>
 #include <set>
+
+#include <algorithm>
+#include <iterator>
+#include <numeric>
 
 #include "Point.h"
 #include "Vec.h"

@@ -13,4 +13,5 @@ struct Polygon {
 };
 
 std::ostream& operator<<(std::ostream& out, const Polygon& poly);
+
 #endif

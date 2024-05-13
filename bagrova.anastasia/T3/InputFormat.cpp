@@ -6,8 +6,8 @@
 #include <limits>
 
 #include "InputFormat.h"
-#include "Polygon.h"
 #include "StreamGuard.h"
+#include "Polygon.h"
 
 std::istream& operator>>(std::istream& in, DelimiterIO&& dest) {
     std::istream::sentry sentry(in);

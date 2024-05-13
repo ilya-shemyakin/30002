@@ -6,6 +6,7 @@
 
 struct Vec {
     double x, y;
+
 public:
     Vec(double x = 0, double y = 0);
     Vec(const Point& a, const Point& b);

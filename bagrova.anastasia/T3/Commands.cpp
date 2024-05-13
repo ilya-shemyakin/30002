@@ -17,7 +17,9 @@ using namespace std::placeholders;
 bool convertToSize(const std::string& str, int& value) {
     try {
         value = std::stoi(str);
-        if (value < 0) {
+        const int MIN_COUNT_SIDE = 3;
+
+        if (value < MIN_COUNT_SIDE) {
             return false;
         }
     }
@@ -45,6 +47,10 @@ bool processArea(const std::string& arg, std::vector<Polygon>& data) {
         std::cout << std::accumulate(data.cbegin(), data.cend(), 0.0, op) << '\n';
     }
     else if (arg == "MEAN") {
+        if (data.size() < 1) {
+            return false;
+        }
+
         auto op = [](double init, const Polygon& p) {
             return init + p.area();
         };
@@ -64,6 +70,10 @@ bool processArea(const std::string& arg, std::vector<Polygon>& data) {
 
 bool processMax(const std::string& arg, std::vector<Polygon>& data) {
     // AREA|VERTEXES
+
+    if (data.size() < 1) {
+        return false;
+    }
 
     if (arg == "AREA") {
         auto it = max_element(data.cbegin(), data.cend(), [](const Polygon& p1, const Polygon& p2) {
@@ -85,6 +95,10 @@ bool processMax(const std::string& arg, std::vector<Polygon>& data) {
 
 bool processMin(const std::string& arg, std::vector<Polygon>& data) {
     // AREA|VERTEXES
+
+    if (data.size() < 1) {
+        return false;
+    }
 
     if (arg == "AREA") {
         auto it = min_element(data.cbegin(), data.cend(), [](const Polygon& p1, const Polygon& p2) {

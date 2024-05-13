@@ -14,7 +14,7 @@
 
 using namespace std::placeholders;
 
-bool convertToSize(const std::string& str, size_t& value) {
+bool convertToSize(const std::string& str, int& value) {
     try {
         value = std::stoi(str);
         if (value < 0) {
@@ -30,7 +30,7 @@ bool convertToSize(const std::string& str, size_t& value) {
 bool processArea(const std::string& arg, std::vector<Polygon>& data) {
     // EVEN|ODD|MEAN|<num-of-vertexes:size_t>
 
-    size_t num = 0;
+    int num = 0;
 
     if (arg == "EVEN") {
         auto op = [](double init, const Polygon& p) {
@@ -52,7 +52,7 @@ bool processArea(const std::string& arg, std::vector<Polygon>& data) {
     }
     else if (convertToSize(arg, num)) {
         auto op = [num](double init, const Polygon& p) {
-            return init + (p.points.size() == num ? p.area() : 0);
+            return init + (static_cast<int>(p.points.size()) == num ? p.area() : 0);
         };
         std::cout << std::accumulate(data.cbegin(), data.cend(), 0.0, op) << '\n';
     }
@@ -107,7 +107,7 @@ bool processMin(const std::string& arg, std::vector<Polygon>& data) {
 bool processCount(const std::string& arg, std::vector<Polygon>& data) {
     // EVEN|ODD|<num-of-vertexes:size_t>
 
-    size_t num = 0;
+    int num = 0;
 
     auto checkParity = [](int number, int parity) {
         return number % 2 == parity;
@@ -128,7 +128,7 @@ bool processCount(const std::string& arg, std::vector<Polygon>& data) {
     }
     else if (convertToSize(arg, num)) {
         auto op = [num](double init, const Polygon& p) {
-            return init + (p.points.size() == num ? 1 : 0);
+            return init + (static_cast<int>(p.points.size()) == num ? 1 : 0);
         };
         std::cout << std::accumulate(data.cbegin(), data.cend(), 0, op);
     }

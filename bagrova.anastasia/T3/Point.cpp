@@ -6,7 +6,7 @@ Point::Point(int x, int y) :
         y(y) {}
 
 bool PointsComparator::operator()(const Point& p1, const Point& p2) const {
-    return p1.x < p2.x || p1.x == p2.x && p1.y < p2.y;
+    return p1.x < p2.x || (p1.x == p2.x && p1.y < p2.y);
 }
 
 std::ostream& operator<<(std::ostream& out, const Point& point) {

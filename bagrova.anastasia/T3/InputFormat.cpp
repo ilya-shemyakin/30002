@@ -1,8 +1,9 @@
 #include <iostream>
 #include <fstream>
-#include <vector>
 
-#include <sstream>
+#include <algorithm>
+#include <iterator>
+#include <limits>
 
 #include "InputFormat.h"
 #include "Polygon.h"
@@ -88,8 +89,8 @@ void load(std::string fileName, std::vector<Polygon>& data) {
 
     while (!file.eof()) {
         std::copy(
-            std::istream_iterator< Polygon >(file),
-            std::istream_iterator< Polygon >(),
+            std::istream_iterator<Polygon>(file),
+            std::istream_iterator<Polygon>(),
             back_inserter(data)
         );
 
@@ -99,7 +100,7 @@ void load(std::string fileName, std::vector<Polygon>& data) {
             if (eofFlag) {
                 file.setstate(std::ios::eofbit);
             }
-            file.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+            file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
 

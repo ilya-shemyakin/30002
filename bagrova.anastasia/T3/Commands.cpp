@@ -29,7 +29,6 @@ bool convertToSize(const std::string& str, size_t& value) {
 bool processArea(const std::string& arg, std::vector<Polygon>& data) {
     // EVEN|ODD|MEAN|<num-of-vertexes:size_t>
     size_t num = 0;
-	
     if (arg == "EVEN") {
         auto op = [](double init, const Polygon& p) {
             return init + (p.points.size() % 2 == 0 ? p.area() : 0);

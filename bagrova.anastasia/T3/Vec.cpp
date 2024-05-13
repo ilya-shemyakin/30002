@@ -1,7 +1,9 @@
 #include "Vec.h"
 #include "Point.h"
 
-Vec::Vec(double x, double y) : x(x), y(y) {}
+Vec::Vec(double x, double y) :
+    x(x),
+    y(y) {}
 Vec::Vec(const Point& a, const Point& b) :
         Vec(b.x - a.x, b.y - a.y) {}
 

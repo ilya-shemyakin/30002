@@ -131,7 +131,7 @@ namespace maltsev
       {
         return lhs == polygon && rhs == polygon;
       };
-    auto toRemoveIt = std::unique(data.begin(), data.end(),  isEcho);
+    auto toRemoveIt = std::unique(data.begin(), data.end(), isEcho);
     std::size_t removedCount = std::distance(toRemoveIt, data.end());
     data.erase(toRemoveIt, data.end());
     out << removedCount;

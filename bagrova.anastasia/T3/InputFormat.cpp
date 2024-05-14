@@ -66,7 +66,7 @@ std::istream& operator>>(std::istream& in, Polygon& poly) {
     }
 
     Point tmpPoint;
-    for (size_t i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
         in >> DelimiterIO{ ' ' } >> tmpPoint;
         tmpPoly.points.push_back(tmpPoint);
     }

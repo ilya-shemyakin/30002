@@ -128,7 +128,9 @@ namespace maltsev
     }
 
     auto isEcho = [&polygon](const Polygon& lhs, const Polygon& rhs)
-      { return lhs == polygon && rhs == polygon; };
+      {
+        return lhs == polygon && rhs == polygon;
+      };
     auto toRemoveIt = std::unique(data.begin(), data.end(),  isEcho);
     std::size_t removedCount = std::distance(toRemoveIt, data.end());
     data.erase(toRemoveIt, data.end());

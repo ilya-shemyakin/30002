@@ -18,7 +18,7 @@ namespace maltsev
     std::string arg;
     in >> arg;
     std::function< double(double, const Polygon& rhs) > func;
-    
+
     if (arg == "MEAN")
     {
       if (data.empty())
@@ -126,11 +126,7 @@ namespace maltsev
       throw std::invalid_argument("<INVALID COMMAND>");
     }
 
-    auto isEcho = [&polygon]
-    (const Polygon& lhs, const Polygon& rhs)
-    {
-      return lhs == polygon && rhs == polygon;
-    };
+    auto isEcho = [&polygon](const Polygon& lhs, const Polygon& rhs) { return lhs == polygon && rhs == polygon; };
     auto toRemoveIt = std::unique(data.begin(), data.end(), isEcho);
     std::size_t removedCount = std::distance(toRemoveIt, data.end());
     data.erase(toRemoveIt, data.end());

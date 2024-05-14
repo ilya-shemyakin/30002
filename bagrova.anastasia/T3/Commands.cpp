@@ -11,6 +11,7 @@
 #include <functional>
 
 #include "InputFormat.h"
+#include "StreamGuard.h"
 
 using namespace std::placeholders;
 
@@ -29,8 +30,16 @@ bool convertToSize(const std::string& str, int& value) {
     return true;
 }
 
-bool processArea(const std::string& arg, std::vector<Polygon>& data) {
+bool processArea(std::vector<Polygon>& data) {
     // EVEN|ODD|MEAN|<num-of-vertexes:size_t>
+
+    StreamGuard cinGuard(std::cin);
+    std::cin >> std::noskipws;
+    std::string arg;
+    std::cin >> DelimiterIO{ ' ' } >> arg >> DelimiterIO{ '\n' };
+    if (!std::cin) {
+        return false;
+    }
 
     int num = 0;
 
@@ -47,7 +56,7 @@ bool processArea(const std::string& arg, std::vector<Polygon>& data) {
         std::cout << std::accumulate(data.cbegin(), data.cend(), 0.0, op) << '\n';
     }
     else if (arg == "MEAN") {
-        if (data.size() < 1) {
+        if (data.empty()) {
             return false;
         }
 
@@ -68,10 +77,18 @@ bool processArea(const std::string& arg, std::vector<Polygon>& data) {
     return true;
 }
 
-bool processMax(const std::string& arg, std::vector<Polygon>& data) {
+bool processMax(std::vector<Polygon>& data) {
     // AREA|VERTEXES
 
-    if (data.size() < 1) {
+    if (data.empty()) {
+        return false;
+    }
+
+    StreamGuard cinGuard(std::cin);
+    std::cin >> std::noskipws;
+    std::string arg;
+    std::cin >> DelimiterIO{ ' ' } >> arg >> DelimiterIO{ '\n' };
+    if (!std::cin) {
         return false;
     }
 
@@ -93,10 +110,18 @@ bool processMax(const std::string& arg, std::vector<Polygon>& data) {
     return true;
 }
 
-bool processMin(const std::string& arg, std::vector<Polygon>& data) {
+bool processMin(std::vector<Polygon>& data) {
     // AREA|VERTEXES
 
-    if (data.size() < 1) {
+    if (data.empty()) {
+        return false;
+    }
+
+    StreamGuard cinGuard(std::cin);
+    std::cin >> std::noskipws;
+    std::string arg;
+    std::cin >> DelimiterIO{ ' ' } >> arg >> DelimiterIO{ '\n' };
+    if (!std::cin) {
         return false;
     }
 
@@ -118,8 +143,16 @@ bool processMin(const std::string& arg, std::vector<Polygon>& data) {
     return true;
 }
 
-bool processCount(const std::string& arg, std::vector<Polygon>& data) {
+bool processCount(std::vector<Polygon>& data) {
     // EVEN|ODD|<num-of-vertexes:size_t>
+
+    StreamGuard cinGuard(std::cin);
+    std::cin >> std::noskipws;
+    std::string arg;
+    std::cin >> DelimiterIO{ ' ' } >> arg >> DelimiterIO{ '\n' };
+    if (!std::cin) {
+        return false;
+    }
 
     int num = 0;
 
@@ -153,13 +186,15 @@ bool processCount(const std::string& arg, std::vector<Polygon>& data) {
     return true;
 }
 
-bool processLessArea(const std::string& arg, std::vector<Polygon>& data) {
+bool processLessArea(std::vector<Polygon>& data) {
     // <Polygon>
 
-    std::istringstream iss(arg);
+    StreamGuard cinGuard(std::cin);
+    std::cin >> std::noskipws;
     Polygon poly;
-    iss >> poly;
-    if (iss) {
+    std::cin >> DelimiterIO{ ' ' } >> poly;
+
+    if (std::cin) {
         double s = poly.area();
         std::cout << std::count_if(data.cbegin(), data.cend(), [s](const Polygon& p) {
             return p.area() < s;
@@ -172,13 +207,15 @@ bool processLessArea(const std::string& arg, std::vector<Polygon>& data) {
     return true;
 }
 
-bool processIntersection(const std::string& arg, std::vector<Polygon>& data) {
+bool processIntersection(std::vector<Polygon>& data) {
     // <Polygon>
 
-    std::istringstream iss(arg);
+    StreamGuard cinGuard(std::cin);
+    std::cin >> std::noskipws;
     Polygon poly;
-    iss >> poly;
-    if (iss) {
+    std::cin >> DelimiterIO{ ' ' } >> poly;
+
+    if (std::cin) {
         auto cond = [&](const Polygon& p) {
             return poly.intersect(p);
             };
@@ -191,32 +228,26 @@ bool processIntersection(const std::string& arg, std::vector<Polygon>& data) {
     return true;
 }
 
-void process(const std::string& cmd_string, std::vector<Polygon>& data) {
-    std::istringstream iss(cmd_string);
-    iss >> std::noskipws;
-    std::string cmd, arg;
-    iss >> cmd >> DelimiterIO{ ' ' };
-    std::getline(iss, arg);
-    iss >> DelimiterIO{ '\n' };
-
+bool process(const std::string& cmd, std::vector<Polygon>& data) {
     bool res = false;
+
     if (cmd == "AREA") {
-        res = processArea(arg, data);
+        res = processArea(data);
     }
     else if (cmd == "MAX") {
-        res = processMax(arg, data);
+        res = processMax(data);
     }
     else if (cmd == "MIN") {
-        res = processMin(arg, data);
+        res = processMin(data);
     }
     else if (cmd == "COUNT") {
-        res = processCount(arg, data);
+        res = processCount(data);
     }
     else if (cmd == "LESSAREA") {
-        res = processLessArea(arg, data);
+        res = processLessArea(data);
     }
     else if (cmd == "INTERSECTIONS") {
-        res = processIntersection(arg, data);
+        res = processIntersection(data);
     }
     else {
         res = false;
@@ -225,4 +256,6 @@ void process(const std::string& cmd_string, std::vector<Polygon>& data) {
     if (!res) {
         std::cout << "<INVALID COMMAND>\n";
     }
+
+    return res;
 }

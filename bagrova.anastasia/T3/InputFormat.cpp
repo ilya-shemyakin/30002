@@ -32,7 +32,7 @@ std::istream& operator>>(std::istream& in, Point& point) {
     }
 
     int x, y;
-    in >> DelimiterIO{ ' ' } >> DelimiterIO{ '(' };
+    in >> DelimiterIO{ '(' };
     if (!in) {
         return in;
     }
@@ -65,14 +65,18 @@ std::istream& operator>>(std::istream& in, Polygon& poly) {
         return in;
     }
 
-    std::copy_n(
-        std::istream_iterator<Point>(in),
-        n,
-        std::back_inserter(tmpPoly.points)
-    );
+    Point tmpPoint;
+    for (size_t i = 0; i < n; i++) {
+        in >> DelimiterIO{ ' ' } >> tmpPoint;
+        tmpPoly.points.push_back(tmpPoint);
+    }
 
     if (!in) {
         return in;
+    }
+
+    if (in.peek() != EOF) {
+        in >> DelimiterIO{ '\n' };
     }
 
     poly = tmpPoly;

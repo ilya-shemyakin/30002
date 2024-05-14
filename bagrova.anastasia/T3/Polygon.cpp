@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <iterator>
 #include <numeric>
+#include <cmath>
 
 #include "Point.h"
 #include "Vec.h"
@@ -127,7 +128,7 @@ bool Polygon::containsPoint(const Point& point) const {
             * sign(determinant(x1, y1, x2, y2));
         };
 
-    return !(accumulate(begin(el), end(el), 0.0, op) <= EPS);
+    return !(abs(accumulate(begin(el), end(el), 0.0, op)) <= EPS);
 }
 bool Polygon::intersect(const Polygon& other) const {
     if (hasMutualPoint(other)) {

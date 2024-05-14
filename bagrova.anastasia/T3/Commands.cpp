@@ -18,16 +18,19 @@ using namespace std::placeholders;
 bool convertToSize(const std::string& str, int& value) {
     try {
         value = std::stoi(str);
-        const int MIN_COUNT_SIDE = 3;
-
-        if (value < MIN_COUNT_SIDE) {
-            return false;
-        }
     }
     catch (const std::exception&) {
         return false;
     }
     return true;
+}
+
+void invalidCommandMessage() {
+    std::cout << "<INVALID COMMAND>\n";
+}
+
+size_t minVertecesSizeInPolygon() {
+    return 3;
 }
 
 bool processArea(std::vector<Polygon>& data) {
@@ -65,14 +68,22 @@ bool processArea(std::vector<Polygon>& data) {
         };
         std::cout << std::accumulate(data.cbegin(), data.cend(), 0.0, op) / data.size() << '\n';
     }
-    else if (convertToSize(arg, num)) {
-        auto op = [num](double init, const Polygon& p) {
-            return init + (static_cast<int>(p.points.size()) == num ? p.area() : 0);
-        };
-        std::cout << std::accumulate(data.cbegin(), data.cend(), 0.0, op) << '\n';
-    }
     else {
-        return false;
+        bool res = convertToSize(arg, num);
+        if (res) {
+            if (num < minVertecesSizeInPolygon()) {
+                invalidCommandMessage();
+                return true;
+            }
+
+            auto op = [num](double init, const Polygon& p) {
+                return init + (p.points.size() == num ? p.area() : 0);
+            };
+            std::cout << std::accumulate(data.cbegin(), data.cend(), 0.0, op) << '\n';
+        }
+        else {
+            return false;
+        }
     }
     return true;
 }
@@ -173,14 +184,22 @@ bool processCount(std::vector<Polygon>& data) {
             return isOdd(p.points.size() % 2);
         });
     }
-    else if (convertToSize(arg, num)) {
-        auto op = [num](double init, const Polygon& p) {
-            return init + (static_cast<int>(p.points.size()) == num ? 1 : 0);
-        };
-        std::cout << std::accumulate(data.cbegin(), data.cend(), 0, op);
-    }
     else {
-        return false;
+        bool res = convertToSize(arg, num);
+        if (res) {
+            if (num < minVertecesSizeInPolygon()) {
+                invalidCommandMessage();
+                return true;
+            }
+
+            auto op = [num](double init, const Polygon& p) {
+                return init + (p.points.size() == num ? 1 : 0);
+            };
+            std::cout << std::accumulate(data.cbegin(), data.cend(), 0, op);
+        }
+        else {
+            return false;
+        }
     }
     std::cout << '\n';
     return true;
@@ -254,7 +273,7 @@ bool process(const std::string& cmd, std::vector<Polygon>& data) {
     }
 
     if (!res) {
-        std::cout << "<INVALID COMMAND>\n";
+        invalidCommandMessage();
     }
 
     return res;

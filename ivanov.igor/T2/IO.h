@@ -6,7 +6,7 @@
 #include "DataStruct.h"
 #include <regex>
 
-namespace DataCheck
+namespace data
 {
     struct LitDoubleIO
     {

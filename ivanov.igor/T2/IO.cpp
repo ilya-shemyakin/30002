@@ -1,5 +1,5 @@
 #include "IO.h"
-namespace DataCheck
+namespace data
 {
     StreamGuard::StreamGuard(std::basic_ios<char>& s) :
         s_(s),
@@ -51,7 +51,7 @@ namespace DataCheck
         in >> dest.value >> suffix;
         if (suffix != "ll" && suffix != "LL")
         {
-            in.setstate(std::ios::failbit); 
+            in.setstate(std::ios::failbit);
         }
         return in;
     }

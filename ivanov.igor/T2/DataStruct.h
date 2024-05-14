@@ -4,7 +4,7 @@
 #include <sstream>
 #include <iomanip>
 #include "IO.h"
-namespace DataCheck
+namespace data
 {
     struct DataStruct
     {

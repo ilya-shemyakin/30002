@@ -4,7 +4,7 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
-using namespace DataCheck;
+using namespace data;
 int main()
 {
     std::vector<DataStruct> vec;

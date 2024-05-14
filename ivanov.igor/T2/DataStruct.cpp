@@ -1,6 +1,6 @@
 #include "DataStruct.h"
 
-namespace DataCheck
+namespace data
 {
     bool operator<(DataStruct& left, DataStruct& right)
     {
@@ -22,7 +22,7 @@ namespace DataCheck
         {
             return in;
         }
-        DataStruct data{ "", 0, "" }; 
+        DataStruct data{ "", 0, "" };
         {
             StreamGuard guard(in);
             const std::size_t COUNT_OF_FIELDS = 3;
@@ -36,7 +36,7 @@ namespace DataCheck
                 in >> DelimiterIO{ ' ' };
                 if (keyId == '1')
                 {
-                    in >> LitDoubleIO{ data.key1 }; 
+                    in >> LitDoubleIO{ data.key1 };
                     continue;
                 }
                 if (keyId == '2')
@@ -80,3 +80,4 @@ namespace DataCheck
         return out;
     }
 }
+

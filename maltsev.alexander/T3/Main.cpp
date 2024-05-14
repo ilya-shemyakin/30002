@@ -62,11 +62,8 @@ int main(int argc, const char* argv[])
     {
       std::cout << "<INVALID COMMAND>\n";
     }
-    if (std::cin.fail() && !std::cin.eof())
-    {
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-    }
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
   }
 
   return 0;

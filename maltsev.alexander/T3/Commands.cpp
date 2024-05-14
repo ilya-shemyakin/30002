@@ -59,10 +59,13 @@ namespace maltsev
     {
       throw std::invalid_argument("INVALID COMMAND");
     }
+
+    iofmtguard guard(out);
     std::string cmd;
     in >> cmd;
     if (cmd == "AREA")
     {
+      out << std::fixed << std::setprecision(1);
       out << std::min_element(data.cbegin(), data.cend(), isLessArea)->computeArea();
     }
     else if (cmd == "VERTEXES")
@@ -77,10 +80,13 @@ namespace maltsev
     {
       throw std::invalid_argument("INVALID COMMAND");
     }
+
+    iofmtguard guard(out);
     std::string cmd;
     in >> cmd;
     if (cmd == "AREA")
     {
+      out << std::fixed << std::setprecision(1);
       out << std::max_element(data.cbegin(), data.cend(), isLessArea)->computeArea();
     }
     else if (cmd == "VERTEXES")

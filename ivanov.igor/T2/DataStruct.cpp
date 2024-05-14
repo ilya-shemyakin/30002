@@ -1,6 +1,6 @@
 #include "DataStruct.h"
 
-namespace data
+namespace check
 {
     bool operator<(DataStruct& left, DataStruct& right)
     {

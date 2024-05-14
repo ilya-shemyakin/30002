@@ -1,5 +1,5 @@
 #include "IO.h"
-namespace data
+namespace check
 {
     StreamGuard::StreamGuard(std::basic_ios<char>& s) :
         s_(s),
@@ -13,6 +13,12 @@ namespace data
         s_.fill(fill_);
         s_.precision(precision_);
         s_.flags(fmt_);
+    }
+
+    bool isValidLiteral(const std::string& str)
+    {
+        std::regex pattern("^[0-9]+\\.[0-9]+[dD]$");
+        return std::regex_match(str, pattern);
     }
 
     std::istream& operator>>(std::istream& in, LitDoubleIO&& dest)
@@ -33,11 +39,6 @@ namespace data
             in.setstate(std::ios::failbit);
         }
         return in;
-    }
-    bool isValidLiteral(const std::string& str)
-    {
-        std::regex pattern("^[0-9]+\\.[0-9]+[dD]$");
-        return std::regex_match(str, pattern);
     }
 
     std::istream& operator>>(std::istream& in, LongLongIO&& dest)

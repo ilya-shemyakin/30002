@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <functional>
 #include <numeric>
+#include <iterator>
 
 #include "IOHelpers.h"
 #include "Polygon.h"

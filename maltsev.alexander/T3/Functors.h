@@ -1,8 +1,6 @@
 #ifndef FUNCTORS_H
 #define FUNCTORS_H
 
-#include <functional>
-
 #include "Point.h"
 #include "Polygon.h"
 

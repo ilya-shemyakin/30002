@@ -1,6 +1,8 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
+#include <functional>
+
 #include "Polygon.h"
 
 namespace maltsev

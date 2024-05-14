@@ -29,7 +29,7 @@ void invalidCommandMessage() {
     std::cout << "<INVALID COMMAND>\n";
 }
 
-size_t minVertecesSizeInPolygon() {
+int minVertecesSizeInPolygon() {
     return 3;
 }
 
@@ -77,7 +77,7 @@ bool processArea(std::vector<Polygon>& data) {
             }
 
             auto op = [num](double init, const Polygon& p) {
-                return init + (p.points.size() == num ? p.area() : 0);
+                return init + (static_cast<int>(p.points.size()) == num ? p.area() : 0);
             };
             std::cout << std::accumulate(data.cbegin(), data.cend(), 0.0, op) << '\n';
         }
@@ -193,7 +193,7 @@ bool processCount(std::vector<Polygon>& data) {
             }
 
             auto op = [num](double init, const Polygon& p) {
-                return init + (p.points.size() == num ? 1 : 0);
+                return init + (static_cast<int>(p.points.size()) == num ? 1 : 0);
             };
             std::cout << std::accumulate(data.cbegin(), data.cend(), 0, op);
         }

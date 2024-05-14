@@ -49,7 +49,6 @@ namespace maltsev
       }
       func = std::bind(detail::accAreaIf, _1, _2, pred);
     }
-    out << arg << " ";
     out << std::fixed << std::setprecision(1);
     out << std::accumulate(data.cbegin(), data.cend(), 0.0, func);
   }
@@ -127,10 +126,11 @@ namespace maltsev
       throw std::invalid_argument("<INVALID COMMAND>");
     }
 
-    auto isEcho = [&polygon](const Polygon& lhs, const Polygon& rhs)
-      {
-        return lhs == polygon && rhs == polygon;
-      };
+    auto isEcho = [&polygon]
+    (const Polygon& lhs, const Polygon& rhs)
+    {
+      return lhs == polygon && rhs == polygon;
+    };
     auto toRemoveIt = std::unique(data.begin(), data.end(), isEcho);
     std::size_t removedCount = std::distance(toRemoveIt, data.end());
     data.erase(toRemoveIt, data.end());

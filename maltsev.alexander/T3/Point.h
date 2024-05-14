@@ -10,7 +10,7 @@ namespace maltsev
     int x, y;
 
     bool operator==(const Point& other) const;
-    bool operator<(const Point& other) const;  // TEMP ?
+    bool operator<(const Point& other) const;
   };
 
   std::istream& operator>>(std::istream& in, Point& dest);

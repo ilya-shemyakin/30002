@@ -22,7 +22,7 @@ namespace maltsev
       return false;
     }
     return (std::mismatch(points.cbegin(), points.cend(),
-                          other.points.cbegin()).first == points.cend());
+      other.points.cbegin()).first == points.cend());
   }
 
   std::istream& operator>>(std::istream& in, Polygon& dest)
@@ -60,7 +60,7 @@ namespace maltsev
     }
 
     std::copy(polygon.points.cbegin(), polygon.points.cend(),
-              std::ostream_iterator< Point >(out, " "));
+      std::ostream_iterator< Point >(out, " "));
     return out;
   }
 }

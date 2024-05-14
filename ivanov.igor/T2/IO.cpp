@@ -29,10 +29,12 @@ namespace check
             return in;
         }
         std::string str;
-        in >> str;
+        std::getline(in, str, ':');
+        in.putback(':');
         if (isValidLiteral(str))
         {
-            dest.value = str;
+            std::stringstream ss(str);
+            ss >> dest.value;
         }
         else
         {
@@ -48,9 +50,8 @@ namespace check
         {
             return in;
         }
-        std::string suffix;
-        in >> dest.value >> suffix;
-        if (suffix != "ll" && suffix != "LL")
+        in >> dest.value >> LabelIO{ "ll" };
+        if (!in)
         {
             in.setstate(std::ios::failbit);
         }

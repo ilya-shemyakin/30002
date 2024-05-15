@@ -176,10 +176,11 @@ double cmd::subcmd::getMaxPolygonArea(const std::vector<Polygon>& polygons) {
   if (polygons.empty()) {
     throw std::invalid_argument("for working AREA MEAN need more one figure");
   }
+  using namespace std::placeholders;
   auto maxIt = std::max_element(
-    polygons.begin(), polygons.end(), [](const Polygon& a, const Polygon& b) -> bool {
-      return cmd::subcmd::getPolygonArea(a) < cmd::subcmd::getPolygonArea(b);
-    });
+      polygons.begin(), polygons.end(),
+      std::bind(std::less<double>{}, std::bind(getPolygonArea, _1),
+                std::bind(getPolygonArea, _2)));
   return cmd::subcmd::getPolygonArea(*maxIt);
 }
 
@@ -187,10 +188,11 @@ double cmd::subcmd::getMinPolygonArea(const std::vector<Polygon>& polygons) {
   if (polygons.empty()) {
     throw std::invalid_argument("for working AREA MEAN need more one figure");
   }
+  using namespace std::placeholders;
   auto minIt = std::min_element(
-    polygons.begin(), polygons.end(), [](const Polygon& a, const Polygon& b) -> bool {
-      return cmd::subcmd::getPolygonArea(a) < cmd::subcmd::getPolygonArea(b);
-    });
+      polygons.begin(), polygons.end(),
+      std::bind(std::less<double>{}, std::bind(getPolygonArea, _1),
+                std::bind(getPolygonArea, _2)));
   return cmd::subcmd::getPolygonArea(*minIt);
 }
 
@@ -224,7 +226,7 @@ bool cmd::subcmd::isPerms(const Polygon& pl1, const Polygon& pl2) {
   if (pl1.points.size() != pl2.points.size()) {
     return false;
   }
-  using namespace std::placeholders;
+  using namespace std::placeholders;// is perm ...
   return std::distance(pl2.points.cbegin(), pl2.points.cend()) ==
     std::count_if(pl1.points.cbegin(), pl1.points.cend(),
       std::bind(isPointInPolygon, pl2, _1));

@@ -216,9 +216,8 @@ size_t cmd::subcmd::getMinPolygonVertexes(const std::vector<Polygon>& polygons) 
 
 bool cmd::subcmd::isPointInPolygon(const Polygon& polygon, const Point& point) {
   Point rotatePoint({ point.y, point.x });
-  return std::find(polygon.points.begin(), polygon.points.end(), point) != polygon.points.cend() ||
-    std::find(polygon.points.begin(), polygon.points.end(), rotatePoint) !=
-    polygon.points.cend();
+  return std::find(polygon.points.begin(), polygon.points.end(), point) !=
+         polygon.points.cend();
 }
 
 bool cmd::subcmd::isPerms(const Polygon& pl1, const Polygon& pl2) {

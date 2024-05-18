@@ -27,3 +27,4 @@ int main() {
         std::ostream_iterator< DataStruct >(std::cout, "\n"));
     return 0;
 }
+

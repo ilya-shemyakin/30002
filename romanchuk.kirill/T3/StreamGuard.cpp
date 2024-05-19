@@ -1,7 +1,6 @@
 #include "StreamGuard.h"
 
-
-StreamGuard::StreamGuard(std::ios& stream) :
+StreamGuard::StreamGuard(std::ios& stream):
   stream_(stream)
 {
   state_ = stream_.flags();

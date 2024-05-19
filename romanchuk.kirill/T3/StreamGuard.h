@@ -1,9 +1,8 @@
 #ifndef STREAMGUARD_H
 #define STREAMGUARD_H
 
-#include <iostream>
 #include <iomanip>
-
+#include <iostream>
 
 class StreamGuard
 {

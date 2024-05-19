@@ -3,10 +3,11 @@
 
 #include <iostream>
 
-struct DelimiterI {
+struct DelimiterI
+{
   char exp;
 };
 
 std::istream& operator>>(std::istream& in, DelimiterI&& dest);
 
-#endif  // !INPUTFORMATTERS_H
+#endif // !INPUTFORMATTERS_H

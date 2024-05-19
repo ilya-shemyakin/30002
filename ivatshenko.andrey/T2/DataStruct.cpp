@@ -99,4 +99,5 @@ namespace ivatshenko
         out << ")";
         return out;
     }
-}   
+}
+

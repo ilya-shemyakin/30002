@@ -5,7 +5,6 @@
 #include <iterator>
 #include <limits>
 
-
 #include "Polygon.h"
 
 void cleanIStream(std::istream& in) {

@@ -17,7 +17,7 @@ namespace ivatshenko
 
     bool isDoubleSCI(const std::string& str)
     {
-        std::regex pattern("^[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)$");
+        std::regex pattern("^[-+]?[0-9]*\\.?[0-9]+([eE][-+][0-9]+)$");
         return std::regex_match(str, pattern);
     }
 
@@ -29,7 +29,7 @@ namespace ivatshenko
             return in;
         }
         std::string str;
-        std::getline(in, str, ':');
+        std::getline(in, str, ':'); 
         in.putback(':');
         if (isDoubleSCI(str))
         {
@@ -38,7 +38,7 @@ namespace ivatshenko
         }
         else
         {
-            in.setstate(std::ios::failbit);
+            in.setstate(std::ios::failbit); 
         }
         return in;
     }

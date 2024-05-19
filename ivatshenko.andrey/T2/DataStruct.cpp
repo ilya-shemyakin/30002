@@ -1,5 +1,6 @@
 #include "DataStruct.h"
 
+
 namespace ivatshenko
 {
     bool operator<(DataStruct& left, DataStruct& right)
@@ -35,7 +36,7 @@ namespace ivatshenko
                 in >> keyId;
                 in >> DelimiterIO{ ' ' };
                 if (keyId == '1')
-                {
+                { 
                     in >> SciDoubleIO{ data.key1 };
                     continue;
                 }
@@ -52,7 +53,7 @@ namespace ivatshenko
                 if (keyId != '1' && keyId != '2' && keyId != '3')
                 {
                     in.setstate(std::istream::failbit);
-                    continue;
+                    break;
                 }
             }
             in >> DelimiterIO{ ':' } >> DelimiterIO{ ')' };
@@ -98,6 +99,4 @@ namespace ivatshenko
         out << ")";
         return out;
     }
-}
-
-
+}   

@@ -36,7 +36,7 @@ namespace ivatshenko
                 in >> keyId;
                 in >> DelimiterIO{ ' ' };
                 if (keyId == '1')
-                { 
+                {
                     in >> SciDoubleIO{ data.key1 };
                     continue;
                 }
@@ -100,4 +100,3 @@ namespace ivatshenko
         return out;
     }
 }
-

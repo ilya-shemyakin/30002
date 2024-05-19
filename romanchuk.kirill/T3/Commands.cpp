@@ -181,7 +181,7 @@ double cmd::subcmd::getPolygonArea(const Polygon& polygon) {
 
 double cmd::subcmd::getMaxPolygonArea(const std::vector<Polygon>& polygons) {
   if (polygons.empty()) {
-    throw std::invalid_argument("for working AREA MEAN need more one figure");
+    throw std::invalid_argument("for working MAX AREA need more one figure");
   }
   using namespace std::placeholders;
   auto maxIt = std::max_element(
@@ -193,7 +193,7 @@ double cmd::subcmd::getMaxPolygonArea(const std::vector<Polygon>& polygons) {
 
 double cmd::subcmd::getMinPolygonArea(const std::vector<Polygon>& polygons) {
   if (polygons.empty()) {
-    throw std::invalid_argument("for working AREA MEAN need more one figure");
+    throw std::invalid_argument("for working MIN AREA need more one figure");
   }
   using namespace std::placeholders;
   auto minIt = std::min_element(

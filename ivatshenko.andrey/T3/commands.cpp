@@ -110,7 +110,7 @@ void ivatshenko::count(const std::vector< ivatshenko::Polygon >& vector, std::is
   std::getline(in, arg);
   arg.erase(0, 1);
   auto count_if = [](int ac, const Polygon& poly, int mod2, size_t vertexes) {
-    if (poly.points.size() % 2 == mod2 || (mod2 == 2) && poly.points.size() == vertexes)
+    if (poly.points.size() % 2 == mod2 || ((mod2 == 2) && poly.points.size() == vertexes))
     {
       ac += 1;
     }

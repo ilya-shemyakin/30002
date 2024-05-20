@@ -30,7 +30,7 @@ std::ostream& operator<<(std::ostream& out, DisjointSetUnion& dsu) {
     for (size_t k = 0; k < dsu.p_.size(); ++k) {
         out << "{ ";
         for (size_t i = 0; i < dsu.p_.size(); ++i) {
-            if (dsu.p(i) == k) {
+            if (dsu.p(i) == static_cast<int>(k)) {
                 out << i << " ";
             }
         }

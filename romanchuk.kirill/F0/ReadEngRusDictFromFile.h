@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <iterator>
 #include "EngRusDict.h"
 
 std::vector< EngRusDict > ReadEngRusDictFromFile(std::string pathToFile)

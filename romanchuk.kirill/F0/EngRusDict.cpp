@@ -1,5 +1,7 @@
 #include "EngRusDict.h"
 
+#include <algorithm>
+
 EngRusDict::EngRusDict()
 {
   name_ = "";

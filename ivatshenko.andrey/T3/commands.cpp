@@ -6,7 +6,7 @@ void ivatshenko::area(const std::vector< ivatshenko::Polygon >& vector, std::ist
   std::string arg;
   std::getline(in, arg);
   arg.erase(0, 1);
-  auto accumalateArea_if = [](double ac, const ivatshenko::Polygon& poly, int mod2, std::size_t vertices) {
+  auto accumalateArea_if = [](double ac, const ivatshenko::Polygon& poly, long unsigned int mod2, std::size_t vertices) {
     if ((poly.points.size() % 2 == mod2) || (mod2 == 2 && poly.points.size() == vertices) || (mod2 == 3))
     {
       ac += poly.getArea();
@@ -109,7 +109,7 @@ void ivatshenko::count(const std::vector< ivatshenko::Polygon >& vector, std::is
   std::string arg;
   std::getline(in, arg);
   arg.erase(0, 1);
-  auto count_if = [](int ac, const Polygon& poly, int mod2, size_t vertexes) {
+  auto count_if = [](int ac, const Polygon& poly, long unsigned int mod2, size_t vertexes) {
     if (poly.points.size() % 2 == mod2 || ((mod2 == 2) && poly.points.size() == vertexes))
     {
       ac += 1;

@@ -27,9 +27,9 @@ int DisjointSetUnion::size() const {
 }
 
 std::ostream& operator<<(std::ostream& out, DisjointSetUnion& dsu) {
-    for (int k = 0; k < dsu.p_.size(); ++k) {
+    for (size_t k = 0; k < dsu.p_.size(); ++k) {
         out << "{ ";
-        for (int i = 0; i < dsu.p_.size(); ++i) {
+        for (size_t i = 0; i < dsu.p_.size(); ++i) {
             if (dsu.p(i) == k) {
                 out << i << " ";
             }

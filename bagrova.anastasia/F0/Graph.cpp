@@ -44,7 +44,7 @@ bool Graph::load(const std::string& fileName) {
         }
     }
     file.close();
-    return (vertices_.size() == nV && edges_.size() == nE);
+    return (static_cast<int>(vertices_.size()) == nV && static_cast<int>(edges_.size()) == nE);
 }
 
 bool Graph::isEmpty() const {
@@ -146,7 +146,6 @@ Graph Graph::prima() const {
     do {
         for (auto e : g.at(v)) {
             int u = e.second;
-            int w = e.weight;
             if (visited.count(u) == 0) {
                 q.insert(e);
             }

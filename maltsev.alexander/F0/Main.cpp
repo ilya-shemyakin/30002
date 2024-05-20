@@ -27,7 +27,11 @@ int main()
       << "6. Print dictionary\n"
       << "7. Exit\n"
       << "> ";
-    std::getline(std::cin, choice);
+    if (!std::getline(std::cin, choice))
+    {
+      std::cout << "Exiting program.\n";
+      break;
+    }
     if (choice == "1")
     {
       std::string filename;

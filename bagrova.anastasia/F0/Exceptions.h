@@ -18,7 +18,7 @@ public:
 
 class MstException : public std::logic_error {
 public:
-    MstException(std::string s) : 
+    MstException(std::string s) :
         std::logic_error(s) {}
 };
 

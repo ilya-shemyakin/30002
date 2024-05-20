@@ -82,7 +82,6 @@ bool Graph::insertEdge(const Edge& edge) {
         return false;
     }
     return true;
-        
 }
 
 void Graph::removeEdge(const Edge& edge) {

@@ -1,6 +1,6 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
-#include "Figures.h"
+#include "figures.h"
 #include <vector>
 #include <string>
 #include <iostream>

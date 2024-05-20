@@ -1,6 +1,7 @@
 ﻿#include <functional>
 #include <iostream>
 #include <map>
+#include <limits>
 #include "Commands.h"
 
 void invalidCommand()
@@ -33,20 +34,7 @@ namespace mapCommands
     return commands;
   }
 } // namespace mapCommands
-/*
-readDicts Input.txt
-display ALL
-remove First book ALL
-display ALL
 
-
-
-display ALL^Z
-^Z
-<INVALID COMMAND>
-^Z
-
-*/
 int main()
 {
   system("chcp 1251");

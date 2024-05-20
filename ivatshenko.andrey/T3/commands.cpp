@@ -6,13 +6,18 @@ void ivatshenko::area(const std::vector< ivatshenko::Polygon >& vector, std::ist
   std::string arg;
   std::getline(in, arg);
   arg.erase(0, 1);
-  auto accumalateArea_if = [](double ac, const ivatshenko::Polygon& poly, long unsigned int mod2, std::size_t vertices) {
-    if ((poly.points.size() % 2 == mod2) || (mod2 == 2 && poly.points.size() == vertices) || (mod2 == 3))
-    {
-      ac += poly.getArea();
-    }
-    return ac;
-  };
+  if (vector.size() < 3)
+  {
+    throw std::invalid_argument{ "<INVALID COMMAND>" };
+  }
+  auto accumalateArea_if =
+    [](double ac, const ivatshenko::Polygon& poly, long unsigned int mod2, std::size_t vertices) {
+      if ((poly.points.size() % 2 == mod2) || (mod2 == 2 && poly.points.size() == vertices) || (mod2 == 3))
+      {
+        ac += poly.getArea();
+      }
+      return ac;
+    };
   if (arg == "EVEN")
   {
     out << std::accumulate(vector.begin(), vector.end(), 0.0, std::bind(accumalateArea_if, _1, _2, 0, 0)) << '\n';
@@ -25,7 +30,7 @@ void ivatshenko::area(const std::vector< ivatshenko::Polygon >& vector, std::ist
   {
     if (vector.size() == 0)
     {
-      throw std::logic_error{ "<TOO FEW FIGURES>" };
+      throw std::logic_error{ "<INVALID COMMAND>" };
     }
     out << std::accumulate(vector.begin(), vector.end(), 0.0, std::bind(accumalateArea_if, _1, _2, 3, 0)) /
              vector.size()
@@ -38,7 +43,7 @@ void ivatshenko::area(const std::vector< ivatshenko::Polygon >& vector, std::ist
   }
   else
   {
-    throw std::invalid_argument("<INVALID ARGUMENT>");
+    throw std::out_of_range("<INVALID COMMAND>");
   }
 }
 
@@ -49,7 +54,7 @@ void ivatshenko::max(const std::vector< ivatshenko::Polygon >& vector, std::istr
   arg.erase(0, 1);
   if (vector.empty())
   {
-    throw std::logic_error{ "<TOO FEW FIGURES>" };
+    throw std::logic_error{ "<INVALID COMMAND>" };
   }
   if (arg == "AREA")
   {
@@ -69,7 +74,7 @@ void ivatshenko::max(const std::vector< ivatshenko::Polygon >& vector, std::istr
   }
   else
   {
-    throw std::invalid_argument("<INVALID ARGUMENT>");
+    throw std::invalid_argument("<INVALID COMMAND>");
   }
 }
 
@@ -80,7 +85,7 @@ void ivatshenko::min(const std::vector< ivatshenko::Polygon >& vector, std::istr
   arg.erase(0, 1);
   if (vector.empty())
   {
-    throw std::logic_error{ "<TOO FEW FIGURES>" };
+    throw std::logic_error{ "<INVALID COMMAND>" };
   }
   if (arg == "AREA")
   {
@@ -100,7 +105,7 @@ void ivatshenko::min(const std::vector< ivatshenko::Polygon >& vector, std::istr
   }
   else
   {
-    throw std::invalid_argument("<INVALID ARGUMENT>");
+    throw std::invalid_argument("<INVALID COMMAND>");
   }
 }
 
@@ -109,6 +114,10 @@ void ivatshenko::count(const std::vector< ivatshenko::Polygon >& vector, std::is
   std::string arg;
   std::getline(in, arg);
   arg.erase(0, 1);
+  if (vector.size() < 3)
+  {
+    throw std::invalid_argument("<INVALID COMMAND>");
+  }
   auto count_if = [](int ac, const Polygon& poly, long unsigned int mod2, size_t vertexes) {
     if (poly.points.size() % 2 == mod2 || ((mod2 == 2) && poly.points.size() == vertexes))
     {
@@ -130,7 +139,7 @@ void ivatshenko::count(const std::vector< ivatshenko::Polygon >& vector, std::is
   }
   else
   {
-    throw std::invalid_argument{ "<INVALID ARGUMENT>" };
+    throw std::invalid_argument{ "<INVALID COMMAND>" };
   }
 }
 
@@ -139,7 +148,7 @@ void ivatshenko::inFrame(const std::vector< ivatshenko::Polygon >& vector, std::
   Polygon poly;
   in >> poly;
   if (in.fail() || in.get() != '\n')
-    throw std::runtime_error("<INVALID ARGUMENT>");
+    throw std::runtime_error("<INVALID COMMAND>");
   Frame frame = getFrame(vector);
   out << (frame.containsPolygon(poly) ? "<TRUE>" : "<FALSE>") << '\n';
 }
@@ -150,7 +159,7 @@ void ivatshenko::rmecho(std::vector< ivatshenko::Polygon >& vector, std::istream
   in >> poly;
   if (in.fail() || in.get() != '\n')
   {
-    throw std::invalid_argument{ "<INVALID ARGUMENT>" };
+    throw std::invalid_argument{ "<INVALID COMMAND>" };
   }
   int rmCnt = 0;
   auto it = vector.begin();

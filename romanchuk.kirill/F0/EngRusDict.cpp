@@ -7,7 +7,7 @@ EngRusDict::EngRusDict()
   name_ = "";
 }
 
-EngRusDict::EngRusDict(std::string name):
+EngRusDict::EngRusDict(const std::string& name):
   name_(name)
 {}
 
@@ -31,7 +31,7 @@ std::string EngRusDict::getName() const
   return name_;
 }
 
-std::vector< std::string > EngRusDict::getTranslations(std::string eng)
+std::set< std::string > EngRusDict::getTranslations(std::string eng)
 {
   return words_[eng];
 }
@@ -52,7 +52,7 @@ void EngRusDict::addTranslation(std::string eng, std::string translation)
   {
     throw std::invalid_argument("");
   }
-  words_[eng].push_back(getLettersToLower(translation));
+  words_[eng].insert(getLettersToLower(translation));
 }
 
 void EngRusDict::removeTranslation(std::string eng, std::string translation)
@@ -70,7 +70,7 @@ void EngRusDict::addWord(std::string eng)
   {
     throw std::invalid_argument("");
   }
-  std::vector< std::string > translations;
+  std::set< std::string > translations;
   words_[getLettersToLower(eng)] = translations;
 }
 
@@ -81,7 +81,7 @@ void EngRusDict::removeWord(std::string eng)
 
 void EngRusDict::addWordFromEngRusDict(EngRusDict& other)
 {
-  for (const std::pair< std::string, std::vector< std::string > > pair : other.words_)
+  for (const std::pair< std::string, std::set< std::string > > pair : other.words_)
   {
     words_.insert(pair);
   }
@@ -89,7 +89,7 @@ void EngRusDict::addWordFromEngRusDict(EngRusDict& other)
 
 void EngRusDict::removeWordFromEngRusDict(EngRusDict& other)
 {
-  for (const std::pair< std::string, std::vector< std::string > > pair : other.words_)
+  for (const std::pair< std::string, std::set< std::string > > pair : other.words_)
   {
     if (words_.find(pair.first) != words_.cend())
     {
@@ -111,21 +111,24 @@ void EngRusDict::display(std::ostream& out) const
   if (sentry)
   {
     out << name_;
-    for (const std::pair< std::string, std::vector< std::string > > pair : words_)
+    for (const auto& pair : words_)
     {
       out << "\n" << pair.first << ": ";
-      if (pair.second.size() != 0)
+      if (!pair.second.empty()) // Проверяем, что множество не пустое
       {
-        out << pair.second[0];
-        for (size_t i = 1; i < pair.second.size() - 1; i++)
+        auto it = pair.second.begin();
+        out << *it;
+        ++it;
+        for (; it != pair.second.end(); ++it)
         {
-          out << ", " << pair.second[i];
+          out << ", " << *it;
         }
       }
     }
     out << "\n";
   }
 }
+
 
 EngRusDict& EngRusDict::operator=(const EngRusDict& other)
 {
@@ -175,7 +178,7 @@ bool EngRusDict::containsOnlyEnglishLetters(const std::string& word) const
 EngRusDict getIntersectionWithEngRusDict(std::string name, EngRusDict& erd1, EngRusDict& erd2)
 {
   EngRusDict newDict(name);
-  for (const std::pair< std::string, std::vector< std::string > > pair : erd2.words_)
+  for (const std::pair< std::string, std::set< std::string > > pair : erd2.words_)
   {
     if (erd1.words_.find(pair.first) != erd1.words_.cend())
     {
@@ -195,14 +198,14 @@ EngRusDict getIntersectionWithEngRusDict(std::string name, EngRusDict& erd1, Eng
 EngRusDict getDifferenceWithEngRusDict(std::string name, EngRusDict& erd1, EngRusDict& erd2)
 {
   EngRusDict newDict(name);
-  for (const std::pair< std::string, std::vector< std::string > > pair : erd2.words_)
+  for (const std::pair< std::string, std::set< std::string > > pair : erd2.words_)
   {
     if (erd1.words_.find(pair.first) == erd1.words_.end())
     {
       newDict.words_[pair.first] = pair.second;
     }
   }
-  for (const std::pair< std::string, std::vector< std::string > > pair : erd1.words_)
+  for (const std::pair< std::string, std::set< std::string > > pair : erd1.words_)
   {
     if (erd2.words_.find(pair.first) == erd2.words_.end())
     {

@@ -54,7 +54,6 @@ void cmd::remove(std::vector< EngRusDict >& vector, std::istream& in)
   if (translation == "ALL")
   {
     vector[i].removeWord(key);
-    vector[i].addWord(key);
   }
   else
   {

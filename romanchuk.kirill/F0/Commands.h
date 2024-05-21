@@ -3,6 +3,8 @@
 
 #include "EngRusDict.h"
 
+#include <vector>
+
 namespace cmd // command
 {
   void createDict(std::vector< EngRusDict >& vector, std::istream& in);

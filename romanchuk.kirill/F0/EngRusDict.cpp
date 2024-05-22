@@ -3,22 +3,14 @@
 #include <algorithm>
 
 EngRusDict::EngRusDict()
-{
-  name_ = "";
-}
-
-EngRusDict::EngRusDict(const std::string& name):
-  name_(name)
 {}
 
 EngRusDict::EngRusDict(const EngRusDict& other)
 {
-  name_ = other.name_;
   words_ = other.words_;
 }
 
 EngRusDict::EngRusDict(EngRusDict&& other) noexcept:
-  name_(std::move(other.name_)),
   words_(std::move(other.words_))
 {
   other.clear();
@@ -26,18 +18,12 @@ EngRusDict::EngRusDict(EngRusDict&& other) noexcept:
 
 EngRusDict::~EngRusDict()
 {
-  name_.clear();
   clear();
 }
 
 void EngRusDict::clear()
 {
   words_.clear();
-}
-
-std::string EngRusDict::getName() const
-{
-  return name_;
 }
 
 std::set< std::string > EngRusDict::getTranslations(std::string eng)
@@ -132,7 +118,6 @@ void EngRusDict::display(std::ostream& out) const
   std::ostream::sentry sentry(out);
   if (sentry)
   {
-    out << name_;
     for (const auto& pair : words_)
     {
       out << "\n" << pair.first << ": ";
@@ -154,7 +139,6 @@ void EngRusDict::display(std::ostream& out) const
 
 EngRusDict& EngRusDict::operator=(const EngRusDict& other)
 {
-  name_ = other.name_;
   words_ = other.words_;
   return *this;
 }
@@ -197,9 +181,9 @@ bool EngRusDict::containsOnlyEnglishLetters(const std::string& word) const
   return result;
 }
 
-EngRusDict getIntersectionWithEngRusDict(std::string name, EngRusDict& erd1, EngRusDict& erd2)
+EngRusDict getIntersectionWithEngRusDict(EngRusDict& erd1, EngRusDict& erd2)
 {
-  EngRusDict newDict(name);
+  EngRusDict newDict;
   for (const std::pair< std::string, std::set< std::string > > pair : erd2.words_)
   {
     if (erd1.words_.find(pair.first) != erd1.words_.cend())
@@ -217,9 +201,9 @@ EngRusDict getIntersectionWithEngRusDict(std::string name, EngRusDict& erd1, Eng
   return newDict;
 }
 
-EngRusDict getDifferenceWithEngRusDict(std::string name, EngRusDict& erd1, EngRusDict& erd2)
+EngRusDict getDifferenceWithEngRusDict(EngRusDict& erd1, EngRusDict& erd2)
 {
-  EngRusDict newDict(name);
+  EngRusDict newDict;
   for (const std::pair< std::string, std::set< std::string > > pair : erd2.words_)
   {
     if (erd1.words_.find(pair.first) == erd1.words_.end())

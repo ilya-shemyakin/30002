@@ -12,6 +12,7 @@ public:
   EngRusDict();
   EngRusDict(const std::string& name);
   EngRusDict(const EngRusDict& other);
+  EngRusDict(EngRusDict&& other) noexcept;
   ~EngRusDict();
   void clear();
 

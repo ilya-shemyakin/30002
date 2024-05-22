@@ -2,6 +2,7 @@
 #include <iostream>
 #include <map>
 #include <limits>
+#include <unordered_map>
 #include "Commands.h"
 
 void invalidCommand()
@@ -14,7 +15,9 @@ void invalidCommand()
 namespace mapCommands
 {
   using mapCmd = std::map< std::string, std::function< void(std::istream&, std::ostream&) > >;
-  mapCmd createMapOfCommands(std::vector< EngRusDict >& EngRusDicts, std::istream& in, std::ostream& out)
+  mapCmd createMapOfCommands(
+    std::unordered_map< std::string, EngRusDict >& EngRusDicts, std::istream& in, std::ostream& out
+  )
   {
     mapCmd commands;
     using namespace std::placeholders;
@@ -39,7 +42,7 @@ int main()
 {
   system("chcp 1251");
   system("cls");
-  std::vector< EngRusDict > EngRusDicts;
+  std::unordered_map<std::string, EngRusDict > EngRusDicts;
   std::map< std::string, std::function< void(std::istream&, std::ostream&) > > commands;
   commands = mapCommands::createMapOfCommands(EngRusDicts, std::cin, std::cout);
   commands["help"](std::cin, std::cout);

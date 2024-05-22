@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "ReadEngRusDictFromFile.h"
 
-void cmd::createDict(std::vector< EngRusDict >& vector, std::istream& in)
+void cmd::createDict(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string name;
   in >> name;
@@ -17,14 +17,14 @@ void cmd::createDict(std::vector< EngRusDict >& vector, std::istream& in)
   vector.push_back(newErd);
 }
 
-void cmd::removeDict(std::vector< EngRusDict >& vector, std::istream& in)
+void cmd::removeDict(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string name;
   in >> name;
   vector.erase(vector.begin() + subcmd::findIndexDict(vector, name));
 }
 
-void cmd::add(std::vector< EngRusDict >& vector, std::istream& in)
+void cmd::add(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string name;
   bool flag = true;
@@ -43,7 +43,7 @@ void cmd::add(std::vector< EngRusDict >& vector, std::istream& in)
   }
 }
 
-void cmd::remove(std::vector< EngRusDict >& vector, std::istream& in)
+void cmd::remove(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string name;
   bool flag = true;
@@ -68,7 +68,7 @@ void cmd::remove(std::vector< EngRusDict >& vector, std::istream& in)
   }
 }
 
-void cmd::addWords(std::vector< EngRusDict >& vector, std::istream& in)
+void cmd::addWords(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string nameFirstDict, nameSecondDict;
   in >> nameFirstDict >> nameSecondDict;
@@ -77,7 +77,7 @@ void cmd::addWords(std::vector< EngRusDict >& vector, std::istream& in)
   vector[i].addWordFromEngRusDict(vector[j]);
 }
 
-void cmd::removeWords(std::vector< EngRusDict >& vector, std::istream& in)
+void cmd::removeWords(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string nameFirstDict, nameSecondDict;
   in >> nameFirstDict >> nameSecondDict;
@@ -86,7 +86,7 @@ void cmd::removeWords(std::vector< EngRusDict >& vector, std::istream& in)
   vector[i].removeWordFromEngRusDict(vector[j]);
 }
 
-void cmd::getIntersection(std::vector< EngRusDict >& vector, std::istream& in)
+void cmd::getIntersection(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string name, nameFirstDict, nameSecondDict;
   in >> name;
@@ -100,7 +100,7 @@ void cmd::getIntersection(std::vector< EngRusDict >& vector, std::istream& in)
   vector.push_back(getIntersectionWithEngRusDict(name, vector[i], vector[j]));
 }
 
-void cmd::getDifference(std::vector< EngRusDict >& vector, std::istream& in)
+void cmd::getDifference(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string name, nameFirstDict, nameSecondDict;
   in >> name;
@@ -114,14 +114,14 @@ void cmd::getDifference(std::vector< EngRusDict >& vector, std::istream& in)
   vector.push_back(getDifferenceWithEngRusDict(name, vector[i], vector[j]));
 }
 
-void cmd::clear(std::vector< EngRusDict >& vector, std::istream& in)
+void cmd::clear(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string name;
   in >> name;
   vector[subcmd::findIndexDict(vector, name)].clear();
 }
 
-void cmd::display(std::vector< EngRusDict >& vector, std::istream& in, std::ostream& out)
+void cmd::display(std::unordered_map< std::string, EngRusDict >, std::istream& in, std::ostream& out)
 {
   std::string name;
   in >> name;
@@ -138,7 +138,7 @@ void cmd::display(std::vector< EngRusDict >& vector, std::istream& in, std::ostr
   }
 }
 
-void cmd::getTranslation(std::vector< EngRusDict >& vector, std::istream& in, std::ostream& out)
+void cmd::getTranslation(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in, std::ostream& out)
 {
   std::string key;
   std::cin >> key;
@@ -160,7 +160,7 @@ void cmd::getTranslation(std::vector< EngRusDict >& vector, std::istream& in, st
   std::copy(result.begin(), result.end(), std::ostream_iterator< std::string >(out, "\n"));
 }
 
-void cmd::readDicts(std::vector< EngRusDict >& vector, std::istream& in)
+void cmd::readDicts(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string pathToFile;
   std::cin >> pathToFile;
@@ -190,26 +190,4 @@ void cmd::help(std::ostream& out)
   out << "11. readDicts <Path to the file>\n";
   out << "12. display <ALL>/<dictionary>\n";
   out << "13. help\n";
-}
-
-bool cmd::subcmd::containsEngRusDict(std::vector< EngRusDict >& vector, std::string name)
-{
-  using namespace std::placeholders;
-  return std::any_of(
-    vector.begin(), vector.end(), std::bind(std::equal_to< std::string >(), std::bind(&EngRusDict::getName, _1), name)
-  );
-}
-
-size_t cmd::subcmd::findIndexDict(std::vector< EngRusDict >& vector, std::string name)
-{
-  using namespace std::placeholders;
-  auto it = std::find_if(
-    vector.begin(), vector.end(), std::bind(std::equal_to< std::string >(), std::bind(&EngRusDict::getName, _1), name)
-  );
-  if (it != vector.end())
-  {
-    return std::distance(vector.begin(), it);
-  }
-  std::string errorMessege = "Словарь \"" + name + "\" не найден ";
-  throw std::runtime_error(errorMessege);
 }

@@ -122,11 +122,17 @@ void cmd::display(std::unordered_map< std::string, EngRusDict >& vector, std::is
   {
     for (std::pair< std::string, EngRusDict > pair : vector)
     {
+      out << pair.first;
       pair.second.display(out);
     }
   }
   else
   {
+    if (vector.find(name) == vector.cend())
+    {
+      throw std::runtime_error("Словарь не найден");
+    }
+    out << name;
     vector.at(name).display(out);
   }
 }
@@ -157,16 +163,14 @@ void cmd::readDicts(std::unordered_map< std::string, EngRusDict >& vector, std::
 {
   std::string pathToFile;
   std::cin >> pathToFile;
-  /*
   std::unordered_map< std::string, EngRusDict > newVector = ReadEngRusDictFromFile(pathToFile);
   for (std::pair< std::string, EngRusDict > pair : newVector)
   {
     if (vector.find(pair.first) == vector.cend()) 
     {
-      vector[pair.first](pair.second);
+      vector[pair.first] = pair.second;
     }
   }
-  */
 }
 
 void cmd::help(std::ostream& out)

@@ -6,14 +6,14 @@
 #include <iterator>
 #include "EngRusDict.h"
 
-std::vector< EngRusDict > ReadEngRusDictFromFile(std::string pathToFile)
+std::unordered_map< std::string, EngRusDict > ReadEngRusDictFromFile(std::string pathToFile)
 {
   std::ifstream file(pathToFile);
   if (!file.is_open())
   {
     throw std::invalid_argument("Ошибка при чтении файла");
   }
-  std::vector< EngRusDict > EngRusDicts;
+  std::unordered_map< std::string, EngRusDict > EngRusDicts;
   std::string name;
   while (getline(file, name))
   {
@@ -45,7 +45,7 @@ std::vector< EngRusDict > ReadEngRusDictFromFile(std::string pathToFile)
         newErd.removeWord(eng);
       }
     }
-    EngRusDicts.push_back(newErd);
+    EngRusDicts[name] = newErd;
   }
   file.close();
   return EngRusDicts;

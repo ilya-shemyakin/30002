@@ -121,7 +121,7 @@ void EngRusDict::display(std::ostream& out) const
     for (const auto& pair : words_)
     {
       out << "\n" << pair.first << ": ";
-      if (!pair.second.empty()) // Проверяем, что множество не пустое
+      if (!pair.second.empty())
       {
         auto it = pair.second.begin();
         out << *it;

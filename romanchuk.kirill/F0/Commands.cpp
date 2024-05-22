@@ -5,23 +5,26 @@
 #include <algorithm>
 #include "ReadEngRusDictFromFile.h"
 
-void cmd::createDict(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
+void cmd::createDict(std::unordered_map< std::string, EngRusDict >& EngRusDicts, std::istream& in)
 {
   std::string name;
   in >> name;
-  if (subcmd::containsEngRusDict(vector, name))
+  if (EngRusDicts.find(name) != EngRusDicts.cend())
   {
     throw std::runtime_error("ѕопытка создани€ двух словарей с одинаковыми названи€ми");
   }
-  EngRusDict newErd(name);
-  vector.push_back(newErd);
+  EngRusDicts[name] = EngRusDict();
 }
 
-void cmd::removeDict(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
+void cmd::removeDict(std::unordered_map< std::string, EngRusDict >& EngRusDicts, std::istream& in)
 {
   std::string name;
   in >> name;
-  vector.erase(vector.begin() + subcmd::findIndexDict(vector, name));
+  if (EngRusDicts.find(name) == EngRusDicts.cend())
+  {
+    throw std::runtime_error("—ловарь не найден");
+  }
+  EngRusDicts.erase(name);
 }
 
 void cmd::add(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
@@ -29,17 +32,16 @@ void cmd::add(std::unordered_map< std::string, EngRusDict >& vector, std::istrea
   std::string name;
   bool flag = true;
   in >> name;
-  size_t i = subcmd::findIndexDict(vector, name);
   std::string key, translation;
   in >> key >> translation;
   try
   {
-    vector[i].addTranslation(key, translation);
+    vector.at(name).addTranslation(key, translation);
   }
   catch (const std::invalid_argument&)
   {
-    vector[i].addWord(key);
-    vector[i].addTranslation(key, translation);
+    vector.at(name).addWord(key);
+    vector.at(name).addTranslation(key, translation);
   }
 }
 
@@ -48,18 +50,17 @@ void cmd::remove(std::unordered_map< std::string, EngRusDict >& vector, std::ist
   std::string name;
   bool flag = true;
   in >> name;
-  size_t i = subcmd::findIndexDict(vector, name);
   std::string key, translation;
   in >> key >> translation;
   if (translation == "ALL")
   {
-    vector[i].removeWord(key);
+    vector.at(name).removeWord(key);
   }
   else
   {
     try
     {
-      vector[i].removeTranslation(key, translation);
+      vector.at(name).removeTranslation(key, translation);
     }
     catch (const std::invalid_argument&)
     {
@@ -72,69 +73,61 @@ void cmd::addWords(std::unordered_map< std::string, EngRusDict >& vector, std::i
 {
   std::string nameFirstDict, nameSecondDict;
   in >> nameFirstDict >> nameSecondDict;
-  size_t i = subcmd::findIndexDict(vector, nameFirstDict);
-  size_t j = subcmd::findIndexDict(vector, nameSecondDict);
-  vector[i].addWordFromEngRusDict(vector[j]);
+  vector.at(nameFirstDict).addWordFromEngRusDict(vector[nameSecondDict]);
 }
 
 void cmd::removeWords(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string nameFirstDict, nameSecondDict;
   in >> nameFirstDict >> nameSecondDict;
-  size_t i = subcmd::findIndexDict(vector, nameFirstDict);
-  size_t j = subcmd::findIndexDict(vector, nameSecondDict);
-  vector[i].removeWordFromEngRusDict(vector[j]);
+  vector.at(nameFirstDict).removeWordFromEngRusDict(vector[nameSecondDict]);
 }
 
 void cmd::getIntersection(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string name, nameFirstDict, nameSecondDict;
   in >> name;
-  if (subcmd::containsEngRusDict(vector, name))
+  if (vector.find(name) != vector.cend())
   {
     throw std::runtime_error("ѕопытка создани€ двух словарей с одинаковыми названи€ми");
   }
   in >> nameFirstDict >> nameSecondDict;
-  size_t i = subcmd::findIndexDict(vector, nameFirstDict);
-  size_t j = subcmd::findIndexDict(vector, nameSecondDict);
-  vector.push_back(getIntersectionWithEngRusDict(name, vector[i], vector[j]));
+  vector[name] = getIntersectionWithEngRusDict(vector[nameFirstDict], vector[nameSecondDict]);
 }
 
 void cmd::getDifference(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string name, nameFirstDict, nameSecondDict;
   in >> name;
-  if (subcmd::containsEngRusDict(vector, name))
+  if (vector.find(name) != vector.cend())
   {
     throw std::runtime_error("ѕопытка создани€ двух словарей с одинаковыми названи€ми");
   }
   in >> nameFirstDict >> nameSecondDict;
-  size_t i = subcmd::findIndexDict(vector, nameFirstDict);
-  size_t j = subcmd::findIndexDict(vector, nameSecondDict);
-  vector.push_back(getDifferenceWithEngRusDict(name, vector[i], vector[j]));
+  vector[name] = getDifferenceWithEngRusDict(vector[nameFirstDict], vector[nameSecondDict]);
 }
 
 void cmd::clear(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in)
 {
   std::string name;
   in >> name;
-  vector[subcmd::findIndexDict(vector, name)].clear();
+  vector.at(name).clear();
 }
 
-void cmd::display(std::unordered_map< std::string, EngRusDict >, std::istream& in, std::ostream& out)
+void cmd::display(std::unordered_map< std::string, EngRusDict >& vector, std::istream& in, std::ostream& out)
 {
   std::string name;
   in >> name;
   if (name == "ALL")
   {
-    for (EngRusDict& erd : vector)
+    for (std::pair< std::string, EngRusDict > pair : vector)
     {
-      erd.display(out);
+      pair.second.display(out);
     }
   }
   else
   {
-    vector[subcmd::findIndexDict(vector, name)].display(out);
+    vector.at(name).display(out);
   }
 }
 
@@ -143,9 +136,9 @@ void cmd::getTranslation(std::unordered_map< std::string, EngRusDict >& vector, 
   std::string key;
   std::cin >> key;
   std::vector< std::string > result;
-  for (EngRusDict& erd : vector)
+  for (std::pair< std::string, EngRusDict > pair : vector)
   {
-    for (const std::string& translation : erd.getTranslations(key))
+    for (const std::string& translation : pair.second.getTranslations(key))
     {
       if (translation != "" && std::find(result.begin(), result.end(), translation) == result.end())
       {
@@ -164,14 +157,16 @@ void cmd::readDicts(std::unordered_map< std::string, EngRusDict >& vector, std::
 {
   std::string pathToFile;
   std::cin >> pathToFile;
-  std::vector< EngRusDict > newVector = ReadEngRusDictFromFile(pathToFile);
-  for (const EngRusDict& erd : newVector)
+  /*
+  std::unordered_map< std::string, EngRusDict > newVector = ReadEngRusDictFromFile(pathToFile);
+  for (std::pair< std::string, EngRusDict > pair : newVector)
   {
-    if (!subcmd::containsEngRusDict(vector, erd.getName()))
+    if (vector.find(pair.first) == vector.cend()) 
     {
-      vector.push_back(erd);
+      vector[pair.first](pair.second);
     }
   }
+  */
 }
 
 void cmd::help(std::ostream& out)

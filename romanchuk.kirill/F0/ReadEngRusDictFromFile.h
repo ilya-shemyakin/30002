@@ -17,7 +17,7 @@ std::vector< EngRusDict > ReadEngRusDictFromFile(std::string pathToFile)
   std::string name;
   while (getline(file, name))
   {
-    EngRusDict newErd(name);
+    EngRusDict newErd;
     std::string words;
     while (std::getline(file, words) && !words.empty())
     {

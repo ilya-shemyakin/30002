@@ -9,6 +9,7 @@
 class EngRusDict
 {
 public:
+  EngRusDict();
   EngRusDict(const EngRusDict& other);
   EngRusDict(EngRusDict&& other) noexcept;
   ~EngRusDict();

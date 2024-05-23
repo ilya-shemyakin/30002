@@ -4,7 +4,7 @@
 #include "Keys.h"
 #include "ScopeGuard.h"
 
-bool IO::operator<(const IO::DataStruct & first, const IO::DataStruct & second)
+bool operator<(const IO::DataStruct & first, const DataStruct & second)
 {
   if (first.key1 != second.key1)
   {
@@ -20,7 +20,7 @@ bool IO::operator<(const IO::DataStruct & first, const IO::DataStruct & second)
   }
 }
 
-std::istream & IO::operator>>(std::istream & is, IO::DataStruct & value)
+std::istream & operator>>(std::istream & is, DataStruct & value)
 {
   std::istream::sentry sentry(is);
   if (!sentry)
@@ -55,7 +55,7 @@ std::istream & IO::operator>>(std::istream & is, IO::DataStruct & value)
   return is;
 }
 
-std::ostream & IO::operator<<(std::ostream & out, const IO::DataStruct & value)
+std::ostream & operator<<(std::ostream & out, const DataStruct & value)
 {
   std::ostream::sentry sentry(out);
   iofmtguard guard(out);

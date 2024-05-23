@@ -1,6 +1,7 @@
 #include "EngRusDict.h"
 
 #include <algorithm>
+#include <functional>
 
 EngRusDict::EngRusDict()
 {}
@@ -26,22 +27,22 @@ void EngRusDict::clear()
   words_.clear();
 }
 
-std::set< std::string > EngRusDict::getTranslations(std::string eng)
+std::set< std::string > EngRusDict::getTranslations(const std::string& eng)
 {
   return words_[eng];
 }
 
-size_t EngRusDict::getCountWords()
+size_t EngRusDict::getCountWords() const
 {
   return words_.size();
 }
 
-size_t EngRusDict::getCountTranslations(std::string eng)
+size_t EngRusDict::getCountTranslations(const std::string& eng)
 {
   return words_[eng].size();
 }
 
-void EngRusDict::addTranslation(std::string eng, std::string translation)
+void EngRusDict::addTranslation(const std::string& eng, const std::string& translation)
 {
   if (!containsOnlyRussianLetters(translation))
   {
@@ -50,7 +51,7 @@ void EngRusDict::addTranslation(std::string eng, std::string translation)
   words_[eng].insert(getLettersToLower(translation));
 }
 
-void EngRusDict::removeTranslation(std::string eng, std::string translation)
+void EngRusDict::removeTranslation(const std::string& eng, const std::string& translation)
 {
   if (!containsOnlyRussianLetters(translation))
   {
@@ -59,7 +60,7 @@ void EngRusDict::removeTranslation(std::string eng, std::string translation)
   words_[eng].erase(std::find(words_[eng].begin(), words_[eng].end(), getLettersToLower(translation)));
 }
 
-void EngRusDict::addWord(std::string eng)
+void EngRusDict::addWord(const std::string& eng)
 {
   if (!containsOnlyEnglishLetters(eng))
   {
@@ -69,7 +70,7 @@ void EngRusDict::addWord(std::string eng)
   words_[getLettersToLower(eng)] = translations;
 }
 
-void EngRusDict::removeWord(std::string eng)
+void EngRusDict::removeWord(const std::string& eng)
 {
   words_.erase(eng);
 }
@@ -143,20 +144,16 @@ EngRusDict& EngRusDict::operator=(const EngRusDict& other)
   return *this;
 }
 
-std::string EngRusDict::getLettersToLower(const std::string& word)
+std::string EngRusDict::getLettersToLower(std::string word)
 {
-  std::string result;
-  for (char c : word)
-  {
-    result += std::tolower(c);
-  }
-  return result;
+  std::transform(word.begin(), word.end(), word.begin(), std::bind(std::tolower, std::placeholders::_1));
+  return word;
 }
 
 bool EngRusDict::containsOnlyRussianLetters(const std::string& word) const
 {
   bool result = true;
-  for (char c : word)
+  for (const char& c : word)
   {
     if (!(c >= 'à' && c <= 'ÿ' || c >= 'À' && c <= 'ß'))
     {
@@ -170,7 +167,7 @@ bool EngRusDict::containsOnlyRussianLetters(const std::string& word) const
 bool EngRusDict::containsOnlyEnglishLetters(const std::string& word) const
 {
   bool result = true;
-  for (char c : word)
+  for (const char& c : word)
   {
     if (!(c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'))
     {

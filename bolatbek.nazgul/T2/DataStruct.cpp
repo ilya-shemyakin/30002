@@ -1,71 +1,77 @@
-#include "DataStruct.h"
 #include <iostream>
-#include "Delimeter.h"
-#include "Keys.h"
-#include "ScopeGuard.h"
+#include <vector>
+#include <algorithm>
+#include <iterator>
+#include <sstream>
 
-bool IO::operator<(const IO::DataStruct & first, const IO::DataStruct & second)
+struct DataStruct
 {
-  if (first.key1 != second.key1)
-  {
-    return (first.key1 < second.key1);
-  }
-  else if (first.key2 != second.key2)
-  {
-    return (abs(first.key2) < abs(second.key2));
-  }
-  else
-  {
-    return (first.key3.length() < second.key3.length());
-  }
+    unsigned long long key1;
+    char key2;
+    std::string key3;
+};
+
+bool operator<(const DataStruct& lhs, const DataStruct& rhs)
+{
+    if (lhs.key1 != rhs.key1)
+        return lhs.key1 < rhs.key1;
+    if (lhs.key2 != rhs.key2)
+        return lhs.key2 < rhs.key2;
+    return lhs.key3.size() < rhs.key3.size();
 }
 
-std::istream & IO::operator>>(std::istream & is, IO::DataStruct & value)
+int main()
 {
-  std::istream::sentry sentry(is);
-  if (!sentry)
-  {
-    return is;
-  }
-  using del = Delimiter;
-  std::string key = "";
-  DataStruct data_struct;
-  is >> del{'('} >> del{':'};
-  for (size_t i = 1; i <= 3; i++)
-  {
-    is >> key;
-    if (key == "key1")
+    std::vector<DataStruct> dataVector;
+
+    std::string line;
+    while (std::getline(std::cin, line))
     {
-      is >> ULLOCT{data_struct.key1} >> del{':'};
+        std::istringstream iss(line);
+        DataStruct data;
+        char dummy;
+
+        if (iss >> dummy >> dummy >> dummy >> dummy >> data.key1 >> dummy >> data.key2 >> dummy >> dummy >> data.key3 >> dummy)
+        {
+            dataVector.push_back(data);
+        }
     }
-    else if (key == "key2")
-    {
-      is >> CMPLSP{data_struct.key2} >> del{':'};
-    }
-    else
-    {
-      is >> STR{data_struct.key3} >> del{':'};
-    }
-  }
-  is >> del{')'};
-  if (is)
-  {
-    value = data_struct;
-  }
-  return is;
+
+    std::sort(dataVector.begin(), dataVector.end());
+
+    std::copy(dataVector.begin(), dataVector.end(), std::ostream_iterator<DataStruct>(std::cout, "\n"));
+
+    return 0;
 }
 
-std::ostream & IO::operator<<(std::ostream & out, const IO::DataStruct & value)
-{
-  std::ostream::sentry sentry(out);
-  iofmtguard guard(out);
-  if(!sentry)
-  {
-    return out;
-  }
-  out << "(:" << "key1 0" << std::oct << value.key1;
-  out << ":" << std::fixed << "key2 #c(" << std::setprecision(1) << value.key2.real();
-  out << " " << value.key2.imag() << ")";
-  out << ":" << std::fixed << "key3 \"" << value.key3 << "\":)";
-  return out;
+#include <iostream>
+#include <sstream>
+#include "datastruc.h"
+
+struct DataStruct {
+    int key1;
+    std::string key2;
+
+    DataStruct(int k1, const std::string& k2) : key1(k1), key2(k2) {}
+};
+
+DataStruct parseDataStruct(const std::string& data) {
+    int key1;
+    std::string key2;
+
+    std::istringstream iss(data);
+    iss >> key1 >> key2;
+
+    return DataStruct(key1, key2);
+}
+
+int main() {
+    std::string inputData = "42 Hello";
+    DataStruct myData = parseDataStruct(inputData);
+
+    std::cout << "Parsed Data:\n";
+    std::cout << "Key 1: " << myData.key1 << "\n";
+    std::cout << "Key 2: " << myData.key2 << "\n";
+
+    return 0;
 }

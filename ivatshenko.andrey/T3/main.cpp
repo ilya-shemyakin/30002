@@ -3,7 +3,7 @@
 #include <functional>
 #include <iomanip>
 #include <iostream>
-#include <limits>
+#include <climits>
 #include <map>
 #include <stdexcept>
 

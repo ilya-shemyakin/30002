@@ -5,10 +5,6 @@ void ivatshenko::area(const std::vector< ivatshenko::Polygon >& vector, std::ist
 {
   std::string arg;
   in >> arg;
-  if (vector.size() < 3)
-  {
-    throw std::invalid_argument{ "<INVALID COMMAND>" };
-  }
   auto accumalateArea_if =
     [](double ac, const ivatshenko::Polygon& poly, long unsigned int mod2, std::size_t vertices) {
       if ((poly.points.size() % 2 == mod2) || (mod2 == 2 && poly.points.size() == vertices) || (mod2 == 3))
@@ -52,7 +48,7 @@ void ivatshenko::max(const std::vector< ivatshenko::Polygon >& vector, std::istr
   in >> arg;
   if (vector.empty())
   {
-    throw std::logic_error{ "<INVALID COMMAND>" };
+    throw std::invalid_argument{ "<INVALID COMMAND>" };
   }
   if (arg == "AREA")
   {

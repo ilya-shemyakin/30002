@@ -33,6 +33,10 @@ void ivatshenko::area(const std::vector< ivatshenko::Polygon >& vector, std::ist
   }
   else if (isUnsignedInt(arg))
   {
+    if (std::stoi(arg) < 3)
+    {
+      throw std::invalid_argument{ "<INVALID COMMAND>" };
+    };
     out << std::accumulate(vector.begin(), vector.end(), 0.0, std::bind(accumalateArea_if, _1, _2, 2, stoi(arg)))
         << '\n';
   }

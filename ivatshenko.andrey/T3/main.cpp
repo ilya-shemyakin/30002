@@ -53,19 +53,25 @@ int main(int argc, char* argv[])
   std::string cmd;
   while (std::cin >> cmd)
   {
+    if (std::cin.eof())
+    {
+      break;
+    }
     try
     {
       commands.at(cmd)(std::cin, std::cout);
     }
     catch (const std::out_of_range&)
     {
-      std::cerr << "<INVALID COMMAND>\n";
+      std::cout << "<INVALID COMMAND>\n";
       std::cin.clear();
       std::cin.ignore(INT_MAX, '\n');
     }
-    catch (const std::exception& e)
+    catch (const std::invalid_argument& e)
     {
-      std::cerr << e.what() << '\n';
+      std::cout << e.what() << '\n';
+      std::cin.clear();
+      std::cin.ignore(INT_MAX, '\n');
     }
   }
   return 0;

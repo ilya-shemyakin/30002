@@ -53,10 +53,6 @@ int main(int argc, char* argv[])
   std::string cmd;
   while (std::cin >> cmd)
   {
-    if (std::cin.eof())
-    {
-      break;
-    }
     try
     {
       commands.at(cmd)(std::cin, std::cout);
@@ -65,13 +61,11 @@ int main(int argc, char* argv[])
     {
       std::cerr << "<INVALID COMMAND>\n";
       std::cin.clear();
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+      std::cin.ignore(INT_MAX, '\n');
     }
-    catch (const std::invalid_argument& e)
+    catch (const std::exception& e)
     {
       std::cerr << e.what() << '\n';
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
   return 0;

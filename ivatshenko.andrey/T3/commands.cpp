@@ -8,7 +8,7 @@ void ivatshenko::area(const std::vector< ivatshenko::Polygon >& vector, std::ist
   arg.erase(0, 1);
   if (vector.size() < 3)
   {
-    throw std::invalid_argument{ "<INVALID COMMAND>" };
+    throw std::invalid_argument("<INVALID COMMAND>");
   }
   auto accumalateArea_if =
     [](double ac, const ivatshenko::Polygon& poly, long unsigned int mod2, std::size_t vertices) {
@@ -30,7 +30,7 @@ void ivatshenko::area(const std::vector< ivatshenko::Polygon >& vector, std::ist
   {
     if (vector.size() == 0)
     {
-      throw std::logic_error{ "<INVALID COMMAND>" };
+      throw std::invalid_argument("<INVALID COMMAND>");
     }
     out << std::accumulate(vector.begin(), vector.end(), 0.0, std::bind(accumalateArea_if, _1, _2, 3, 0)) /
              vector.size()
@@ -43,7 +43,7 @@ void ivatshenko::area(const std::vector< ivatshenko::Polygon >& vector, std::ist
   }
   else
   {
-    throw std::out_of_range("<INVALID COMMAND>");
+    throw std::invalid_argument("<INVALID COMMAND>");
   }
 }
 
@@ -114,10 +114,6 @@ void ivatshenko::count(const std::vector< ivatshenko::Polygon >& vector, std::is
   std::string arg;
   std::getline(in, arg);
   arg.erase(0, 1);
-  if (vector.size() < 3)
-  {
-    throw std::invalid_argument("<INVALID COMMAND>");
-  }
   auto count_if = [](int ac, const Polygon& poly, long unsigned int mod2, size_t vertexes) {
     if (poly.points.size() % 2 == mod2 || ((mod2 == 2) && poly.points.size() == vertexes))
     {
@@ -135,6 +131,10 @@ void ivatshenko::count(const std::vector< ivatshenko::Polygon >& vector, std::is
   }
   else if (isUnsignedInt(arg))
   {
+    if (std::stoi(arg) < 3)
+    {
+      throw std::invalid_argument{ "<INVALID COMMAND>" };
+    };
     out << std::accumulate(vector.begin(), vector.end(), 0, std::bind(count_if, _1, _2, 2, std::stoi(arg))) << '\n';
   }
   else

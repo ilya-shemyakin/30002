@@ -243,7 +243,7 @@ void handleCommand(const std::string& command, std::vector<Polygon>& polygons) {
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "Error: No input file provided." << std::endl;
-        return 1;
+        return 0;
     }
 
     std::string filename = argv[1];

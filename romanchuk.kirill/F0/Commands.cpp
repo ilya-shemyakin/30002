@@ -166,7 +166,7 @@ void cmd::readDicts(std::unordered_map< std::string, EngRusDict >& vector, std::
   std::unordered_map< std::string, EngRusDict > newVector = ReadEngRusDictFromFile(pathToFile);
   for (std::pair< std::string, EngRusDict > pair : newVector)
   {
-    if (vector.find(pair.first) == vector.cend()) 
+    if (vector.find(pair.first) == vector.cend())
     {
       vector[pair.first] = pair.second;
     }

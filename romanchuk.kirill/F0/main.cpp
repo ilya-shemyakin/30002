@@ -32,7 +32,7 @@ namespace mapCommands
     commands["9"] = std::bind(cmd::clear, std::ref(EngRusDicts), _1);
     commands["10"] = std::bind(cmd::getTranslation, std::ref(EngRusDicts), _1, _2);
     commands["11"] = std::bind(cmd::readDicts, std::ref(EngRusDicts), _1);
-    commands["12"] = std::bind(cmd::display, std::ref(EngRusDicts), _1, _2);
+    commands["12"] = std::bind(cmd::display, std::ref(EngRusDicts), _1, _2); //???
     commands["13"] = std::bind(cmd::help, _2);
     return commands;
   }

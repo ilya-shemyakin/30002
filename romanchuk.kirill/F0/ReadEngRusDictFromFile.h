@@ -6,7 +6,7 @@
 #include <iterator>
 #include "EngRusDict.h"
 
-std::unordered_map< std::string, EngRusDict > ReadEngRusDictFromFile(std::string pathToFile)
+std::unordered_map< std::string, EngRusDict > ReadEngRusDictFromFile(const std::string& pathToFile)
 {
   std::ifstream file(pathToFile);
   if (!file.is_open())

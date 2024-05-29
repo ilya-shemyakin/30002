@@ -7,9 +7,7 @@
 struct DataStruct
 {
   double key1 = 0;
-  std::string key1_str;
   unsigned long long key2 = 0;
-  std::string key2_str;
   std::string key3;
 };
 

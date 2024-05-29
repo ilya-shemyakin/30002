@@ -64,10 +64,10 @@ void ivatshenko::max(const std::vector< ivatshenko::Polygon >& vector, std::istr
   }
   else if (arg == "VERTEXES")
   {
-    out << std::accumulate(
-             vector.begin() + 1, vector.end(), vector[0].points.size(),
-             [](size_t max, const Polygon& poly) { return poly.points.size() > max ? poly.points.size() : max; }
-           )
+    out << std::max_element(
+             vector.begin(), vector.end(),
+             [](const Polygon& left, const Polygon& right) { return left.points.size() < right.points.size(); }
+           )->points.size()
         << '\n';
   }
   else
@@ -88,16 +88,25 @@ void ivatshenko::min(const std::vector< ivatshenko::Polygon >& vector, std::istr
   {
     out << std::min_element(
              vector.begin(), vector.end(),
+             std::bind(std::less< double >{}, std::bind(&Polygon::getArea, _1), std::bind(&Polygon::getArea, _2))
+           )
+             ->getArea()
+        << '\n';
+  }
+  /*if (arg == "AREA")
+  {
+    out << std::min_element(
+             vector.begin(), vector.end(),
              [](const Polygon& left, const Polygon& right) { return left.getArea() < right.getArea(); }
            )->getArea()
         << '\n';
-  }
+  }*/
   else if (arg == "VERTEXES")
   {
-    out << std::accumulate(
-             vector.begin() + 1, vector.end(), vector[0].points.size(),
-             [](size_t min, const Polygon& poly) { return poly.points.size() < min ? poly.points.size() : min; }
-           )
+    out << std::min_element(
+             vector.begin(), vector.end(),
+             [](const Polygon& left, const Polygon& right) { return left.points.size() < right.points.size(); }
+           )->points.size()
         << '\n';
   }
   else
@@ -159,20 +168,12 @@ void ivatshenko::rmecho(std::vector< ivatshenko::Polygon >& vector, std::istream
   {
     throw std::invalid_argument{ "<INVALID COMMAND>" };
   }
-  int rmCnt = 0;
-  auto it = vector.begin();
-  while (it != vector.end() - 1)
-  {
-    if (*it == *(it + 1) and *it == poly)
-    {
-      it = vector.erase(it);
-      rmCnt += 1;
-    }
-    else
-    {
-      ++it;
-    }
-  }
+  std::size_t rmCnt = 0;
+  auto removedIt = std::unique(vector.begin(), vector.end(), [&poly](const Polygon& left, const Polygon& right) {
+    return (left == poly && right == poly);
+  });
+  rmCnt = std::distance(removedIt, vector.end());
+  vector.erase(removedIt, vector.end());
   out << rmCnt << '\n';
 }
 

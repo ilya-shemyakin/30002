@@ -24,7 +24,8 @@ namespace ivatshenko
   {
     std::vector< Point > points;
     double getArea() const;
-    bool operator==(const Polygon& right);
+    bool operator==(const Polygon& right) const;
+    bool operator<(const Polygon& right);
   };
 
   struct Triangle

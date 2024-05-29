@@ -43,12 +43,12 @@ int main(int argc, char* argv[])
   std::map< std::string, std::function< void(std::istream&, std::ostream&) > > commands;
   {
     using namespace std::placeholders;
-    commands["AREA"] = std::bind(ivatshenko::area, polygons, _1, _2);
-    commands["MAX"] = std::bind(ivatshenko::max, polygons, _1, _2);
-    commands["MIN"] = std::bind(ivatshenko::min, polygons, _1, _2);
-    commands["COUNT"] = std::bind(ivatshenko::count, polygons, _1, _2);
-    commands["INFRAME"] = std::bind(ivatshenko::inFrame, polygons, _1, _2);
-    commands["RMECHO"] = std::bind(ivatshenko::rmecho, polygons, _1, _2);
+    commands["AREA"] = std::bind(ivatshenko::area, std::cref(polygons), _1, _2);
+    commands["MAX"] = std::bind(ivatshenko::max, std::cref(polygons), _1, _2);
+    commands["MIN"] = std::bind(ivatshenko::min, std::cref(polygons), _1, _2);
+    commands["COUNT"] = std::bind(ivatshenko::count, std::cref(polygons), _1, _2);
+    commands["INFRAME"] = std::bind(ivatshenko::inFrame, std::cref(polygons), _1, _2);
+    commands["RMECHO"] = std::bind(ivatshenko::rmecho, std::ref(polygons), _1, _2);
   }
   std::string cmd;
   while (std::cin >> cmd)

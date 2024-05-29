@@ -27,7 +27,7 @@ double ivatshenko::Polygon::getArea() const
   return square;
 }
 
-bool ivatshenko::Polygon::operator==(const Polygon& right)
+bool ivatshenko::Polygon::operator==(const Polygon& right) const
 {
   std::vector< Point > vec1 = this->points;
   std::vector< Point > vec2 = right.points;
@@ -47,36 +47,45 @@ bool ivatshenko::Polygon::operator==(const Polygon& right)
   return result;
 }
 
+bool ivatshenko::Polygon::operator<(const Polygon& right)
+{
+  return false;
+}
+
 ivatshenko::Frame ivatshenko::getFrame(const std::vector< Polygon >& data)
 {
-  if (data.size() == 0)
+  if (data.empty())
   {
-    throw std::runtime_error("<TOO FEW POLYGONS>");
+    throw std::runtime_error("<INVALID ARGUMENT>");
   }
-  Point lowerLeft = data[0].points[0];
-  Point upperRight = data[0].points[0];
-  for (const Polygon& poly : data)
-  {
-    for (const Point& p : poly.points)
-    {
-      if (p.x < lowerLeft.x)
-      {
-        lowerLeft.x = p.x;
-      }
-      if (p.x > upperRight.x)
-      {
-        upperRight.x = p.x;
-      }
-      if (p.y < lowerLeft.y)
-      {
-        lowerLeft.y = p.y;
-      }
-      if (p.y > upperRight.y)
-      {
-        upperRight.y = p.y;
-      }
-    }
-  }
+
+  auto compareX = [](const Point& p1, const Point& p2) { return p1.x < p2.x; };
+  auto compareY = [](const Point& p1, const Point& p2) { return p1.y < p2.y; };
+
+  auto minX = std::min_element(data.begin(), data.end(), [&compareX](const Polygon& a, const Polygon& b) {
+    return std::min_element(a.points.begin(), a.points.end(), compareX)->x <
+           std::min_element(b.points.begin(), b.points.end(), compareX)->x;
+  });
+  auto maxX = std::max_element(data.begin(), data.end(), [&compareX](const Polygon& a, const Polygon& b) {
+    return std::max_element(a.points.begin(), a.points.end(), compareX)->x <
+           std::max_element(b.points.begin(), b.points.end(), compareX)->x;
+  });
+
+  auto minY = std::min_element(data.begin(), data.end(), [&compareY](const Polygon& a, const Polygon& b) {
+    return std::min_element(a.points.begin(), a.points.end(), compareY)->y <
+           std::min_element(b.points.begin(), b.points.end(), compareY)->y;
+  });
+  auto maxY = std::max_element(data.begin(), data.end(), [&compareY](const Polygon& a, const Polygon& b) {
+    return std::max_element(a.points.begin(), a.points.end(), compareY)->y <
+           std::max_element(b.points.begin(), b.points.end(), compareY)->y;
+  });
+
+  Point lowerLeft = { std::min_element(minX->points.begin(), minX->points.end(), compareX)->x,
+                      std::min_element(minY->points.begin(), minY->points.end(), compareY)->y };
+
+  Point upperRight = { std::max_element(maxX->points.begin(), maxX->points.end(), compareX)->x,
+                       std::max_element(maxY->points.begin(), maxY->points.end(), compareY)->y };
+
   return Frame(lowerLeft, upperRight);
 }
 

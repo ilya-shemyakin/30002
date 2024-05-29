@@ -26,6 +26,11 @@ std::istream& operator>>(std::istream& in, LabelI&& dest)
 
 std::istream& operator>>(std::istream& in, LongLongI&& dest)
 {
-  in >> DelimiterI{ '0' } >> DelimiterI{ 'x' };
-  return in >> std::hex >> dest.num;
+  char x;
+  in >> DelimiterI{ '0' } >> x;
+  if (in && x != 'x')
+    in.setstate(std::ios::failbit);
+  else
+    in >> std::hex >> dest.num;
+  return in;
 }

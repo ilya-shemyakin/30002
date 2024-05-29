@@ -34,16 +34,34 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
     return in;
   }
 
+  bool key1_parsed = false, key2_parsed = false, key3_parsed = false;
   for (size_t i = 0; i < 3; ++i)
   {
     std::string key;
     in >> sep{ ':' } >> label{ key };
     if (key == "key1")
-      in >> dbl{ input.key1 };
+    {
+      if (!(in >> dbl{ input.key1 }))
+      {
+        in.clear();
+        in >> str{ input.key1_str };
+      }
+      key1_parsed = true;
+    }
     else if (key == "key2")
-      in >> num{ input.key2 };
+    {
+      if (!(in >> num{ input.key2 }))
+      {
+        in.clear();
+        in >> str{ input.key2_str };
+      }
+      key2_parsed = true;
+    }
     else if (key == "key3")
+    {
       in >> str{ input.key3 };
+      key3_parsed = true;
+    }
     else
     {
       in.setstate(std::ios::failbit);
@@ -58,7 +76,7 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
     return in;
   }
 
-  if (!in.fail())
+  if (key1_parsed && key2_parsed && key3_parsed && !in.fail())
     dest = input;
 
   return in;

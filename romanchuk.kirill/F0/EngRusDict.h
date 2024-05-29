@@ -15,21 +15,21 @@ public:
   ~EngRusDict();
   void clear();
 
-  std::set< std::string > getTranslations(const std::string& eng);
+  std::set< std::string > getTranslations(const std::string& eng) const;
 
   size_t getCountWords() const;
-  size_t getCountTranslations(const std::string& eng);
+  size_t getCountTranslations(const std::string& eng) const;
 
   void addTranslation(const std::string& eng, const std::string& translation);
   void removeTranslation(const std::string& eng, const std::string& translation);
   void addWord(const std::string& eng);
   void removeWord(const std::string& eng);
 
-  void addWordFromEngRusDict(EngRusDict& other);
-  void removeWordFromEngRusDict(EngRusDict& other);
+  void addWordFromEngRusDict(const EngRusDict& other);
+  void removeWordFromEngRusDict(const EngRusDict& other);
 
-  friend EngRusDict getIntersectionWithEngRusDict(EngRusDict& erd1, EngRusDict& erd2);
-  friend EngRusDict getDifferenceWithEngRusDict(EngRusDict& erd1, EngRusDict& erd2);
+  friend EngRusDict getIntersectionWithEngRusDict(const EngRusDict& erd1, const EngRusDict& erd2);
+  friend EngRusDict getDifferenceWithEngRusDict(const EngRusDict& erd1, const EngRusDict& erd2);
 
   void display(std::ostream& out) const;
 

@@ -47,11 +47,6 @@ bool ivatshenko::Polygon::operator==(const Polygon& right) const
   return result;
 }
 
-bool ivatshenko::Polygon::operator<(const Polygon& right)
-{
-  return false;
-}
-
 ivatshenko::Frame ivatshenko::getFrame(const std::vector< Polygon >& data)
 {
   if (data.empty())

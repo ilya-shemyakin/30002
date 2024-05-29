@@ -3,7 +3,6 @@
 #include "StreamGuard.h"
 #include <iomanip>
 #include <sstream>
-#include <limits>
 
 bool operator<(const DataStruct& lhs, const DataStruct& rhs)
 {
@@ -16,10 +15,11 @@ bool operator<(const DataStruct& lhs, const DataStruct& rhs)
 
 std::istream& operator>>(std::istream& in, DataStruct& dest)
 {
-  std::istream::sentry sentry(in);
-  if (!sentry)
+  std::string line;
+  if (!std::getline(in, line))
     return in;
 
+  std::istringstream iss(line);
   DataStruct input;
   using sep = DelimiterI;
   using label = LabelI;
@@ -28,38 +28,44 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
   using num = LongLongI;
 
   char ch;
-  in >> ch;
+  iss >> ch;
   if (ch != '(')
   {
     in.setstate(std::ios::failbit);
     return in;
   }
 
+  bool key1_found = false, key2_found = false, key3_found = false;
   for (size_t i = 0; i < 3; ++i)
   {
     std::string key;
-    in >> sep{ ':' } >> label{ key };
+    iss >> sep{ ':' } >> label{ key };
     if (key == "key1")
     {
-      if (!(in >> dbl{ input.key1 }))
+      if (!(iss >> dbl{ input.key1 }))
       {
-        in.clear();
-        in.ignore(std::numeric_limits<std::streamsize>::max(), ':');
+        iss.clear();
+        iss.ignore(std::numeric_limits<std::streamsize>::max(), ':');
         in.setstate(std::ios::failbit);
+        return in;
       }
+      key1_found = true;
     }
     else if (key == "key2")
     {
-      if (!(in >> num{ input.key2 }))
+      if (!(iss >> num{ input.key2 }))
       {
-        in.clear();
-        in.ignore(std::numeric_limits<std::streamsize>::max(), ':');
+        iss.clear();
+        iss.ignore(std::numeric_limits<std::streamsize>::max(), ':');
         in.setstate(std::ios::failbit);
+        return in;
       }
+      key2_found = true;
     }
     else if (key == "key3")
     {
-      in >> str{ input.key3 };
+      iss >> str{ input.key3 };
+      key3_found = true;
     }
     else
     {
@@ -68,14 +74,14 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
     }
   }
 
-  in >> sep{ ':' } >> ch;
+  iss >> sep{ ':' } >> ch;
   if (ch != ')')
   {
     in.setstate(std::ios::failbit);
     return in;
   }
 
-  if (!in.fail())
+  if (!iss.fail() && key1_found && key2_found && key3_found)
     dest = input;
 
   return in;

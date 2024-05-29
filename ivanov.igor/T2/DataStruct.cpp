@@ -2,7 +2,7 @@
 
 namespace check
 {
-    bool operator<(DataStruct& left, DataStruct& right)
+    bool operator<(const DataStruct& left, const DataStruct& right)
     {
         if (left.key1 != right.key1)
         {
@@ -52,7 +52,7 @@ namespace check
                 if (keyId != '1' && keyId != '2' && keyId != '3')
                 {
                     in.setstate(std::istream::failbit);
-                    continue;
+                    break;
                 }
             }
             in >> DelimiterIO{ ':' } >> DelimiterIO{ ')' };
@@ -71,7 +71,6 @@ namespace check
         {
             return out;
         }
-        StreamGuard guard(out);
         out << "(";
         out << ":key1 " << ds.key1;
         out << ":key2 " << ds.key2 << "ll";

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <complex>
 
 struct DelimiterI
 {
@@ -24,9 +25,15 @@ struct LabelI
   std::string& ref;
 };
 
+struct ComplexI
+{
+  std::complex<double>& ref;
+};
+
 std::istream& operator>>(std::istream& in, DelimiterI&& dest);
 std::istream& operator>>(std::istream& in, LongLongI&& dest);
 std::istream& operator>>(std::istream& in, StringI&& dest);
 std::istream& operator>>(std::istream& in, LabelI&& dest);
+std::istream& operator>>(std::istream& in, ComplexI&& dest);
 
 #endif

@@ -9,23 +9,13 @@ int main()
   std::vector<DataStruct> dataStructVector;
   DataStruct ds;
 
-  while (std::cin >> ds)
-  {
-    if (!std::cin.fail())
-    {
-      dataStructVector.push_back(ds);
-    }
-    else
-    {
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
-  }
+  std::istream_iterator<DataStruct> in_begin(std::cin), in_end;
+  std::copy(in_begin, in_end, std::back_inserter(dataStructVector));
 
   std::sort(dataStructVector.begin(), dataStructVector.end());
 
-  std::copy(dataStructVector.begin(), dataStructVector.end(),
-    std::ostream_iterator<DataStruct>(std::cout, "\n"));
+  std::ostream_iterator<DataStruct> out_begin(std::cout, "\n");
+  std::copy(dataStructVector.begin(), dataStructVector.end(), out_begin);
 
   return 0;
 }

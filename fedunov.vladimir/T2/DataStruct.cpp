@@ -3,6 +3,7 @@
 #include "StreamGuard.h"
 #include <iomanip>
 #include <sstream>
+#include <limits>
 
 bool operator<(const DataStruct& lhs, const DataStruct& rhs)
 {
@@ -23,9 +24,8 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
   DataStruct input;
   using sep = DelimiterI;
   using label = LabelI;
-  using dbl = DoubleI;
+  using ull = LongLongI;
   using str = StringI;
-  using num = LongLongI;
 
   char ch;
   iss >> ch;
@@ -46,7 +46,7 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
     }
     if (key == "key1")
     {
-      if (!(iss >> dbl{ input.key1 }))
+      if (!(iss >> ull{ input.key1 }))
       {
         in.setstate(std::ios::failbit);
         return in;
@@ -55,7 +55,7 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
     }
     else if (key == "key2")
     {
-      if (!(iss >> num{ input.key2 }))
+      if (!(iss >> ull{ input.key2 }))
       {
         in.setstate(std::ios::failbit);
         return in;
@@ -98,8 +98,8 @@ std::ostream& operator<<(std::ostream& out, const DataStruct& dest)
 
   StreamGuard guard(out);
   out << "(:";
-  out << "key1 " << std::fixed << std::setprecision(1) << dest.key1 << "d:";
-  out << "key2 0x" << std::hex << std::uppercase << dest.key2 << ":";
+  out << "key1 " << dest.key1 << "ull:";
+  out << "key2 " << dest.key2 << "ull:";
   out << "key3 \"" << dest.key3 << "\"";
   out << ":)";
   return out;

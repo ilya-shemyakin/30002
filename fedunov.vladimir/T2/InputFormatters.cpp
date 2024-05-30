@@ -9,9 +9,9 @@ std::istream& operator>>(std::istream& in, DelimiterI&& dest)
   return in;
 }
 
-std::istream& operator>>(std::istream& in, DoubleI&& dest)
+std::istream& operator>>(std::istream& in, LongLongI&& dest)
 {
-  return in >> dest.ref >> DelimiterI{ 'd' };
+  return in >> dest.num >> DelimiterI{ 'u' } >> DelimiterI{ 'l' } >> DelimiterI{ 'l' };
 }
 
 std::istream& operator>>(std::istream& in, StringI&& dest)
@@ -22,15 +22,4 @@ std::istream& operator>>(std::istream& in, StringI&& dest)
 std::istream& operator>>(std::istream& in, LabelI&& dest)
 {
   return std::getline(in, dest.ref, ' ');
-}
-
-std::istream& operator>>(std::istream& in, LongLongI&& dest)
-{
-  char x;
-  in >> DelimiterI{ '0' } >> x;
-  if (in && x != 'x')
-    in.setstate(std::ios::failbit);
-  else
-    in >> std::hex >> dest.num;
-  return in;
 }

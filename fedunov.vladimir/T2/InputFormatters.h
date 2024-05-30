@@ -9,9 +9,9 @@ struct DelimiterI
   char exp;
 };
 
-struct DoubleI
+struct LongLongI
 {
-  double& ref;
+  unsigned long long& num;
 };
 
 struct StringI
@@ -24,15 +24,9 @@ struct LabelI
   std::string& ref;
 };
 
-struct LongLongI
-{
-  unsigned long long& num;
-};
-
 std::istream& operator>>(std::istream& in, DelimiterI&& dest);
-std::istream& operator>>(std::istream& in, DoubleI&& dest);
+std::istream& operator>>(std::istream& in, LongLongI&& dest);
 std::istream& operator>>(std::istream& in, StringI&& dest);
 std::istream& operator>>(std::istream& in, LabelI&& dest);
-std::istream& operator>>(std::istream& in, LongLongI&& dest);
 
 #endif

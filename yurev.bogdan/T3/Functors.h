@@ -14,4 +14,4 @@ namespace yurev
     };
 }
 
-#endif
+#endif // FUNCTORS_H_

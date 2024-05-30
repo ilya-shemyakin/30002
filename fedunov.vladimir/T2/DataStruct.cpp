@@ -27,7 +27,6 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
   using label = LabelI;
   using ull = LongLongI;
   using str = StringI;
-  using cmplx = ComplexI;
 
   char ch;
   iss >> ch;
@@ -50,13 +49,8 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
     {
       if (!(iss >> ull{ input.key1 }))
       {
-        iss.clear();
-        std::string dummy;
-        if (iss >> dummy)
-        {
-          in.setstate(std::ios::failbit);
-          return in;
-        }
+        in.setstate(std::ios::failbit);
+        return in;
       }
       key1_parsed = true;
     }
@@ -64,13 +58,8 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
     {
       if (!(iss >> ull{ input.key2 }))
       {
-        iss.clear();
-        std::string dummy;
-        if (iss >> dummy)
-        {
-          in.setstate(std::ios::failbit);
-          return in;
-        }
+        in.setstate(std::ios::failbit);
+        return in;
       }
       key2_parsed = true;
     }

@@ -11,7 +11,7 @@ int main()
 
   std::istream_iterator<DataStruct> in_begin(std::cin), in_end;
   std::copy_if(in_begin, in_end, std::back_inserter(dataStructVector),
-    [](const DataStruct& ds) { return !std::cin.fail(); });
+    [](const DataStruct&) { return !std::cin.fail(); });
 
   std::sort(dataStructVector.begin(), dataStructVector.end());
 

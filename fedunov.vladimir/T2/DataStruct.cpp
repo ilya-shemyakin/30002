@@ -35,37 +35,41 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
     return in;
   }
 
-  bool key1_found = false, key2_found = false, key3_found = false;
+  bool key1_parsed = false, key2_parsed = false, key3_parsed = false;
   for (size_t i = 0; i < 3; ++i)
   {
     std::string key;
-    iss >> sep{ ':' } >> label{ key };
+    if (!(iss >> sep{ ':' } >> label{ key }))
+    {
+      in.setstate(std::ios::failbit);
+      return in;
+    }
     if (key == "key1")
     {
       if (!(iss >> dbl{ input.key1 }))
       {
-        iss.clear();
-        iss.ignore(std::numeric_limits<std::streamsize>::max(), ':');
         in.setstate(std::ios::failbit);
         return in;
       }
-      key1_found = true;
+      key1_parsed = true;
     }
     else if (key == "key2")
     {
       if (!(iss >> num{ input.key2 }))
       {
-        iss.clear();
-        iss.ignore(std::numeric_limits<std::streamsize>::max(), ':');
         in.setstate(std::ios::failbit);
         return in;
       }
-      key2_found = true;
+      key2_parsed = true;
     }
     else if (key == "key3")
     {
-      iss >> str{ input.key3 };
-      key3_found = true;
+      if (!(iss >> str{ input.key3 }))
+      {
+        in.setstate(std::ios::failbit);
+        return in;
+      }
+      key3_parsed = true;
     }
     else
     {
@@ -74,14 +78,13 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
     }
   }
 
-  iss >> sep{ ':' } >> ch;
-  if (ch != ')')
+  if (!(iss >> sep{ ':' } >> ch) || ch != ')')
   {
     in.setstate(std::ios::failbit);
     return in;
   }
 
-  if (!iss.fail() && key1_found && key2_found && key3_found)
+  if (!iss.fail() && key1_parsed && key2_parsed && key3_parsed)
     dest = input;
 
   return in;

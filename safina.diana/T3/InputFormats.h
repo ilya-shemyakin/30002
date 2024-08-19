@@ -9,6 +9,7 @@ namespace shapes
     {
         char exp;
     };
+
     std::istream& operator>>(std::istream& in, DelimiterIO&& dest);
     std::istream& operator>>(std::istream& in, Point& dest);
     std::istream& operator>>(std::istream& in, Polygon& dest);

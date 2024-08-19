@@ -2,6 +2,7 @@
 #define	INPUT_FORMATS_H
 
 #include "Polygon.h"
+#include "Point.h"
 
 namespace shapes
 {

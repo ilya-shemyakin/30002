@@ -112,7 +112,7 @@ namespace cmd
         {
             throw std::invalid_argument("At least 1 shape is required to calculate min values\n");
         }
-        
+
         if (option == "AREA")
         {
             out << getShapeArea(*std::min_element(shapes.begin(), shapes.end(),
@@ -215,7 +215,7 @@ namespace cmd
     double getShapeArea(const shapes::Polygon& shape)
     {
         std::vector< std::pair< int, int > > pairs = generatePairIndexes(shape.points.size());
-        return 0.5 * std::abs(std::accumulate(pairs.cbegin(), pairs.cend(), 0, 
+        return 0.5 * std::abs(std::accumulate(pairs.cbegin(), pairs.cend(), 0,
             [&shape](double areaSum, std::pair< int, int > ind)
             {
                 return areaSum + shape.points[ind.first].x * shape.points[ind.second].y -

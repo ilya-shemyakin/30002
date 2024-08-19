@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     {
         fileName = argv[1];
     }
-    else 
+    else
     {
         if (argc == 1)
         {

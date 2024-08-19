@@ -26,7 +26,7 @@ namespace shapes
         {
             return in;
         }
-        return in >> DelimiterIO{ '(' } >> dest.x >> DelimiterIO{ ';' } >> 
+        return in >> DelimiterIO{ '(' } >> dest.x >> DelimiterIO{ ';' } >>
             dest.y >> DelimiterIO{ ')' };
     }
 

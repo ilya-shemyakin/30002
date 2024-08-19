@@ -25,7 +25,7 @@ namespace cmd
     inline auto getCommand(const std::vector< shapes::Polygon >& shapes, std::string key)
     {
         using namespace std::placeholders;
-        std::unordered_map < std::string, 
+        std::unordered_map < std::string,
             std::function< void(std::istream& in, std::ostream& out) > > cmd =
         {
             {"AREA", std::bind(area, std::cref(shapes), _1, _2)},

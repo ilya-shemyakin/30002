@@ -55,7 +55,7 @@ namespace cmd
         }
         else
         {
-            int verticesNum = std::stoi(option);
+            long unsigned int verticesNum = std::stoi(option);
             out << std::accumulate(shapes.cbegin(), shapes.cend(), 0.0,
                 [&verticesNum](double areaSum, const shapes::Polygon& shape)
                 {
@@ -162,7 +162,7 @@ namespace cmd
         }
         else
         {
-            int verticesNum = std::stoi(option);
+            long unsigned int verticesNum = std::stoi(option);
             out << std::count_if(shapes.cbegin(), shapes.cend(),
                 [&verticesNum](const shapes::Polygon& shape)
                 {

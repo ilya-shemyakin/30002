@@ -51,15 +51,9 @@ int main(int argc, char* argv[])
             cmd::getCommand(shapes, command)(std::cin, std::cout);
             std::cout << '\n';
         }
-        catch (const std::out_of_range& error)
+        catch (...)
         {
-            std::cerr << "<INVALID COMMAND>\n";
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-        }
-        catch (const std::invalid_argument& error)
-        {
-            std::cerr << "<INVALID COMMAND>\n";
+            std::cout << "<INVALID COMMAND>\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
         }

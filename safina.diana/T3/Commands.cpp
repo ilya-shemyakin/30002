@@ -56,6 +56,11 @@ namespace cmd
         else
         {
             long unsigned int verticesNum = std::stoi(option);
+            if (verticesNum < shapes::MIN_VERTEXES_NUMBER)
+            {
+                throw std::invalid_argument("Error! A polygon has 3 vertices minimum\n");
+            }
+
             out << std::accumulate(shapes.cbegin(), shapes.cend(), 0.0,
                 [&verticesNum](double areaSum, const shapes::Polygon& shape)
                 {
@@ -163,6 +168,11 @@ namespace cmd
         else
         {
             long unsigned int verticesNum = std::stoi(option);
+            if (verticesNum < shapes::MIN_VERTEXES_NUMBER)
+            {
+                throw std::invalid_argument("Error! A polygon has 3 vertices minimum\n");
+            }
+
             out << std::count_if(shapes.cbegin(), shapes.cend(),
                 [&verticesNum](const shapes::Polygon& shape)
                 {
@@ -176,6 +186,11 @@ namespace cmd
     {
         shapes::Polygon option;
         in >> option;
+
+        if (in.fail())
+        {
+            throw std::invalid_argument("Error! Incorrect polygon is given\n");
+        }
 
         out << std::count_if(shapes.cbegin(), shapes.cend(),
             [&option](const shapes::Polygon& shape)
@@ -191,6 +206,11 @@ namespace cmd
     {
         shapes::Polygon option;
         in >> option;
+
+        if (in.fail())
+        {
+            throw std::invalid_argument("Error! Incorrect polygon is given\n");
+        }
 
         std::vector<int> sequences;
         int count = 0;

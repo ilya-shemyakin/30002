@@ -46,7 +46,6 @@ namespace shapes
             int vertexesNumber = 0;
             in >> vertexesNumber;
 
-            const int MIN_VERTEXES_NUMBER = 3;
             if (vertexesNumber < MIN_VERTEXES_NUMBER)
             {
                 in.setstate(std::ios::failbit);
@@ -59,6 +58,11 @@ namespace shapes
                 in >> DelimiterIO{ ' ' } >> point;
                 inputPolygon.points.push_back(point);
             }
+        }
+
+        if (in.peek() != EOF)
+        {
+            in >> DelimiterIO{ '\n' };
         }
 
         if (in)

@@ -4,13 +4,22 @@
 
 #include "Commands.h"
 #include "InputFormats.h"
+#include "StreamGuard.h"
 
 namespace cmd
 {
     void area(const std::vector< shapes::Polygon >& shapes, std::istream& in, std::ostream& out)
     {
+        shapes::StreamGuard guard(in);
+        in >> std::noskipws;
+
         std::string option = "";
-        in >> option;
+        in >> shapes::DelimiterIO{ ' ' } >> option;
+
+        if (in.peek() != '\n')
+        {
+            throw std::invalid_argument("Incorrect option is givan\n");
+        }
 
         if (option == "EVEN")
         {
@@ -76,8 +85,16 @@ namespace cmd
 
     void max(const std::vector< shapes::Polygon >& shapes, std::istream& in, std::ostream& out)
     {
+        shapes::StreamGuard guard(in);
+        in >> std::noskipws;
+
         std::string option = "";
-        in >> option;
+        in >> shapes::DelimiterIO{ ' ' } >> option;
+
+        if (in.peek() != '\n')
+        {
+            throw std::invalid_argument("Incorrect option is givan\n");
+        }
 
         if (shapes.empty())
         {
@@ -110,8 +127,16 @@ namespace cmd
 
     void min(const std::vector< shapes::Polygon >& shapes, std::istream& in, std::ostream& out)
     {
+        shapes::StreamGuard guard(in);
+        in >> std::noskipws;
+
         std::string option = "";
-        in >> option;
+        in >> shapes::DelimiterIO{ ' ' } >> option;
+
+        if (in.peek() != '\n')
+        {
+            throw std::invalid_argument("Incorrect option is givan\n");
+        }
 
         if (shapes.empty())
         {
@@ -144,8 +169,16 @@ namespace cmd
 
     void count(const std::vector< shapes::Polygon >& shapes, std::istream& in, std::ostream& out)
     {
+        shapes::StreamGuard guard(in);
+        in >> std::noskipws;
+
         std::string option = "";
-        in >> option;
+        in >> shapes::DelimiterIO{ ' ' } >> option;
+
+        if (in.peek() != '\n')
+        {
+            throw std::invalid_argument("Incorrect option is givan\n");
+        }
 
         if (option == "EVEN")
         {
@@ -184,8 +217,16 @@ namespace cmd
 
     void perms(const std::vector< shapes::Polygon >& shapes, std::istream& in, std::ostream& out)
     {
+        shapes::StreamGuard guard(in);
+        in >> std::noskipws;
+
         shapes::Polygon option;
-        in >> option;
+        in >> shapes::DelimiterIO{ ' ' } >> option;
+
+        if (in.peek() != '\n')
+        {
+            throw std::invalid_argument("Incorrect option is givan\n");
+        }
 
         if (in.fail())
         {
@@ -204,8 +245,16 @@ namespace cmd
 
     void maxseq(const std::vector< shapes::Polygon >& shapes, std::istream& in, std::ostream& out)
     {
+        shapes::StreamGuard guard(in);
+        in >> std::noskipws;
+
         shapes::Polygon option;
-        in >> option;
+        in >> shapes::DelimiterIO{ ' ' } >> option;
+
+        if (in.peek() != '\n')
+        {
+            throw std::invalid_argument("Incorrect option is givan\n");
+        }
 
         if (in.fail())
         {
@@ -238,15 +287,16 @@ namespace cmd
         return 0.5 * std::abs(std::accumulate(pairs.cbegin(), pairs.cend(), 0,
             [&shape](double areaSum, std::pair< int, int > ind)
             {
-                return areaSum + shape.points[ind.first].x * shape.points[ind.second].y -
-                    shape.points[ind.second].x * shape.points[ind.first].y;
+                return areaSum + shape.points[ind.first].x *
+                    shape.points[ind.second % shape.points.size()].y -
+                    shape.points[ind.second % shape.points.size()].x * shape.points[ind.first].y;
             }
         ));
     }
 
     std::vector< std::pair< int, int > > generatePairIndexes(size_t shapeSize)
     {
-        std::vector< std::pair< int, int > > res(shapeSize - 1);
+        std::vector< std::pair< int, int > > res(shapeSize);
         int count = -1;
         std::generate(res.begin(), res.end(),
             [&count]()

@@ -14,6 +14,7 @@ namespace shapes
         in >> c;
         if (in && (c != dest.exp))
         {
+            in.unget();
             in.setstate(std::ios::failbit);
         }
         return in;
@@ -58,11 +59,6 @@ namespace shapes
                 in >> DelimiterIO{ ' ' } >> point;
                 inputPolygon.points.push_back(point);
             }
-        }
-
-        if (in.peek() != EOF)
-        {
-            in >> DelimiterIO{ '\n' };
         }
 
         if (in)

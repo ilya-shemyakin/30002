@@ -61,6 +61,11 @@ namespace shapes
             }
         }
 
+        if (in.peek() != EOF)
+        {
+            in >> DelimiterIO{ '\n' };
+        }
+
         if (in)
         {
             dest = inputPolygon;

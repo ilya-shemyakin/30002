@@ -16,7 +16,7 @@ namespace cmd
         std::string option = "";
         in >> shapes::DelimiterIO{ ' ' } >> option;
 
-        if (in.peek() != '\n')
+        if (in.fail())
         {
             throw std::invalid_argument("Incorrect option is givan\n");
         }
@@ -91,7 +91,7 @@ namespace cmd
         std::string option = "";
         in >> shapes::DelimiterIO{ ' ' } >> option;
 
-        if (in.peek() != '\n')
+        if (in.fail())
         {
             throw std::invalid_argument("Incorrect option is givan\n");
         }
@@ -133,7 +133,7 @@ namespace cmd
         std::string option = "";
         in >> shapes::DelimiterIO{ ' ' } >> option;
 
-        if (in.peek() != '\n')
+        if (in.fail())
         {
             throw std::invalid_argument("Incorrect option is givan\n");
         }
@@ -175,7 +175,7 @@ namespace cmd
         std::string option = "";
         in >> shapes::DelimiterIO{ ' ' } >> option;
 
-        if (in.peek() != '\n')
+        if (in.fail())
         {
             throw std::invalid_argument("Incorrect option is givan\n");
         }
@@ -223,11 +223,6 @@ namespace cmd
         shapes::Polygon option;
         in >> shapes::DelimiterIO{ ' ' } >> option;
 
-        if (in.peek() != '\n')
-        {
-            throw std::invalid_argument("Incorrect option is givan\n");
-        }
-
         if (in.fail())
         {
             throw std::invalid_argument("Error! Incorrect polygon is given\n");
@@ -250,11 +245,6 @@ namespace cmd
 
         shapes::Polygon option;
         in >> shapes::DelimiterIO{ ' ' } >> option;
-
-        if (in.peek() != '\n')
-        {
-            throw std::invalid_argument("Incorrect option is givan\n");
-        }
 
         if (in.fail())
         {

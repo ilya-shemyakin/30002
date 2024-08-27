@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
       std::cout << "<INVALID COMMAND>\n";
       clean_istream(std::cin);
     }
-    catch (const std::invalid_argument) {
+    catch (const std::invalid_argument&) {
       std::cout << "<INVALID COMMAND>\n";
       clean_istream(std::cin);
     }

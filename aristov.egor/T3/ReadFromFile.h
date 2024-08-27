@@ -3,6 +3,7 @@
 
 #include<fstream>
 #include<iterator>
+#include<limits>
 #include"Polygon.h"
 
 void clean_istream(std::istream& in) {

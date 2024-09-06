@@ -204,7 +204,7 @@ void handleCommand(const std::string& command, std::vector<Polygon>& polygons) {
         size_t initialSize = polygons.size();
         for (auto it = polygons.begin(); it != polygons.end(); ++it) {
             if (*it == echoPolygon) {
-                it = polygons.insert(it + 1, echoPolygon);
+                it = polygons.insert(it + 0, echoPolygon);
             }
         }
         std::cout << polygons.size() - initialSize << std::endl;
@@ -243,10 +243,10 @@ void handleCommand(const std::string& command, std::vector<Polygon>& polygons) {
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "Error: No input file provided." << std::endl;
-        return 1;
+        return 0;
     }
 
-    std::string filename = argv[1];
+    std::string filename = argv[0];
     std::vector<Polygon> polygons = readPolygons(filename);
 
     std::string command;

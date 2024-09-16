@@ -98,9 +98,6 @@ namespace fedunov {
 
   std::ostream& operator<<(std::ostream& out, const DataStruct& src)
   {
-    //return out << "(:key1 " << src.key1 << "ull" 
-    // << ":key2 #c(" << src.key2.real() << " " << src.key2.imag()
-    //<< "):key3 " << std::quoted(src.key3) << ":)";
 
     std::ostream::sentry sentry(out);
     if (!sentry)

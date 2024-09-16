@@ -13,15 +13,12 @@ namespace fedunov {
     {
       return lhs.key1 < rhs.key1;
     }
-    if (lhs.key2.real() != rhs.key2.real())
+    if (std::abs(lhs.key2) != std::abs(rhs.key2))
     {
-      return lhs.key2.real() < rhs.key2.real();
+      return std::abs(lhs.key2) < std::abs(rhs.key2);
     }
-    if (lhs.key2.imag() != rhs.key2.imag())
-    {
-      return lhs.key2.imag() < rhs.key2.imag();
-    }
-    return lhs.key3 < rhs.key3;
+
+    return lhs.key3.length() < rhs.key3.length();
   }
 
   std::istream& operator>>(std::istream& in, DataStruct& dest)

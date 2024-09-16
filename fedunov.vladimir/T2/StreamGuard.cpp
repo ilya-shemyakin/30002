@@ -1,15 +1,17 @@
 #include "StreamGuard.h"
+#include <iostream>
 
-StreamGuard::StreamGuard(std::ios& stream) : stream_(stream)
+namespace fedunov
 {
-  state_ = stream_.flags();
-  precision_ = stream_.precision();
-  fill_ = stream_.fill();
-}
-
-StreamGuard::~StreamGuard()
-{
-  stream_.flags(state_);
-  stream_.precision(precision_);
-  stream_.fill(fill_);
+  StreamGuard::StreamGuard(std::basic_ios<char>& s) : s_(s),
+    fill_(s.fill()),
+    precision_(s.precision()),
+    fmt_(s.flags())
+  {}
+  StreamGuard::~StreamGuard()
+  {
+    s_.fill(fill_);
+    s_.precision(precision_);
+    s_.flags(fmt_);
+  }
 }

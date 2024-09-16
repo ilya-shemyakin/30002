@@ -1,34 +1,38 @@
 #include <iostream>
+#include <iomanip>
 #include <iterator>
 #include <vector>
-#include <algorithm>
+#include <limits>
 #include "DataStruct.h"
+#include <algorithm>
 
 int main()
 {
-  std::vector<DataStruct> dataStructVector;
-  DataStruct ds;
+  using fedunov::DataStruct;
+  
+  std::vector<DataStruct> data;
 
-  // Используем std::copy для копирования данных из входного потока
-  std::istream_iterator<DataStruct> in_begin(std::cin), in_end;
-  std::copy(in_begin, in_end, std::back_inserter(dataStructVector));
+  while (true)
+  {
+    DataStruct ds;
+    if (std::cin >> ds)
+    {
+      data.push_back(ds);
+    }
+    else if (std::cin.eof())
+    {
+      break;
+    }
+    else
+    {
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+  }
 
-  // Удаляем некорректные записи, вызвавшие failbit
-  dataStructVector.erase(
-    std::remove_if(dataStructVector.begin(), dataStructVector.end(),
-      [](const DataStruct& ds) {
-        std::istringstream iss;
-        iss.str(ds.key3);
-        return iss.fail();
-      }),
-    dataStructVector.end());
+  std::sort(data.begin(), data.end());
 
-  // Сортируем данные
-  std::sort(dataStructVector.begin(), dataStructVector.end());
-
-  // Используем std::copy для вывода данных
-  std::ostream_iterator<DataStruct> out_begin(std::cout, "\n");
-  std::copy(dataStructVector.begin(), dataStructVector.end(), out_begin);
+  std::copy(data.begin(), data.end(), std::ostream_iterator< DataStruct >(std::cout, "\n"));
 
   return 0;
 }

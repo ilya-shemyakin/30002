@@ -1,19 +1,20 @@
-#ifndef STREAMGUARD_H
-#define STREAMGUARD_H
+#ifndef STREAM_GUARD_H
+#define STREAM_GUARD_H
 
 #include <iostream>
 
-class StreamGuard
-{
-public:
-  StreamGuard(std::ios& stream);
-  ~StreamGuard();
+namespace fedunov {
+  class StreamGuard {
+  public:
+    StreamGuard(std::basic_ios<char>& s);
+    ~StreamGuard();
 
-private:
-  std::ios& stream_;
-  std::ios::fmtflags state_;
-  std::streamsize precision_;
-  char fill_;
-};
+  private:
+    std::basic_ios<char>& s_;
+    char fill_;
+    std::streamsize precision_;
+    std::basic_ios<char>::fmtflags fmt_;
+  };
+}
 
 #endif

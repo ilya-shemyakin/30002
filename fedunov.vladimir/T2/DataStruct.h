@@ -1,19 +1,21 @@
-#ifndef DATASTRUCT_H
-#define DATASTRUCT_H
+#ifndef DATA_STRUCT_H
+#define DATA_STRUCT_H
 
 #include <iostream>
-#include <string>
 #include <complex>
+#include <string>
 
-struct DataStruct
-{
-  unsigned long long key1 = 0;
-  unsigned long long key2 = 0;
-  std::string key3;
-};
+namespace fedunov {
+  struct DataStruct
+  {
+    unsigned long long key1;
+    std::complex<double> key2;
+    std::string key3;
+  };
 
-bool operator<(const DataStruct& lhs, const DataStruct& rhs);
-std::istream& operator>>(std::istream& in, DataStruct& dest);
-std::ostream& operator<<(std::ostream& out, const DataStruct& dest);
+  bool operator<(const DataStruct& lhs, const DataStruct& rhs);
+  std::istream& operator>>(std::istream& in, DataStruct& dest);
+  std::ostream& operator<<(std::ostream& out, const DataStruct& src);
+}
 
 #endif

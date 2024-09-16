@@ -1,107 +1,121 @@
 #include "DataStruct.h"
-#include "InputFormatters.h"
+#include "InputFormat.h"
 #include "StreamGuard.h"
 #include <iomanip>
 #include <sstream>
-#include <limits>
-#include <complex>
+#include <iostream>
 
-bool operator<(const DataStruct& lhs, const DataStruct& rhs)
-{
-  if (lhs.key1 != rhs.key1)
-    return lhs.key1 < rhs.key1;
-  if (lhs.key2 != rhs.key2)
-    return lhs.key2 < rhs.key2;
-  return lhs.key3.length() < rhs.key3.length();
-}
-
-std::istream& operator>>(std::istream& in, DataStruct& dest)
-{
-  std::string line;
-  if (!std::getline(in, line))
-    return in;
-
-  std::istringstream iss(line);
-  DataStruct input;
-  using sep = DelimiterI;
-  using label = LabelI;
-  using ull = LongLongI;
-  using str = StringI;
-
-  char ch;
-  iss >> ch;
-  if (ch != '(')
+namespace fedunov {
+  
+  bool operator<(const DataStruct& lhs, const DataStruct& rhs)
   {
-    in.setstate(std::ios::failbit);
-    return in;
+    if (lhs.key1 != rhs.key1) 
+    {
+      return lhs.key1 < rhs.key1;
+    }
+    if (lhs.key2.real() != rhs.key2.real())
+    {
+      return lhs.key2.real() < rhs.key2.real();
+    }
+    if (lhs.key2.imag() != rhs.key2.imag())
+    {
+      return lhs.key2.imag() < rhs.key2.imag();
+    }
+    return lhs.key3 < rhs.key3;
   }
 
-  bool key1_parsed = false, key2_parsed = false, key3_parsed = false;
-  for (size_t i = 0; i < 3; ++i)
+  std::istream& operator>>(std::istream& in, DataStruct& dest)
   {
-    std::string key;
-    if (!(iss >> sep{ ':' } >> label{ key }))
+    std::istream::sentry sentry(in);
+    if (!sentry) return in;
+
+    DataStruct input;
+    StreamGuard guard(in);
+    in >> std::noskipws;
+
+    if (!(in >> DelimiterIO{ '(' }))
     {
       in.setstate(std::ios::failbit);
       return in;
     }
-    if (key == "key1")
+
+    const int KEY_NUMBER = 3;
+    for (int i = 1; i <= KEY_NUMBER; ++i)
     {
-      if (!(iss >> ull{ input.key1 }))
+      if (!(in >> DelimiterIO{ ':' } >> LabelIO{ "key" }))
       {
         in.setstate(std::ios::failbit);
         return in;
       }
-      key1_parsed = true;
-    }
-    else if (key == "key2")
-    {
-      if (!(iss >> ull{ input.key2 }))
+
+      char keyNumber = in.get();
+      in >> DelimiterIO{ ' ' };
+
+      switch (keyNumber)
       {
+      case '1':
+        if (!(in >> UnsignedLongLongIO{ input.key1 }))
+        {
+          in.setstate(std::ios::failbit);
+          return in;
+        }
+        break;
+
+      case '2':
+        if (!(in >> ComplexIO{ input.key2 }))
+        {
+          in.setstate(std::ios::failbit);
+          return in;
+        }
+        break;
+
+      case '3':
+        if (!(in >> StringIO{ input.key3 }))
+        {
+          in.setstate(std::ios::failbit);
+          return in;
+        }
+        break;
+
+      default:
         in.setstate(std::ios::failbit);
         return in;
       }
-      key2_parsed = true;
     }
-    else if (key == "key3")
-    {
-      if (!(iss >> str{ input.key3 }))
-      {
-        in.setstate(std::ios::failbit);
-        return in;
-      }
-      key3_parsed = true;
-    }
-    else
+
+    if (!(in >> DelimiterIO{ ':' } >> DelimiterIO{ ')' }))
     {
       in.setstate(std::ios::failbit);
       return in;
     }
-  }
 
-  if (!(iss >> sep{ ':' } >> ch) || ch != ')')
-  {
-    in.setstate(std::ios::failbit);
+    if (in)
+    {
+      dest = input;
+    }
     return in;
   }
 
-  if (!iss.fail() && key1_parsed && key2_parsed && key3_parsed)
-    dest = input;
+  std::ostream& operator<<(std::ostream& out, const DataStruct& src)
+  {
+    //return out << "(:key1 " << src.key1 << "ull" 
+    // << ":key2 #c(" << src.key2.real() << " " << src.key2.imag()
+    //<< "):key3 " << std::quoted(src.key3) << ":)";
+    
+    std::ostream::sentry sentry(out);
+    if (!sentry)
+    {
+      return out;
+    }
 
-  return in;
-}
+    StreamGuard guard(out);
 
-std::ostream& operator<<(std::ostream& out, const DataStruct& dest)
-{
-  std::ostream::sentry sentry(out);
-  if (!sentry)
+    out << "(:";
+    out << "key1 " << std::fixed << src.key1 << "ull:";
+    out << "key2 #c(" << std::setprecision(1) << src.key2.real() << " " << std::setprecision(1) << src.key2.imag() << "):";
+    out << "key3 " << std::quoted(src.key3);
+    out << ":)";
+    
     return out;
-
-  StreamGuard guard(out);
-  out << "(:";
-  out << "key1 " << dest.key1 << "ull:";
-  out << "key2 " << dest.key2 << "ull:";
-  out << "key3 \"" << dest.key3 << "\"";
-  out << ":)";
-  return out;
+  }
 }

@@ -6,10 +6,10 @@
 #include <iostream>
 
 namespace fedunov {
-  
+
   bool operator<(const DataStruct& lhs, const DataStruct& rhs)
   {
-    if (lhs.key1 != rhs.key1) 
+    if (lhs.key1 != rhs.key1)
     {
       return lhs.key1 < rhs.key1;
     }
@@ -101,7 +101,7 @@ namespace fedunov {
     //return out << "(:key1 " << src.key1 << "ull" 
     // << ":key2 #c(" << src.key2.real() << " " << src.key2.imag()
     //<< "):key3 " << std::quoted(src.key3) << ":)";
-    
+
     std::ostream::sentry sentry(out);
     if (!sentry)
     {
@@ -115,7 +115,7 @@ namespace fedunov {
     out << "key2 #c(" << std::setprecision(1) << src.key2.real() << " " << std::setprecision(1) << src.key2.imag() << "):";
     out << "key3 " << std::quoted(src.key3);
     out << ":)";
-    
+
     return out;
   }
 }

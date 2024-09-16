@@ -57,16 +57,16 @@ namespace fedunov {
   std::istream& operator>>(std::istream& in, ComplexIO&& dest)
   {
     using del = DelimiterIO;
-    
+
     std::istream::sentry sentry(in);
     if (!sentry) return in;
 
     StreamGuard guard(in);
 
     char c;
-    double real_part = 0.0, 
-           imag_part = 0.0;
-    
+    double real_part = 0.0,
+      imag_part = 0.0;
+
     in >> std::fixed;
     in >> del{ '#' } >> del{ 'c' } >> del{ '(' } >>
       real_part >> del{ ' ' } >> imag_part >> del{ ')' };

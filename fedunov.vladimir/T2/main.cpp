@@ -9,7 +9,7 @@
 int main()
 {
   using fedunov::DataStruct;
-  
+
   std::vector<DataStruct> data;
 
   while (true)

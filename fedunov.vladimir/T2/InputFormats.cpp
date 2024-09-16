@@ -63,7 +63,6 @@ namespace fedunov {
 
     StreamGuard guard(in);
 
-    char c;
     double real_part = 0.0,
       imag_part = 0.0;
 

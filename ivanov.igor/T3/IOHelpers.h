@@ -1,4 +1,3 @@
-#pragma once
 // IOHelpers.h
 #ifndef IOHELPERS_H_
 #define IOHELPERS_H_

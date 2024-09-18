@@ -1,4 +1,3 @@
-#pragma once
 // Functors.h
 #ifndef FUNCTORS_H_
 #define FUNCTORS_H_

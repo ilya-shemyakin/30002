@@ -1,4 +1,3 @@
-#pragma once
 // Predicates.h
 #ifndef PREDICATES_H_
 #define PREDICATES_H_

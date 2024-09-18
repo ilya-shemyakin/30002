@@ -1,4 +1,3 @@
-#pragma once
 // Polygon.h
 #ifndef POLYGON_H_
 #define POLYGON_H_

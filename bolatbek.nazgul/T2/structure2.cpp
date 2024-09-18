@@ -3,6 +3,7 @@
 namespace DNLX
 {
   std::istream& operator>>(std::istream& in, DelimiterIO&& dest)
+  
   {
     std::istream::sentry sentry(in);
     if (!sentry)
@@ -20,6 +21,7 @@ namespace DNLX
   }
 
   std::istream& operator>>(std::istream& in, ComplexDoubleIO&& dest)
+
   {
     std::istream::sentry sentry(in);
     if (!sentry)
@@ -38,6 +40,7 @@ namespace DNLX
   }
 
   std::istream& operator>>(std::istream& in, DoubleIO&& dest)
+
   {
     std::istream::sentry sentry(in);
     if (!sentry)
@@ -48,7 +51,7 @@ namespace DNLX
     return in >> dest.num;
   }
 
-  std::istream& operator>>(std::istream& in, ULLOCTIO&& dest) {
+  std::istream& operator>>(std::istream& in, ULLOCTIO&& dest){
     std::istream::sentry sentry(in);
     if (!sentry)
     {
@@ -59,6 +62,7 @@ namespace DNLX
   }
 
   std::istream& operator>>(std::istream& in, StringIO&& dest)
+
   {
     std::istream::sentry sentry(in);
     if (!sentry)
@@ -162,6 +166,7 @@ namespace DNLX
     }
     return false;
   }
+
   iofmtguard::iofmtguard(std::basic_ios< char >& s) :
     s_(s),
     fill_(s.fill()),
@@ -174,5 +179,6 @@ namespace DNLX
     s_.precision(precision_);
     s_.flags(fmt_);
   }
+
 }
 

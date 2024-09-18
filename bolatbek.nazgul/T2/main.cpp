@@ -1,15 +1,3 @@
-#ifndef LOCAL_H
-#define LOCAL_H
-
-#include <iostream>
-#include <string>
-#include <vector>
-#include <iterator>
-#include <iomanip>
-#include <complex>
-#include <algorithm>
-#include <exception>
-
 #include "structure2.h"
 
 using DNLX::DataStruct;
@@ -49,5 +37,3 @@ int main()
 
   return EXIT_SUCCESS;
 }
-
-#endif

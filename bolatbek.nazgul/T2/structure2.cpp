@@ -3,7 +3,7 @@
 namespace DNLX
 {
   std::istream& operator>>(std::istream& in, DelimiterIO&& dest)
-  
+
   {
     std::istream::sentry sentry(in);
     if (!sentry)
@@ -181,4 +181,3 @@ namespace DNLX
   }
 
 }
-

@@ -65,7 +65,7 @@ namespace DNLX
     {
       return in;
     }
-    
+
     return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
   }
   std::istream& operator>>(std::istream& in, DataStruct& dest)
@@ -175,5 +175,4 @@ namespace DNLX
     s_.flags(fmt_);
   }
 }
-
 

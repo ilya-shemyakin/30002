@@ -141,10 +141,15 @@ namespace ivanov
 
     void same(const std::vector<Polygon>& data, std::istream& in, std::ostream& out)
     {
+        if (data.empty())
+        {
+            throw std::invalid_argument("INVALID COMMAND");
+        }
+
         Polygon target;
         in >> target;
 
-        if (!in)
+        if (!in || in.peek() != '\n')
         {
             throw std::invalid_argument("<INVALID COMMAND>");
         }

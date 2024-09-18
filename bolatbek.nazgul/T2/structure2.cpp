@@ -1,5 +1,4 @@
 #include "structure2.h"
-
 namespace DNLX
 {
     std::istream& operator>>(std::istream& in, DelimiterIO&& dest)
@@ -162,5 +161,6 @@ namespace DNLX
         s_.flags(fmt_);
     }
 }
+
 
 

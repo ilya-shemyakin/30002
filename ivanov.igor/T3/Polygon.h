@@ -14,12 +14,12 @@ namespace ivanov
         std::vector<Point> points;
 
         double computeArea() const;
-        bool operator==(const Polygon& other) const;
+        bool operator==(const Polygon &other) const;
         bool isCompatibleWith(const Polygon& other) const;
     };
 
-    std::istream& operator>>(std::istream& in, Polygon& dest);
-    std::ostream& operator<<(std::ostream& out, const Polygon& polygon);
+    std::istream &operator>>(std::istream &in, Polygon &dest);
+    std::ostream &operator<<(std::ostream &out, const Polygon &polygon);
 }
 
 #endif // POLYGON_H_

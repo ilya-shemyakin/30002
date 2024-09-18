@@ -141,21 +141,20 @@ namespace ivanov
 
     void same(const std::vector<Polygon>& data, std::istream& in, std::ostream& out)
     {
-        Polygon polygonToCompare;
-        in >> polygonToCompare;
+        StreamGuard guard(out);
+        Polygon targetPolygon;
+        in >> targetPolygon;
 
-        if (data.empty())
+        if (in.fail())
         {
-            throw std::invalid_argument("INVALID COMMAND");
+            throw std::invalid_argument("<INVALID COMMAND>");
         }
 
-        // —читайте количество полигонов, которые совместимы с polygonToCompare
-        auto count = std::count_if(data.cbegin(), data.cend(),
-            [&polygonToCompare](const Polygon& p) {
-                return p.isCompatibleWith(polygonToCompare);
+        auto countCompatible = std::count_if(data.cbegin(), data.cend(), [&targetPolygon](const Polygon& polygon) {
+            return polygon.isCompatibleWith(targetPolygon);
             });
 
-        out << count << "\n";
+        out << countCompatible;
     }
 
 

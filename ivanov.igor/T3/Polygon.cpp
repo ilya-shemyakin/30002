@@ -71,6 +71,7 @@ namespace ivanov
         return in;
     }
 
+
     std::ostream& operator<<(std::ostream& out, const Polygon& polygon)
     {
         std::ostream::sentry sentry(out);

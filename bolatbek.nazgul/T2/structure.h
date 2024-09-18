@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef NAMESPACE_H
 #define NAMESPACE_H
 #include "libraries.h"

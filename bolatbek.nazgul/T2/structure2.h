@@ -1,6 +1,8 @@
 #ifndef NAMESPACE_H
 #define NAMESPACE_H
+
 #include "libraries.h"
+
 namespace DNLX
 {
   struct DataStruct
@@ -40,6 +42,7 @@ namespace DNLX
   public:
     iofmtguard(std::basic_ios<char>& s);
     ~iofmtguard();
+
   private:
     std::basic_ios<char>& s_;
     char fill_;

@@ -1,11 +1,14 @@
 #include "structure2.h"
+
 using DNLX::DataStruct;
 int main()
 {
   try
   {
     std::string input = "";
+
     std::vector< DataStruct > data;
+
     while (!std::cin.eof())
     {
       std::copy(
@@ -19,6 +22,7 @@ int main()
       }
     }
     std::sort(std::begin(data), std::end(data), DNLX::compareDataStruct);
+
     std::copy(
     std::begin(data),
     std::end(data),
@@ -32,3 +36,4 @@ int main()
   }
   return EXIT_SUCCESS;
 }
+

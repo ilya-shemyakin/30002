@@ -41,7 +41,7 @@ namespace DNLX
   {
     std::string& ref;
   };
-  
+
 
   class iofmtguard
   {
@@ -65,5 +65,6 @@ namespace DNLX
   bool compareDataStruct(const DataStruct& ds_first, const DataStruct& ds_second);
 }
 #endif
+
 
 

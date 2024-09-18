@@ -9,6 +9,7 @@ namespace DNLX
     {
       return in;
     }
+
     char c = '0';
     in >> c;
     if (in && (c != dest.exp))
@@ -43,6 +44,7 @@ namespace DNLX
     {
       return in;
     }
+
     return in >> dest.num;
   }
 
@@ -52,6 +54,7 @@ namespace DNLX
     {
       return in;
     }
+
     return in >> std::oct >> dest.ref;
   }
 
@@ -62,6 +65,7 @@ namespace DNLX
     {
       return in;
     }
+    
     return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
   }
   std::istream& operator>>(std::istream& in, DataStruct& dest)
@@ -171,4 +175,5 @@ namespace DNLX
     s_.flags(fmt_);
   }
 }
+
 

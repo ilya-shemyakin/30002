@@ -1,5 +1,6 @@
 #ifndef LOCAL_H
 #define LOCAL_H
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,6 +9,5 @@
 #include <complex>
 #include <algorithm>
 #include <exception>
-
 #endif
 

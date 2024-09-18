@@ -1,7 +1,6 @@
 #include "structure2.h"
 
 using DNLX::DataStruct;
-
 int main()
 {
   try

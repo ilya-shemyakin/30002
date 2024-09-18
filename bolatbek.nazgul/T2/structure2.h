@@ -55,4 +55,5 @@ namespace DNLX
     std::ostream& operator<<(std::ostream& out, const DataStruct& dest);
     bool compareDataStruct(const DataStruct& ds_first, const DataStruct& ds_second);
 }
+
 #endif

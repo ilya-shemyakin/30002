@@ -160,7 +160,7 @@ namespace ivanov
                 {
                     return plg.is_overlay_compatible(target);
                 };
-            out << std::count_if(data.begin(), data.end(), countFunc) << std::endl;
+            out << std::count_if(data.begin(), data.end(), countFunc);
         }
     }
 

@@ -1,4 +1,5 @@
 #include "structure2.h"
+
 namespace DNLX
 {
     std::istream& operator>>(std::istream& in, DelimiterIO&& dest)
@@ -16,6 +17,7 @@ namespace DNLX
         }
         return in;
     }
+
     std::istream& operator>>(std::istream& in, ComplexDoubleIO&& dest)
     {
         std::istream::sentry sentry(in);
@@ -23,6 +25,7 @@ namespace DNLX
         {
             return in;
         }
+
         double real = 0.0;
         double imag = 0.0;
         in >> DelimiterIO{ '(' } >> real >> imag >> DelimiterIO{ ')' };
@@ -32,6 +35,7 @@ namespace DNLX
         }
         return in;
     }
+
     std::istream& operator>>(std::istream& in, DoubleIO&& dest)
     {
         std::istream::sentry sentry(in);
@@ -41,6 +45,7 @@ namespace DNLX
         }
         return in >> dest.num;
     }
+
     std::istream& operator>>(std::istream& in, ULLOCTIO&& dest) {
         std::istream::sentry sentry(in);
         if (!sentry)
@@ -49,6 +54,7 @@ namespace DNLX
         }
         return in >> std::oct >> dest.ref;
     }
+
     std::istream& operator>>(std::istream& in, StringIO&& dest)
     {
         std::istream::sentry sentry(in);
@@ -65,6 +71,7 @@ namespace DNLX
         {
             return in;
         }
+
         DataStruct input;
         {
             using sep = DelimiterIO;
@@ -106,6 +113,7 @@ namespace DNLX
         }
         return in;
     }
+
     std::ostream& operator<<(std::ostream& out, const DataStruct& src)
     {
         std::ostream::sentry sentry(out);
@@ -113,6 +121,7 @@ namespace DNLX
         {
             return out;
         }
+
         iofmtguard fmtguard(out);
         out << "(";
         out << ":key1 " << "0" << std::oct << src.key1;
@@ -121,6 +130,7 @@ namespace DNLX
         out << ":)";
         return out;
     }
+    
     bool compareDataStruct(const DataStruct& ds_first, const DataStruct& ds_second)
     {
         double Re_first = ds_first.key2.real(),

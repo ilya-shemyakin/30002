@@ -1,6 +1,8 @@
 #ifndef NAMESPACE_H
 #define NAMESPACE_H
+
 #include "libraries.h"
+
 namespace DNLX
 {
     struct DataStruct

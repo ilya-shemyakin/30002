@@ -12,30 +12,36 @@ namespace DNLX
     std::string key3;
   };
 
+
   struct DelimiterIO
   {
     char exp;
   };
+
 
   struct ComplexDoubleIO
   {
     std::complex<double>& ref;
   };
 
+
   struct ULLOCTIO
   {
     unsigned long long& ref;
   };
+
 
   struct DoubleIO
   {
     double& num;
   };
 
+
   struct StringIO
   {
     std::string& ref;
   };
+  
 
   class iofmtguard
   {

@@ -121,7 +121,7 @@ namespace DNLX
     {
       return out;
     }
-    
+
     iofmtguard fmtguard(out);
     out << "(";
     out << ":key1 " << "0" << std::oct << src.key1;

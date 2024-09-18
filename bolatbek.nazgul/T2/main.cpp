@@ -1,6 +1,7 @@
 #include "structure2.h"
 
 using DNLX::DataStruct;
+
 int main()
 {
   try
@@ -34,6 +35,7 @@ int main()
     std::cerr << ex.what();
     return EXIT_FAILURE;
   }
+
   return EXIT_SUCCESS;
 }
 

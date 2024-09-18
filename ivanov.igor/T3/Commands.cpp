@@ -147,7 +147,7 @@ namespace ivanov
 
         if (in.fail())
         {
-            throw std::invalid_argument("<INVALID COMMAND>");
+            throw std::invalid_argument("INVALID COMMAND");
         }
 
         auto countCompatible = std::count_if(data.cbegin(), data.cend(), [&targetPolygon](const Polygon& polygon) {

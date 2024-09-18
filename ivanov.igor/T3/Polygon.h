@@ -15,7 +15,7 @@ namespace ivanov
 
         double computeArea() const;
         bool operator==(const Polygon &other) const;
-        bool isCompatibleWith(const Polygon& other) const;
+        bool is_overlay_compatible(const Polygon& other) const;
     };
 
     std::istream &operator>>(std::istream &in, Polygon &dest);

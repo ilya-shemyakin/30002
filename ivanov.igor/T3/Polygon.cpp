@@ -27,52 +27,26 @@ namespace ivanov
             .first == points.cend());
     }
 
-    bool Polygon::isCompatibleWith(const Polygon& other) const
+    bool Polygon::is_overlay_compatible(const Polygon& other) const
     {
-        if (points.size() != other.points.size())
-        {
-            return false;
-        }
+        if (points.size() != other.points.size()) return false;
 
-        auto translate = [](const std::vector<Point>& poly, const Point& offset) {
-            std::vector<Point> translatedPoly;
-            translatedPoly.reserve(poly.size());
-            for (const auto& p : poly) {
-                translatedPoly.push_back({ p.x - offset.x, p.y - offset.y });
-            }
-            return translatedPoly;
-        };
+        std::vector<Point> sorted_points(points);
+        std::sort(sorted_points.begin(), sorted_points.end());
 
-        auto sortPoints = [](std::vector<Point>& poly) {
-            std::sort(poly.begin(), poly.end(), [](const Point& a, const Point& b) {
-                return std::tie(a.x, a.y) < std::tie(b.x, b.y);
-            });
-        };
+        double x_offset = other.points[0].x - sorted_points[0].x;
+        double y_offset = other.points[0].y - sorted_points[0].y;
 
-        auto arePolygonsEqual = [](const std::vector<Point>& poly1, const std::vector<Point>& poly2) {
-            return poly1 == poly2;
-        };
-
-        std::vector<Point> poly1 = points;
-        std::vector<Point> poly2 = other.points;
-
-        sortPoints(poly1);
-
-        // Try all possible translations of poly2
-        for (const auto& p : poly2)
-        {
-            std::vector<Point> translatedPoly = translate(poly2, p);
-            sortPoints(translatedPoly);
-
-            if (arePolygonsEqual(poly1, translatedPoly))
+        auto sorted_pnt = sorted_points.begin();
+        auto testFunc = [&sorted_pnt, &x_offset, &y_offset](const Point& pnt)
             {
-                return true;
-            }
-        }
+                bool result = pnt.x - (*sorted_pnt).x == x_offset && pnt.y - (*sorted_pnt).y == y_offset;
+                sorted_pnt++;
+                return result;
+            };
 
-        return false;
+        return std::all_of(other.points.begin(), other.points.end(), testFunc);
     }
-
     std::istream& operator>>(std::istream& in, Polygon& dest)
     {
         std::istream::sentry sentry(in);

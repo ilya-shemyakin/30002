@@ -144,19 +144,19 @@ namespace ivanov
         Polygon target;
         in >> target;
 
-        if (data.empty())
+        if (!in)
         {
-            throw std::invalid_argument("INVALID COMMAND");
+            throw std::invalid_argument("<INVALID COMMAND>");
         }
-
-        StreamGuard guard(out);
-
-        auto countFunc = [&target](const Polygon& plg)
-            {
-                return plg.isCompatibleWith(target);
-            };
-
-        std::cout << std::count_if(data.begin(), data.end(), countFunc) << std::endl;
+        else
+        {
+            std::sort(target.points.begin(), target.points.end());
+            auto countFunc = [&target](const Polygon& plg)
+                {
+                    return plg.is_overlay_compatible(target);
+                };
+            out << std::count_if(data.begin(), data.end(), countFunc) << std::endl;
+        }
     }
 
 

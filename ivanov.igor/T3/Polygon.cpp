@@ -79,16 +79,18 @@ namespace ivanov
     }
 
 
-    std::ostream& operator<<(std::ostream& out, const Polygon& polygon)
+    std::ostream& operator<<(std::ostream& out, const Polygon& poly)
     {
-        std::ostream::sentry sentry(out);
-        if (!sentry)
+        std::ostream::sentry guard(out);
+        if (!guard)
         {
             return out;
         }
-
-        std::copy(polygon.points.cbegin(), polygon.points.cend(),
-            std::ostream_iterator<Point>(out, " "));
+        out << poly.points.size() << " ";
+        for (const auto& p : poly.points)
+        {
+            out << p << " ";
+        }
         return out;
     }
 }

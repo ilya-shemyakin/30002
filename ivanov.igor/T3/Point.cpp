@@ -32,14 +32,14 @@ namespace ivanov
         return in;
     }
 
-    std::ostream& operator<<(std::ostream& out, const Point& point)
+    std::ostream& operator<<(std::ostream& out, const Point& pnt)
     {
-        std::ostream::sentry sentry(out);
-        if (!sentry)
+        std::ostream::sentry guard(out);
+        if (!guard)
         {
             return out;
         }
-        out << '(' << point.x << ';' << point.y << ')';
+        out << "(" << pnt.x << "; " << pnt.y << ")";
         return out;
     }
 }

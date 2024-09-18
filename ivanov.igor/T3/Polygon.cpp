@@ -47,42 +47,49 @@ namespace ivanov
 
         return std::all_of(other.points.begin(), other.points.end(), testFunc);
     }
-    std::istream& operator>>(std::istream& in, Polygon& dest)
+    std::istream& operator>>(std::istream& in, Polygon& poly)
     {
-        std::istream::sentry sentry(in);
-        if (!sentry)
+        std::istream::sentry guard(in);
+        if (!guard)
         {
             return in;
         }
-
-        int size = 0;
+        size_t size;
         in >> size;
         if (size < 3)
         {
-            in.setstate(std::istream::failbit);
+            in.setstate(std::ios::failbit);
             return in;
         }
-        std::vector<Point> tempPoints;
-        tempPoints.reserve(size);
-        std::copy_n(std::istream_iterator<Point>(in), size, std::back_inserter(tempPoints));
+        poly.points.clear();
+        poly.points.resize(size);
 
-        if (in)
+        for (size_t i = 0; i < size; i++)
         {
-            dest.points = tempPoints;
+            in >> poly.points[i];
         }
+
+        if (in.peek() != int('\n') && !in.eof())
+        {
+            in.setstate(std::ios::failbit);
+            return in;
+        }
+
         return in;
     }
 
-    std::ostream& operator<<(std::ostream& out, const Polygon& polygon)
+    std::ostream& operator<<(std::ostream& out, const Polygon& poly)
     {
-        std::ostream::sentry sentry(out);
-        if (!sentry)
+        std::ostream::sentry guard(out);
+        if (!guard)
         {
             return out;
         }
-
-        std::copy(polygon.points.cbegin(), polygon.points.cend(),
-            std::ostream_iterator<Point>(out, " "));
+        out << poly.points.size() << " ";
+        for (const auto& p : poly.points)
+        {
+            out << p << " ";
+        }
         return out;
     }
 }

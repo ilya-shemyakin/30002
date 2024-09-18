@@ -15,6 +15,12 @@ namespace ivanov
 
     std::istream& operator>>(std::istream& in, Point& dest)
     {
+        if (in.peek() == '\n')
+        {
+            in.setstate(std::ios::failbit);
+            return in;
+        }
+
         std::istream::sentry sentry(in);
         if (!sentry)
         {

@@ -27,22 +27,50 @@ namespace ivanov
             .first == points.cend());
     }
 
-    bool Polygon::isCompatibleWith(const Polygon& other) const {
-        if (points.size() != other.points.size()) {
+    bool Polygon::isCompatibleWith(const Polygon& other) const
+    {
+        if (points.size() != other.points.size())
+        {
             return false;
         }
 
-        std::vector<Point> sortedPoints = points;
-        std::vector<Point> otherSortedPoints = other.points;
+        auto translate = [](const std::vector<Point>& poly, const Point& offset) {
+            std::vector<Point> translatedPoly;
+            translatedPoly.reserve(poly.size());
+            for (const auto& p : poly) {
+                translatedPoly.push_back({ p.x - offset.x, p.y - offset.y });
+            }
+            return translatedPoly;
+        };
 
-        std::sort(sortedPoints.begin(), sortedPoints.end(), [](const Point& a, const Point& b) {
-            return std::tie(a.x, a.y) < std::tie(b.x, b.y);
+        auto sortPoints = [](std::vector<Point>& poly) {
+            std::sort(poly.begin(), poly.end(), [](const Point& a, const Point& b) {
+                return std::tie(a.x, a.y) < std::tie(b.x, b.y);
             });
-        std::sort(otherSortedPoints.begin(), otherSortedPoints.end(), [](const Point& a, const Point& b) {
-            return std::tie(a.x, a.y) < std::tie(b.x, b.y);
-            });
+        };
 
-        return sortedPoints == otherSortedPoints;
+        auto arePolygonsEqual = [](const std::vector<Point>& poly1, const std::vector<Point>& poly2) {
+            return poly1 == poly2;
+        };
+
+        std::vector<Point> poly1 = points;
+        std::vector<Point> poly2 = other.points;
+
+        sortPoints(poly1);
+
+        // Try all possible translations of poly2
+        for (const auto& p : poly2)
+        {
+            std::vector<Point> translatedPoly = translate(poly2, p);
+            sortPoints(translatedPoly);
+
+            if (arePolygonsEqual(poly1, translatedPoly))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     std::istream& operator>>(std::istream& in, Polygon& dest)

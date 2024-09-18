@@ -141,21 +141,24 @@ namespace ivanov
 
     void same(const std::vector<Polygon>& data, std::istream& in, std::ostream& out)
     {
-        StreamGuard guard(out);
-        Polygon targetPolygon;
-        in >> targetPolygon;
+        Polygon target;
+        in >> target;
 
-        if (in.fail())
+        if (data.empty())
         {
             throw std::invalid_argument("INVALID COMMAND");
         }
 
-        auto countCompatible = std::count_if(data.cbegin(), data.cend(), [&targetPolygon](const Polygon& polygon) {
-            return polygon.isCompatibleWith(targetPolygon);
-            });
+        StreamGuard guard(out);
 
-        out << countCompatible;
+        auto countFunc = [&target](const Polygon& plg)
+            {
+                return plg.isCompatibleWith(target);
+            };
+
+        std::cout << std::count_if(data.begin(), data.end(), countFunc) << std::endl;
     }
+
 
     double detail::accAreaIf(double val, const Polygon& polygon, predicate_t pred)
     {

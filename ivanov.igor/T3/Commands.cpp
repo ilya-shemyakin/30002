@@ -157,7 +157,6 @@ namespace ivanov
         out << countCompatible;
     }
 
-
     double detail::accAreaIf(double val, const Polygon& polygon, predicate_t pred)
     {
         return val + polygon.computeArea() * pred(polygon);

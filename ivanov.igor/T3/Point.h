@@ -17,4 +17,3 @@ namespace ivanov
 }
 
 #endif // POINT_H_
-#pragma once

@@ -22,19 +22,17 @@ int main(int argc, const char* argv[])
         std::cerr << "Error: can't open the file!\n";
         return 2;
     }
-
-
     using namespace ivanov;
     std::vector<Polygon> polygons;
 
     while (!file.eof())
     {
-        using input_it_t = std::istream_iterator<Polygon>;
+        using input_it_t = std::istream_iterator< Polygon >;
         std::copy(input_it_t{ file }, input_it_t{}, std::back_inserter(polygons));
         if (file.fail() && !file.eof())
         {
             file.clear();
-            file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            file.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
         }
     }
     file.close();
@@ -65,7 +63,7 @@ int main(int argc, const char* argv[])
             std::cout << "<INVALID COMMAND>\n";
         }
         std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
 
     return 0;

@@ -13,8 +13,6 @@ namespace ivanov
     bool checkVertexesCount(const Polygon& polygon, std::size_t num);
     bool isLessArea(const Polygon& lhs, const Polygon& rhs);
     bool isLessVertexesCount(const Polygon& lhs, const Polygon& rhs);
-    bool hasIntersection(const Polygon& lhs, const Polygon& rhs);
-    bool isRect(const Polygon& p);
 }
 
 #endif // PREDICATES_H_

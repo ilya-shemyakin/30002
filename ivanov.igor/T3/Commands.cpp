@@ -40,7 +40,7 @@ namespace ivanov
             }
             else
             {
-                int size = std::stoul(arg);
+                size_t size = std::stoul(arg);
                 if (size < 3)
                 {
                     throw std::invalid_argument("<INVALID COMMAND>");

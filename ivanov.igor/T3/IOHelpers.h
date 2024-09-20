@@ -25,7 +25,7 @@ namespace ivanov
         bool ignoreCase = false;
     };
 
-    std::istream& operator>>(std::istream& in, const ExpectedCharIO& exp);
+    std::istream& operator>>(std::istream& in, const ExpectedCharIO&& exp);
 }
 
 #endif // IOHELPERS_H_

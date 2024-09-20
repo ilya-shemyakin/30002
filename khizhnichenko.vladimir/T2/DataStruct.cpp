@@ -65,7 +65,7 @@ namespace khizhnichenko {
     iofmtguard fmtguard(out);
     out << "(:";
     out << "key1 " << src.key1 << "ll" << ":";
-    out << "key2 " << "(:N " << src.key2.first << ":D " << src.key2.second << ":)";
+    out << "key2 " << "(:N " << src.key2.first << ":D " << src.key2.second << ":)" << ":";
     out << "key3 " << std::quoted(src.key3) << ":";
     out << ")";
     return out;

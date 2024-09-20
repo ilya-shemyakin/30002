@@ -16,4 +16,3 @@ namespace ivanov
 }
 
 #endif // PREDICATES_H_
- 

@@ -5,11 +5,8 @@
 
 namespace khizhnichenko {
   std::istream& operator>>(std::istream& in, LongLongIO&& dest) {
-    // Проверка состояния потока.
-    // Необходима в начале каждого переопределения operator>>
     std::istream::sentry sentry(in);
-    if (!sentry)
-    {
+    if (!sentry) {
       return in;
     }
     iofmtguard fmtguard(in);

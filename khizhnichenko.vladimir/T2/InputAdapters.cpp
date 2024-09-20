@@ -29,7 +29,6 @@ namespace khizhnichenko {
       :keyX (:N -2:D 3:):
       :keyX (:N 3:D 2:):
     */
-    
     return in >> LabelIO{ "(:N " } >> dest.ref.first >> LabelIO{ ":D " } >> dest.ref.second >> LabelIO{ ":)" };
   }
 

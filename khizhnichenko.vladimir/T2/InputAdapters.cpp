@@ -30,8 +30,7 @@ namespace khizhnichenko {
       :keyX (:N 3:D 2:):
     */
     
-    return in >> LabelIO{ "(:N " } >> dest.ref.first
-              >> LabelIO{ ":D " } >> dest.ref.second >> LabelIO{ ":)" };
+    return in >> LabelIO{ "(:N " } >> dest.ref.first >> LabelIO{ ":D " } >> dest.ref.second >> LabelIO{ ":)" };
   }
 
   std::istream& operator>>(std::istream& in, StringIO&& dest) {

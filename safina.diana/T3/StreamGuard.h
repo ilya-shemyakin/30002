@@ -5,7 +5,6 @@
 
 namespace shapes
 {
-    // Scope guard для возврата потока в первоначальное состояние
     class StreamGuard
     {
     public:

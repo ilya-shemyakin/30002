@@ -70,6 +70,11 @@ namespace cmd
         Node* path = huffmanTree.root;
         char symbol = '\0';
 
+        if (path == nullptr)
+        {
+            throw std::exception("Error! You need to run 'CODE' to build a Huffman's tree\n");
+        }
+
         while (in >> symbol)
         {
             if (symbol == '0')
@@ -162,6 +167,7 @@ namespace cmd
         }
         else
         {
+            in.unget();
             throw std::exception("Error! You need to run 'CODE' to build a Huffman's tree\n");
         }
     }
@@ -191,6 +197,7 @@ namespace cmd
         }
         else
         {
+            in.unget();
             throw std::exception("Error! You need to run 'CODE' to build a Huffman's tree\n");
         }
     }

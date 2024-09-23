@@ -126,6 +126,7 @@ void handleCommand(const std::string& command, std::vector<Polygon>& polygons) {
                 std::cout << "<INVALID COMMAND>" << std::endl;
                 return;
             }
+            
             size_t maxVertexes = 0;
             for (const auto& polygon : polygons) {
                 maxVertexes = std::max(maxVertexes, polygon.points.size());
@@ -153,6 +154,7 @@ void handleCommand(const std::string& command, std::vector<Polygon>& polygons) {
                 std::cout << "<INVALID COMMAND>" << std::endl;
                 return;
             }
+            
             size_t minVertexes = polygons.front().points.size();
             for (const auto& polygon : polygons) {
                 minVertexes = std::min(minVertexes, polygon.points.size());
@@ -169,6 +171,7 @@ void handleCommand(const std::string& command, std::vector<Polygon>& polygons) {
             size_t count = std::count_if(polygons.begin(), polygons.end(), [](const Polygon& polygon) {
                 return polygon.points.size() % 2 == 0;
             });
+            
             std::cout << count << std::endl;
         } else if (type == "ODD") {
             size_t count = std::count_if(polygons.begin(), polygons.end(), [](const Polygon& polygon) {

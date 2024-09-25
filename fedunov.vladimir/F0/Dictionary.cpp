@@ -1,5 +1,7 @@
 #include "Dictionary.h"
 
+// test
+
 frequencyDictionary::frequencyDictionary()
 {}
 

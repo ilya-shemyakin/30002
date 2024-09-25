@@ -31,7 +31,7 @@ int main() {
   std::map<std::string, std::function<void(std::istream&, std::ostream&)>> cmds;
 
   {
-    using namespace std::placeholders; 
+    using namespace std::placeholders;
     cmds["1"] = std::bind(commands::insertWords, std::ref(dictionary), _1, _2);
     cmds["2"] = std::bind(commands::input, std::cref(dictionary), _2);
     cmds["3"] = std::bind(commands::findWord, std::cref(dictionary), _1, _2);

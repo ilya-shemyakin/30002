@@ -57,22 +57,22 @@ void commands::printMenu(std::ostream& out)
   out << WHITE << "+" << top_bottom_line << "+" << "\n";
   out << WHITE << "|" << YELLOW << " Feel free to pick any option: " << std::setw(24) << WHITE << "|" << "\n";
   out << WHITE << "+" << top_bottom_line << "+" << "\n";
-  
+
   out << WHITE << "|" << YELLOW << " 1. INSERT" << std::setw(45) << WHITE << "|" << "\n";
   out << WHITE << "+" << top_bottom_line << "+" << "\n";
-  
+
   out << WHITE << "|" << YELLOW << " 2. TOP THREE OUT" << std::setw(38) << WHITE << "|" << "\n";
   out << WHITE << "+" << top_bottom_line << "+" << "\n";
-  
+
   out << WHITE << "|" << YELLOW << " 3. FIND WORD" << std::setw(42) << WHITE << "|" << "\n";
   out << WHITE << "+" << top_bottom_line << "+" << "\n";
- 
+
   out << WHITE << "|" << YELLOW << " 4. DELETE" << std::setw(45) << WHITE << "|" << "\n";
   out << WHITE << "+" << top_bottom_line << "+" << "\n";
-  
+
   out << WHITE << "|" << YELLOW << " 6. FAQ" << std::setw(48) << WHITE << "|" << "\n";
   out << WHITE << "+" << top_bottom_line << "+" << "\n";
-  
+
   out << WHITE << "|" << RED << " 7. CTRL+Z for EXIT" << std::setw(36) << WHITE << "|" << "\n";
   out << WHITE << "+" << top_bottom_line << "+" << "\n";
 }

@@ -61,6 +61,4 @@ namespace printmenu {
     std::cout << std::setw(39) << WHITE << "2024 SPBSTU\n\n";
 
   }
-
-
 }

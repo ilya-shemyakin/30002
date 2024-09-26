@@ -52,10 +52,9 @@ std::istream& operator>>(std::istream& in, DataStruct& dest) {
     }
         in >> label{ ":)" };
 
-        if (!in) {
-            in.setstate(std::ios::failbit);
+        if (in) {
+            dest = input;
         }
-        dest = input;
         return in;
 }
 

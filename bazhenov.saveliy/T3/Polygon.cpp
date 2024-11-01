@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <numeric>
 #include "Polygon.h"
+#include <cmath>
 
 #define EPS 1e-6
 

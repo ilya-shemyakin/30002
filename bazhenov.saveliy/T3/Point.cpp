@@ -1,6 +1,6 @@
 #include "InputFormatters.h"
 #include "Point.h"
-//#include "Delimiter.h"
+#include <cmath>
 
 
 bool Point::operator==(const Point& other) const {

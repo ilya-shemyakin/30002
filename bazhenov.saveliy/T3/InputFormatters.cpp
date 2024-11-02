@@ -5,6 +5,9 @@
 #include <iterator>
 #include <vector>
 #include <sstream>
+#include <algorithm>
+#include <cctype>
+#include <limits>
 
 std::istream& operator>>(std::istream& in, DelimiterI&& dest) {
     std::istream::sentry sentry(in);

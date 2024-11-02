@@ -71,28 +71,6 @@ void area(const std::vector<Polygon>& vecPoly) {
     }
 }
 
-//void echo(std::vector<Polygon>& vecPoly) {
-//    Polygon poly;
-//    std::cin >> poly;
-//
-//    if (std::cin.fail() || std::cin.get() != '\n')
-//        throw ERROR_405;
-//
-//    std::vector<Polygon> result;
-//    int count = 0;
-//    for (const Polygon& el : vecPoly) {
-//        result.push_back(el);
-//        if (el == poly) {
-//            count++;
-//            result.push_back(el);
-//        }
-//    }
-//
-//    vecPoly = std::move(result);
-//    std::cout << count << '\n';
-//}
-
-
 void echo(std::vector<Polygon>& vecPoly) {
     Polygon poly;
     std::cin >> poly;
@@ -121,12 +99,6 @@ void echo(std::vector<Polygon>& vecPoly) {
             return acc;
         }
     );
-
-    // test print
-    //for (const Polygon& el : vecPoly) {
-    //    std::cout << el << '\n';
-    //}
-
     std::cout << count << '\n';
 }
 

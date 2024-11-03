@@ -77,30 +77,25 @@ void echo(std::vector<Polygon>& vecPoly) {
 
     if (std::cin.fail() || std::cin.get() != '\n')
         throw ERROR_405;
-
-    int count = 0;
-    std::vector<std::vector<Polygon>> result;
+    
+    std::vector<Polygon> result;
+    result.reserve(vecPoly.size());
+    size_t count = 0;
 
     std::transform(vecPoly.begin(), vecPoly.end(), std::back_inserter(result),
-        [&poly, &count](const Polygon& el) {
-            if (el == poly) {
-                count++;
-                return std::vector<Polygon>{el, el};
+        [&poly, &result, &count](Polygon p) {
+            if (p == poly) {
+                result.push_back(poly);
+                ++count;
             }
-            else {
-                return std::vector<Polygon>{el};
-            }
-        }
-    );
+            return p;
+        });
 
-    vecPoly = std::accumulate(result.begin(), result.end(), std::vector<Polygon>(),
-        [](std::vector<Polygon>& acc, const std::vector<Polygon>& vec) {
-            acc.insert(acc.end(), vec.begin(), vec.end());
-            return acc;
-        }
-    );
+    vecPoly = std::move(result);
     std::cout << count << '\n';
+    return;
 }
+
 
 void min(const std::vector<Polygon>& vecPoly) {
     if (vecPoly.empty())

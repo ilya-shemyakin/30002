@@ -77,7 +77,7 @@ void echo(std::vector<Polygon>& vecPoly) {
 
     if (std::cin.fail() || std::cin.get() != '\n')
         throw ERROR_405;
-    
+
     std::vector<Polygon> result;
     result.reserve(vecPoly.size());
     size_t count = 0;
@@ -95,7 +95,6 @@ void echo(std::vector<Polygon>& vecPoly) {
     std::cout << count << '\n';
     return;
 }
-
 
 void min(const std::vector<Polygon>& vecPoly) {
     if (vecPoly.empty())

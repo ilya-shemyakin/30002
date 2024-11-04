@@ -77,7 +77,7 @@ void echo(std::vector<Polygon>& vecPoly) {
 
     if (std::cin.fail() || std::cin.get() != '\n')
         throw ERROR_405;
-    
+
     std::vector<Polygon> result;
     size_t count = 0;
 

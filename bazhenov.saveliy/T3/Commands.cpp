@@ -77,9 +77,8 @@ void echo(std::vector<Polygon>& vecPoly) {
 
     if (std::cin.fail() || std::cin.get() != '\n')
         throw ERROR_405;
-
+    
     std::vector<Polygon> result;
-    result.reserve(vecPoly.size());
     size_t count = 0;
 
     std::transform(vecPoly.begin(), vecPoly.end(), std::back_inserter(result),
@@ -93,7 +92,6 @@ void echo(std::vector<Polygon>& vecPoly) {
 
     vecPoly = std::move(result);
     std::cout << count << '\n';
-    return;
 }
 
 void min(const std::vector<Polygon>& vecPoly) {
@@ -130,7 +128,7 @@ void max(const std::vector<Polygon>& vecPoly) {
 
         std::cout << std::max_element(vecPoly.begin(), vecPoly.end(),
             [](const Polygon& a, const Polygon& b) {
-                return a.points.size() > b.points.size();
+                return a.points.size() < b.points.size();
             }
         )->points.size() << '\n';
     }

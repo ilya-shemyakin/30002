@@ -12,7 +12,7 @@
 const std::string ERROR_405 = "<INVALID COMMAND>"; // 405 Method Not Allowed
 
 void rightShapes(const std::vector<Polygon>& vecPoly) {
-    std::cout << std::count_if(vecPoly.cbegin(), vecPoly.cend(), std::bind(rightAngle, std::placeholders::_1)) << '\n';
+    std::cout << std::count_if(vecPoly.cbegin(), vecPoly.cend(), rightAngle) << '\n';
 }
 
 void count(const std::vector<Polygon>& vecPoly) {
@@ -79,19 +79,20 @@ void echo(std::vector<Polygon>& vecPoly) {
         throw ERROR_405;
 
     std::vector<Polygon> result;
-    int count = 0;
-    for (const Polygon& el : vecPoly) {
-        result.push_back(el);
-        if (el == poly) {
-            count++;
-            result.push_back(el);
-        }
-    }
+    size_t count = 0;
+
+    std::transform(vecPoly.begin(), vecPoly.end(), std::back_inserter(result),
+        [&poly, &result, &count](Polygon p) {
+            if (p == poly) {
+                result.push_back(poly);
+                ++count;
+            }
+            return p;
+        });
 
     vecPoly = std::move(result);
     std::cout << count << '\n';
 }
-
 
 void min(const std::vector<Polygon>& vecPoly) {
     if (vecPoly.empty())
@@ -103,11 +104,11 @@ void min(const std::vector<Polygon>& vecPoly) {
     if (str == "VERTEXES") {
         std::vector<std::size_t> sizes(vecPoly.size());
 
-        std::cout << std::accumulate(vecPoly.begin() + 1, vecPoly.end(), vecPoly[0].points.size(),
-            [](std::size_t min, const Polygon& poly) {
-                return (poly.points.size() < min ? poly.points.size() : min);
+        std::cout << std::min_element(vecPoly.begin(), vecPoly.end(),
+            [](const Polygon& a, const Polygon& b) {
+                return a.points.size() < b.points.size();
             }
-        ) << '\n';
+        )->points.size() << '\n';
     }
     else if (str == "AREA")
         std::cout << std::min_element(vecPoly.begin(), vecPoly.end())->area() << '\n';
@@ -125,11 +126,11 @@ void max(const std::vector<Polygon>& vecPoly) {
     if (str == "VERTEXES") {
         std::vector<std::size_t> sizes(vecPoly.size());
 
-        std::cout << std::accumulate(vecPoly.begin() + 1, vecPoly.end(), vecPoly[0].points.size(),
-            [](std::size_t max, const Polygon& poly) {
-                return (poly.points.size() > max ? poly.points.size() : max);
+        std::cout << std::max_element(vecPoly.begin(), vecPoly.end(),
+            [](const Polygon& a, const Polygon& b) {
+                return a.points.size() < b.points.size();
             }
-        ) << '\n';
+        )->points.size() << '\n';
     }
     else if (str == "AREA")
         std::cout << std::max_element(vecPoly.begin(), vecPoly.end())->area() << '\n';
